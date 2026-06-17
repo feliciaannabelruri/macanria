@@ -264,18 +264,19 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   #s3b{font-size:clamp(44px,12vw,96px);bottom:11%!important;left:0!important;transform:none!important;}
   /* Scene panels hidden on mobile — scenes are bold type + cup only */
   .sc-right,.sc-left{display:none!important;}
-  /* SCENE 4 — heading top, lineup row bottom */
-  #s4head{top:8%;}
+  /* SCENE 4 — heading top, lineup centered (fills the gap) */
+  #s4head{top:7%;}
   #s4head .bt{font-size:clamp(44px,12vw,96px)!important;}
-  #lineup{flex-direction:row;align-items:flex-end;gap:14px;bottom:9%;justify-content:center;padding:0 16px;}
-  #lineup .li-item:nth-child(1) img,#lineup .li-item:nth-child(3) img{height:118px!important;}
-  #lineup .li-item:nth-child(2) img{height:150px!important;}
+  #lineup{flex-direction:row;align-items:center;gap:16px;top:52%;bottom:auto;transform:translateY(-50%);justify-content:center;padding:0 16px;}
+  #lineup .li-item:nth-child(1) img,#lineup .li-item:nth-child(3) img{height:128px!important;}
+  #lineup .li-item:nth-child(2) img{height:168px!important;}
   .li-lbl{font-size:8px;}
   /* SECTIONS padding */
   #menu,#scoops,#story,#gallery,#locations{padding:64px 28px;}
   footer{padding:56px 28px 36px;}
-  /* MENU */
-  .mtabs{flex-wrap:wrap;gap:6px;}
+  /* MENU — stacked full-width pills */
+  .mtabs{flex-direction:column;width:100%;border-radius:18px;gap:6px;padding:6px;margin-bottom:28px;}
+  .mtab{width:100%;text-align:center;padding:13px;font-size:11px;letter-spacing:.16em;}
   .mgrid{grid-template-columns:1fr 1fr;gap:12px;}
   /* SCOOPS */
   .scoop-stage{grid-template-columns:1fr;gap:32px;}
