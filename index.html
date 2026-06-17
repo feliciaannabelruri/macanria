@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Macanria — Homemade Soy Milk Tea · Jakarta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Noto+Serif+SC:wght@700;900&family=Zilla+Slab:ital,wght@0,500;0,600;0,700;1,600;1,700&display=swap" rel="stylesheet" />
+<script src="image-slot.js"></script>
+<style>
+/* ── BRAND TOKENS (from Macanria guideline: cobalt + silver + cream) ── */
+:root{
+  --ink:#2D2F77;        /* brand navy · Pantone 2756C */
+  --cobalt:#2D2F77;     /* brand navy */
+  --cb:#4146A8;         /* lifted navy (hover) */
+  --silver:#E7EAF2;     /* silver cup tone */
+  --cream:#F4ECDA;
+  --cs:#FAF6EC;
+  --rose:#DA5370;       /* brand rose · Pantone 198C */
+  --display:'Zilla Slab',Georgia,serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ── NAV ── */
+#nav{position:fixed;inset:0 0 auto;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:72px;transition:background .35s,box-shadow .35s;}
+#nav.glass{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(16,28,92,.08);}
+#nav.dark{background:rgba(16,28,92,.97);backdrop-filter:blur(16px);}
+.logo{font-family:var(--display);font-size:20px;font-weight:700;text-decoration:none;letter-spacing:.01em;transition:color .3s;}
+.logo.dk{color:var(--cobalt);}.logo.lt{color:#fff;}
+.logo .dot{color:var(--rose);}
+.nav-links{display:flex;gap:30px;align-items:center;}
+.nav-links a{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;transition:color .25s;}
+.nl-dk{color:rgba(16,28,92,.55);}.nl-dk:hover{color:var(--cobalt);}
+.nl-lt{color:rgba(255,255,255,.6);}.nl-lt:hover{color:#fff;}
+.nav-btn{background:var(--cobalt);color:#fff;font-size:12.5px;font-weight:700;letter-spacing:.03em;padding:10px 22px;border-radius:999px;text-decoration:none;transition:background .2s;}
+.nav-btn:hover{background:var(--cb);}
+
+/* ── FIXED CUP (transparent PNG, real 3D parallax) ── */
+#cup-fixed{position:fixed;inset:0;z-index:50;pointer-events:none;display:flex;align-items:center;justify-content:center;}
+#cup-wrap{will-change:transform;transform-origin:50% 50%;position:relative;}
+.cup-img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transition:opacity .55s ease;filter:drop-shadow(0 40px 60px rgba(16,28,92,.28));}
+#cup-silver{height:74vh;}
+#cup-guava{height:80vh;}
+#cup-mochi{height:86vh;}
+
+/* ── SCENES ── */
+.scene{position:relative;}
+.s1,.s2,.s3{height:340vh;}
+.s4{height:300vh;}
+.pin{position:sticky;top:0;height:100vh;overflow:hidden;}
+.s1 .pin,.s2 .pin{background:#fff;}
+.s3 .pin{background:var(--cs);}
+.s4 .pin{background:var(--cream);}
+
+/* ── BIG DISPLAY TYPE ── */
+.bt{position:absolute;font-family:var(--display);font-weight:700;letter-spacing:-.012em;line-height:.82;user-select:none;pointer-events:none;color:var(--cobalt);}
+#s1a{display:none;}
+#s1b{top:50%;left:0;right:0;transform:translateY(-50%);text-align:center;font-size:clamp(72px,11vw,170px);}
+#s2a{top:50%;left:50%;transform:translate(-50%,-108%);font-size:clamp(84px,15vw,230px);white-space:nowrap;}
+#s2b{top:50%;left:50%;transform:translate(-50%,8%);font-size:clamp(84px,15vw,230px);white-space:nowrap;}
+#s3a{top:50%;left:50%;transform:translate(-50%,-108%);font-size:clamp(64px,11.5vw,172px);white-space:nowrap;}
+#s3b{top:50%;left:50%;transform:translate(-50%,8%);font-size:clamp(64px,11.5vw,172px);white-space:nowrap;}
+
+/* ── SCENE SIDE PANELS ── */
+.sc-left{position:absolute;left:58px;top:50%;transform:translateY(-50%);z-index:60;max-width:266px;}
+.sc-right{position:absolute;right:58px;top:50%;transform:translateY(-50%);z-index:60;}
+
+/* ── SPECS BOX ── */
+.specs{border:1.5px solid rgba(16,28,92,.12);border-radius:18px;overflow:hidden;min-width:248px;background:rgba(255,255,255,.6);backdrop-filter:blur(4px);}
+.srow{padding:14px 20px;border-bottom:1px solid rgba(16,28,92,.06);}
+.srow:last-child{border-bottom:none;}
+.slbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(16,28,92,.4);margin-bottom:5px;}
+.sval{font-size:21px;font-weight:700;color:var(--ink);line-height:1;letter-spacing:-.015em;}
+.sval.b{color:var(--cobalt);}
+.ssub{font-size:11px;color:rgba(16,28,92,.42);margin-top:3px;}
+
+/* ── SCENE 4 HEAD ── */
+#s4head{position:absolute;top:64px;left:0;right:0;text-align:center;z-index:2;pointer-events:none;}
+#lineup{position:absolute;bottom:60px;left:0;right:0;display:flex;justify-content:center;align-items:flex-end;gap:48px;z-index:60;}
+.li-item{display:flex;flex-direction:column;align-items:center;gap:12px;opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease;}
+.li-item.show{opacity:1;transform:none;}
+.li-item:nth-child(2){transition-delay:.14s;}
+.li-item:nth-child(3){transition-delay:.28s;}
+.li-img{object-fit:contain;display:block;filter:drop-shadow(0 18px 26px rgba(16,28,92,.22));mix-blend-mode:multiply;}
+.li-lbl{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(16,28,92,.5);}
+
+/* ── HELPERS ── */
+.mono{font-family:'Space Mono',monospace;}
+.tag{font-size:11px;letter-spacing:.24em;text-transform:uppercase;}
+.acc-line{display:inline-block;width:14px;height:1.5px;vertical-align:middle;margin-right:10px;flex-shrink:0;}
+a.btn-cobalt{background:var(--cobalt);color:#fff;font-size:13px;font-weight:700;letter-spacing:.02em;padding:12px 24px;border-radius:999px;text-decoration:none;display:inline-block;box-shadow:0 5px 18px rgba(27,44,140,.3);transition:background .2s,transform .15s;}
+a.btn-cobalt:hover{background:var(--cb);transform:translateY(-2px);}
+a.btn-outline{background:rgba(16,28,92,.06);color:var(--ink);font-size:13px;padding:12px 22px;border-radius:999px;text-decoration:none;display:inline-block;border:1px solid rgba(16,28,92,.12);transition:background .2s;}
+a.btn-outline:hover{background:rgba(16,28,92,.12);}
+
+/* ── MARQUEE STRIP ── */
+.strip{background:var(--cobalt);padding:13px 0;overflow:hidden;white-space:nowrap;}
+.strip-track{display:inline-flex;animation:marquee 22s linear infinite;}
+.strip-track span{font-family:'Noto Serif SC',serif;font-size:17px;letter-spacing:.18em;color:rgba(255,255,255,.55);padding:0 32px;}
+
+/* ── SECTION HEADERS ── */
+.eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.26em;text-transform:uppercase;display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.eyebrow::before{content:'';display:block;width:16px;height:1.5px;}
+.ey-lt{color:rgba(255,255,255,.4);}.ey-lt::before{background:var(--rose);}
+.ey-dk{color:rgba(16,28,92,.4);}.ey-dk::before{background:var(--cobalt);}
+.sh{font-family:var(--display);font-weight:700;line-height:.92;letter-spacing:-.01em;}
+.sh-lt{color:#fff;}.sh-dk{color:var(--ink);}
+
+/* ── MENU ── */
+#menu{background:var(--ink);padding:100px 80px;}
+.mtabs{display:flex;gap:4px;background:rgba(255,255,255,.08);border-radius:999px;padding:4px;width:fit-content;margin-bottom:44px;}
+.mtab{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:10px 20px;border-radius:999px;border:none;cursor:pointer;color:rgba(255,255,255,.42);background:transparent;transition:background .2s,color .2s;}
+.mtab.on{background:var(--cobalt);color:#fff;box-shadow:0 3px 14px rgba(27,44,140,.5);}
+.mpanel{display:none;}.mpanel.on{display:block;}
+.mgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.mc{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:16px;padding:22px 18px;transition:border-color .2s,transform .2s;}
+.mc:hover{border-color:rgba(42,67,201,.5);transform:translateY(-3px);}
+.mc.star{background:rgba(42,67,201,.14);border-color:rgba(42,67,201,.4);}
+.mc-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;background:var(--rose);color:#fff;padding:2px 8px;border-radius:999px;margin-bottom:10px;}
+.mc-zh{font-family:'Noto Serif SC',serif;font-size:12px;color:rgba(255,255,255,.28);letter-spacing:.1em;margin-bottom:4px;}
+.mc-en{font-family:var(--display);font-size:17px;font-weight:600;color:#fff;margin-bottom:8px;line-height:1.2;}
+.mc-desc{font-size:12px;line-height:1.6;color:rgba(255,255,255,.46);margin-bottom:14px;}
+.mc-price{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:#8FA0FF;}
+.menu-note{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.12em;color:rgba(255,255,255,.22);text-align:center;margin-top:22px;}
+
+/* ── ICE CREAM SELECTOR ── */
+#scoops{background:var(--cs);padding:100px 80px;}
+.scoop-stage{display:grid;grid-template-columns:1fr 1.15fr;gap:64px;align-items:center;margin-top:48px;}
+.scoop-feature{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:440px;}
+.scoop-disc{display:none;}
+.scoop-big{position:relative;width:360px;height:360px;object-fit:contain;z-index:2;filter:drop-shadow(0 28px 40px rgba(16,28,92,.18));animation:floaty 5s ease-in-out infinite;mix-blend-mode:multiply;}
+.scoop-cap{position:relative;z-index:3;text-align:center;margin-top:8px;}
+.scoop-zh{font-family:'Noto Serif SC',serif;font-size:15px;color:rgba(16,28,92,.3);letter-spacing:.14em;margin-bottom:4px;}
+.scoop-name{font-family:var(--display);font-size:32px;font-weight:700;letter-spacing:0;color:var(--ink);}
+.scoop-desc{font-size:14px;line-height:1.65;color:rgba(16,28,92,.55);max-width:330px;margin:10px auto 0;}
+.scoop-side h3{font-size:14px;font-weight:700;margin-bottom:4px;}
+.scoop-side .hint{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(16,28,92,.4);margin-bottom:20px;}
+.scoop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.scoop-chip{background:#fff;border:1.5px solid rgba(16,28,92,.1);border-radius:14px;padding:12px 10px 11px;cursor:pointer;text-align:center;transition:border-color .2s,transform .15s,box-shadow .2s;}
+.scoop-chip:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(16,28,92,.1);}
+.scoop-chip.on{border-color:var(--cobalt);box-shadow:0 8px 20px rgba(27,44,140,.16);}
+.scoop-chip img{width:62px;height:62px;object-fit:contain;display:block;margin:0 auto 7px;mix-blend-mode:multiply;}
+.scoop-chip span{font-size:11px;font-weight:600;color:var(--ink);line-height:1.2;display:block;}
+.topping-row{margin-top:26px;}
+.topping-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.tchip{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.04em;padding:8px 14px;border-radius:999px;border:1.5px solid rgba(16,28,92,.14);background:#fff;color:rgba(16,28,92,.62);cursor:pointer;transition:all .18s;}
+.tchip.on{background:var(--cobalt);color:#fff;border-color:var(--cobalt);}
+.scoop-order{margin-top:28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.scoop-price{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--cobalt);}
+
+/* ── STORY ── */
+#story{background:#fff;padding:100px 80px;position:relative;overflow:hidden;isolation:isolate;}
+.story-grid{display:grid;grid-template-columns:1fr 1.15fr;align-items:center;gap:80px;}
+.story-logo{width:100%;max-width:560px;}
+.story-body{font-size:16px;line-height:1.74;color:rgba(16,28,92,.6);margin-bottom:32px;}
+.story-body strong{color:var(--cobalt);font-weight:600;}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.mcard{border-radius:16px;padding:22px 18px;position:relative;overflow:visible;}
+.mcard.tiger{background:var(--ink);}
+.mcard.rabbit{background:rgba(255,208,218,.4);border:1.5px solid rgba(200,80,110,.12);}
+.mcard-zh{font-family:'Noto Serif SC',serif;font-size:26px;margin-bottom:6px;}
+.mcard.tiger .mcard-zh{color:rgba(255,255,255,.18);}
+.mcard.rabbit .mcard-zh{color:rgba(200,80,110,.22);}
+.mcard-name{font-size:14px;font-weight:700;margin-bottom:3px;}
+.mcard.tiger .mcard-name{color:#fff;}
+.mcard-sub{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px;opacity:.42;}
+.mcard.tiger .mcard-sub{color:#fff;}
+.mcard-desc{font-size:12px;line-height:1.62;opacity:.62;}
+.mcard.tiger .mcard-desc{color:#fff;}
+
+/* ── BRAND MOTIFS (tiger × rabbit · CJK · pills) ── */
+.cjk-wm{position:absolute;font-family:'Noto Serif SC',serif;font-weight:900;line-height:.8;pointer-events:none;user-select:none;z-index:-1;}
+.pill-blob{position:absolute;border-radius:999px;pointer-events:none;z-index:-1;}
+.logo-cjk{font-family:'Noto Serif SC',serif;font-weight:700;color:var(--rose);font-size:.5em;letter-spacing:.04em;margin-left:7px;vertical-align:.16em;}
+.mcard-badge{display:none;}
+.mcard-mascot{position:absolute;bottom:-18px;right:-6px;height:148px;width:auto;z-index:4;animation:floaty 4s ease-in-out infinite;filter:drop-shadow(0 10px 18px rgba(0,0,0,.18));pointer-events:none;}
+.mcard.rabbit .mcard-mascot{animation-delay:.75s;}
+.mcard-zh,.mcard-name,.mcard-sub,.mcard-desc{position:relative;z-index:1;}
+.mcard-zh,.mcard-name{padding-right:36px;}
+
+/* ── GALLERY ── */
+#gallery{background:var(--ink);padding:100px 80px;}
+.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:230px;gap:14px;margin-top:44px;}
+.gal-grid image-slot{width:100%;height:100%;display:block;}
+.gal-photo{width:100%;height:100%;display:block;object-fit:cover;border-radius:18px;}
+.span2c{grid-column:span 2;}
+.span2r{grid-row:span 2;}
+.gal-note{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:24px;display:flex;align-items:center;gap:8px;}
+
+/* ── LOCATIONS ── */
+#locations{background:var(--cs);padding:100px 80px;position:relative;overflow:hidden;isolation:isolate;}
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px;}
+.lcard{display:block;text-decoration:none;color:inherit;background:#fff;border-radius:18px;padding:26px 22px;border:1.5px solid rgba(16,28,92,.07);transition:border-color .2s,transform .2s,box-shadow .2s;position:relative;}
+.lcard:hover{border-color:var(--cobalt);transform:translateY(-3px);box-shadow:0 14px 30px rgba(16,28,92,.1);}
+.l-map{display:inline-flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--cobalt);margin-top:14px;opacity:.5;transition:opacity .2s;}
+.lcard:hover .l-map{opacity:1;}
+.lcard.flag .l-map{color:rgba(140,160,255,.85);}
+.lcard.flag{background:var(--ink);border-color:transparent;grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;column-gap:44px;row-gap:6px;padding:28px 36px;}
+.l-badge{display:inline-block;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;background:var(--cobalt);color:#fff;padding:3px 9px;border-radius:999px;margin-bottom:12px;}
+.l-num{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--cobalt);margin-bottom:12px;}
+.l-zone{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;opacity:.38;margin-bottom:3px;}
+.lcard.flag .l-zone{color:rgba(255,255,255,.35);}
+.l-name{font-family:var(--display);font-size:20px;font-weight:600;margin-bottom:3px;}
+.lcard.flag .l-name{color:#fff;}
+.l-area{font-size:13px;color:rgba(16,28,92,.42);margin-bottom:10px;}
+.lcard.flag .l-area{color:rgba(255,255,255,.42);}
+.lcard.flag .l-badge{flex:0 0 100%;margin-bottom:10px;}
+.lcard.flag .l-name{font-size:24px;margin-bottom:0;}
+.lcard.flag .l-area{margin-bottom:0;}
+.lcard.flag .l-addr{flex:1;margin-bottom:0;}
+.lcard.flag .l-hours{margin-top:0;}
+.lcard.flag .l-map{margin-top:0;}
+.l-addr{display:none;}
+.l-hours{font-family:'Space Mono',monospace;font-size:10px;color:var(--cb);margin-top:8px;}
+.lcard.flag .l-hours{color:rgba(140,160,255,.8);}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);padding:80px 80px 44px;}
+.f-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:56px;margin-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08);}
+.f-wm{font-family:var(--display);font-size:32px;font-weight:700;color:#fff;letter-spacing:.01em;margin-bottom:6px;}
+.f-wm .dot{color:var(--rose);}
+.f-cjk{font-family:'Noto Serif SC',serif;font-size:13px;letter-spacing:.2em;color:rgba(255,255,255,.2);margin-bottom:12px;}
+.f-tag{font-size:13.5px;line-height:1.66;color:rgba(255,255,255,.4);max-width:260px;}
+.f-col h4{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:14px;}
+.f-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.f-col a{font-size:14px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s;}
+.f-col a:hover{color:#fff;}
+.f-bot{display:flex;justify-content:space-between;align-items:center;}
+.f-copy{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;color:rgba(255,255,255,.2);}
+.f-soc{display:flex;gap:20px;}
+.f-soc a{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s;}
+.f-soc a:hover{color:#8FA0FF;}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.rv.in{opacity:1;transform:none;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.22s;}.d3{transition-delay:.34s;}
+
+/* ── MOBILE ── */
+@media(max-width:1024px){
+  #cup-fixed,.s2,.s3,.s4{display:none;}
+  .nav-links{display:none;}
+  .s1{height:auto;}
+  .s1 .pin{position:static;height:auto;background:var(--ink)!important;padding:110px 36px 60px;display:flex;flex-direction:column;align-items:center;}
+  #s1a{display:none!important;}
+  #s1b{position:static!important;font-size:clamp(48px,13vw,68px)!important;color:#fff;display:block;text-align:center;}
+  #s1-mobile-cup{display:block;margin:24px auto;height:280px;}
+  #s1-info-m{position:static;margin-top:8px;}
+  #s1-info-m .mono{color:rgba(255,255,255,.42)!important;}
+  #s1-ctas{position:static!important;margin-top:26px;flex-wrap:wrap;justify-content:center;left:auto!important;transform:none!important;bottom:auto!important;}
+  #s1-hint{display:none;}
+  .scoop-stage{grid-template-columns:1fr;gap:36px;}
+  .story-grid{grid-template-columns:1fr!important;gap:40px;}
+  .gal-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:200px;}
+  .span2c,.span2r{grid-column:auto;grid-row:auto;}
+}
+@media(min-width:1025px){#s1-mobile-cup{display:none;}}
+@media(max-width:900px){
+  .mgrid{grid-template-columns:1fr 1fr;}
+  .lgrid{grid-template-columns:1fr 1fr;}
+  .duo{grid-template-columns:1fr;}
+  .f-top{grid-template-columns:1fr 1fr;gap:32px;}
+  .scoop-grid{grid-template-columns:repeat(3,1fr);}
+  #menu,#story,#locations,#scoops,#gallery{padding:70px 36px;}
+  footer{padding:60px 36px 36px;}
+  #nav{padding:0 24px;}
+}
+@media(max-width:600px){
+  .mgrid,.lgrid,.f-top{grid-template-columns:1fr;}
+  .gal-grid{grid-template-columns:1fr;}
+  .f-bot{flex-direction:column;gap:14px;text-align:center;}
+  #menu,#story,#locations,#scoops,#gallery{padding:52px 20px;}
+  footer{padding:48px 20px 28px;}
+  .mcard{overflow:hidden;}
+  .mcard-mascot{height:110px;}
+  .loc-grid,.lgrid{grid-template-columns:1fr!important;}
+  .nav-btn{font-size:11px;padding:8px 14px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav id="nav">
+  <a href="#" class="logo dk" id="nav-logo">MACANRIA<span class="dot">.</span><span class="logo-cjk">免免</span></a>
+  <div class="nav-links" id="nav-links">
+    <a href="#menu" class="nl-dk">Menu</a>
+    <a href="#scoops" class="nl-dk">Ice Cream</a>
+    <a href="#story" class="nl-dk">Story</a>
+    <a href="#locations" class="nl-dk">Locations</a>
+  </div>
+  <a href="#locations" class="nav-btn">Find a Booth →</a>
+</nav>
+
+<!-- ═══ FLOATING CUP (transparent PNG · 3D parallax) ═══ -->
+<div id="cup-fixed" aria-hidden="true">
+  <div id="cup-wrap">
+    <img class="cup-img" id="cup-silver" src="assets/cup-silver.png" alt="" />
+    <img class="cup-img" id="cup-guava"  src="assets/cup-guava-t.png" alt="" style="opacity:0" />
+    <img class="cup-img" id="cup-mochi"  src="assets/cup-mochi-t.png" alt="" style="opacity:0" />
+  </div>
+</div>
+
+<!-- ═══ SCENE 1 — HERO ═══ -->
+<div class="scene s1" id="scene1" data-screen-label="Hero">
+<div class="pin">
+  <div class="bt" id="s1a">MA</div>
+  <div class="bt" id="s1b">MACANRIA<span style="color:var(--rose)">.</span></div>
+
+  <img id="s1-mobile-cup" src="assets/cup-silver.png" alt="Macanria cup" />
+
+  <div id="s1-info-m" style="position:absolute;left:58px;bottom:106px;z-index:60;display:none;">
+    <div class="mono tag" style="color:rgba(16,28,92,.38);display:flex;align-items:center;margin-bottom:9px;">
+      <span class="acc-line" style="background:var(--rose);"></span>
+      Jakarta · Homemade Soy Milk Tea · Est. 2024
+    </div>
+    <div style="font-family:'Noto Serif SC',serif;font-size:17px;letter-spacing:.22em;color:rgba(16,28,92,.2);">豆漿以茶</div>
+  </div>
+
+  <div id="s1-ctas" style="position:absolute;left:50%;transform:translateX(-50%);bottom:80px;z-index:60;display:flex;gap:12px;white-space:nowrap;">
+    <a href="#locations" class="btn-cobalt">Find a Booth →</a>
+    <a href="#menu" class="btn-outline">View Menu</a>
+  </div>
+
+  <div id="s1-hint" style="display:none;">
+    <div style="width:1px;height:36px;background:linear-gradient(to bottom,transparent,rgba(16,28,92,.16));animation:pulse 2.2s ease-in-out infinite;"></div>
+    <span class="mono tag" style="font-size:9px;color:rgba(16,28,92,.2);">Scroll</span>
+  </div>
+</div>
+</div>
+
+<!-- ═══ SCENE 2 — PINK GUAVA ═══ -->
+<div class="scene s2" id="scene2" data-screen-label="Pink Guava">
+<div class="pin">
+  <div class="bt" id="s2a">PINK</div>
+  <div class="bt" id="s2b">GUAVA</div>
+  <div class="sc-left">
+    <div class="mono tag" style="color:rgba(16,28,92,.4);display:flex;align-items:center;margin-bottom:13px;">
+      <span class="acc-line" style="background:var(--cobalt);"></span>Hei Cha Series
+    </div>
+    <div style="font-family:'Noto Serif SC',serif;font-size:16px;letter-spacing:.14em;color:rgba(16,28,92,.22);margin-bottom:14px;">粉紅芭樂黑茶</div>
+    <p style="font-size:14.5px;line-height:1.74;color:rgba(16,28,92,.55);margin-bottom:22px;">Fresh-pressed pink guava meets our bold heritage black tea. A burst of fruit in every sip.</p>
+    <a href="#locations" class="btn-cobalt">Find a Booth →</a>
+  </div>
+  <div class="sc-right">
+    <div class="specs">
+      <div class="srow"><div class="slbl">Tea Base</div><div class="sval">Hei Cha</div><div class="ssub">Heritage black tea · Fujian</div></div>
+      <div class="srow"><div class="slbl">Fruit</div><div class="sval">Pink Guava</div><div class="ssub">Cold-pressed every morning</div></div>
+      <div class="srow"><div class="slbl">Topping</div><div class="sval">Ruby Jelly</div><div class="ssub">Hand-cut daily</div></div>
+      <div class="srow"><div class="slbl">Dairy</div><div class="sval">Free</div><div class="ssub">100% homemade soy milk</div></div>
+      <div class="srow"><div class="slbl">Price</div><div class="sval b">Rp 38k</div><div class="ssub">Sugar level adjustable</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ SCENE 3 — YÙ TOU MOCHI ═══ -->
+<div class="scene s3" id="scene3" data-screen-label="Yù Tou Mochi">
+<div class="pin">
+  <div class="bt" id="s3a">YÙ TOU</div>
+  <div class="bt" id="s3b">MOCHI</div>
+  <div class="sc-left">
+    <div class="mono tag" style="color:rgba(16,28,92,.4);display:flex;align-items:center;margin-bottom:13px;">
+      <span class="acc-line" style="background:var(--cobalt);"></span>Dieng Hei Cha Series
+    </div>
+    <div style="font-family:'Noto Serif SC',serif;font-size:16px;letter-spacing:.14em;color:rgba(16,28,92,.22);margin-bottom:14px;">芋頭麻糬黑茶</div>
+    <p style="font-size:14.5px;line-height:1.74;color:rgba(16,28,92,.55);margin-bottom:22px;">Creamy purple taro blended with soft mochi pieces, layered over our bold Dieng black tea.</p>
+    <a href="#locations" class="btn-cobalt">Find a Booth →</a>
+  </div>
+  <div class="sc-right">
+    <div class="specs">
+      <div class="srow"><div class="slbl">Tea Base</div><div class="sval">Dieng Hei Cha</div><div class="ssub">Highland black tea</div></div>
+      <div class="srow"><div class="slbl">Star</div><div class="sval">Purple Taro</div><div class="ssub">Creamy ube · Blended fresh</div></div>
+      <div class="srow"><div class="slbl">Topping</div><div class="sval">Mochi</div><div class="ssub">Soft &amp; chewy bites</div></div>
+      <div class="srow"><div class="slbl">Dairy</div><div class="sval">Free</div><div class="ssub">Vegan-friendly</div></div>
+      <div class="srow"><div class="slbl">Price</div><div class="sval b">Rp 38k</div><div class="ssub">Sugar level adjustable</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══ SCENE 4 — PICK YOUR FLAVOUR ═══ -->
+<div class="scene s4" id="scene4" data-screen-label="Lineup">
+<div class="pin">
+  <div id="s4head">
+    <div class="mono tag" style="color:rgba(16,28,92,.3);display:inline-flex;align-items:center;margin-bottom:16px;">
+      <span class="acc-line" style="background:var(--rose);"></span>Our Menu
+      <span style="display:inline-block;width:14px;height:1.5px;background:var(--rose);margin-left:10px;vertical-align:middle;"></span>
+    </div>
+    <div class="bt" style="position:static;font-size:clamp(52px,9vw,132px);text-align:center;line-height:.84;color:var(--ink);">PICK YOUR<br>FLAVOUR<span style="color:var(--rose);">.</span></div>
+    <div style="font-family:'Noto Serif SC',serif;font-size:16px;letter-spacing:.2em;color:rgba(16,28,92,.18);margin-top:10px;">選你的味道</div>
+  </div>
+  <div id="lineup">
+    <div class="li-item"><img src="assets/cup-guava-t.png" alt="Pink Guava" class="li-img" style="height:230px;" /><span class="li-lbl">Pink Guava · 38k</span></div>
+    <div class="li-item" style="margin-bottom:24px;"><img src="assets/cup-silver.png" alt="Soymilk Tea" class="li-img" style="height:270px;" /><span class="li-lbl">Soymilk Tea · From 35k</span></div>
+    <div class="li-item"><img src="assets/cup-mochi-t.png" alt="Yù Tou Mochi" class="li-img" style="height:230px;" /><span class="li-lbl">Yù Tou Mochi · 38k</span></div>
+  </div>
+  <a href="#menu" style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:60;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(16,28,92,.28);text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:6px;">
+    <div style="width:1px;height:26px;background:linear-gradient(to bottom,transparent,rgba(16,28,92,.16));animation:pulse 2.2s ease-in-out infinite;"></div>Full Menu Below
+  </a>
+</div>
+</div>
+
+<!-- ═══ MARQUEE ═══ -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track">
+    <span>豆漿以茶</span><span>·</span><span>Homemade Soy</span><span>·</span><span>Heritage Tea</span><span>·</span><span>Dairy-Free</span><span>·</span><span>Counter-Fresh</span><span>·</span><span>Jakarta 2024</span><span>·</span><span>老虎兔兔</span><span>·</span>
+    <span>豆漿以茶</span><span>·</span><span>Homemade Soy</span><span>·</span><span>Heritage Tea</span><span>·</span><span>Dairy-Free</span><span>·</span><span>Counter-Fresh</span><span>·</span><span>Jakarta 2024</span><span>·</span><span>老虎兔兔</span><span>·</span>
+  </div>
+</div>
+
+<!-- ═══ MENU ═══ -->
+<section id="menu" data-screen-label="Menu">
+  <div class="eyebrow ey-lt rv">02 — Full Menu</div>
+  <h2 class="sh sh-lt rv d1" style="font-size:clamp(36px,4.5vw,60px);margin-bottom:44px;">Pick your flavour.<br><span style="font-family:'Noto Serif SC',serif;font-size:.62em;opacity:.25;font-weight:700;">選你的味道</span></h2>
+  <div class="mtabs rv d2">
+    <button class="mtab on" data-tab="smt">Soymilk Tea 豆漿</button>
+    <button class="mtab" data-tab="tea">Pure Tea 清茶</button>
+    <button class="mtab" data-tab="frt">Fruit Tea 果茶</button>
+  </div>
+  <div class="mpanel on" id="tab-smt">
+    <div class="mgrid">
+      <div class="mc star rv d1"><span class="mc-badge">★ Bestseller</span><div class="mc-zh">桂花烏龍</div><div class="mc-en">Osmanthus Oolong</div><div class="mc-desc">Delicate osmanthus blossom with premium oolong. Naturally sweet, elegant.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d2"><div class="mc-zh">伯爵茶</div><div class="mc-en">Earl Grey</div><div class="mc-desc">Classic Earl Grey meets fresh homemade soy milk. Calming and refined.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d3"><div class="mc-zh">白桃烏龍</div><div class="mc-en">White Peach Oolong</div><div class="mc-desc">Light white peach rounds out a smooth, refreshing oolong base.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d1"><div class="mc-zh">茉莉花</div><div class="mc-en">Jasmine</div><div class="mc-desc">Fragrant jasmine — light, floral, perfect on a warm day.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d2"><div class="mc-zh">鐵觀音</div><div class="mc-en">Tie Guan Yin</div><div class="mc-desc">Semi-fermented oolong with a distinctive floral character. Balanced.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d3"><div class="mc-zh">雲南普洱</div><div class="mc-en">Yunnan Pu Er</div><div class="mc-desc">Deep, earthy Yunnan pu-erh — for the serious tea lover.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d1"><div class="mc-zh">大紅袍</div><div class="mc-en">Da Hong Pao</div><div class="mc-desc">Legendary Wuyi oolong. Bold, roasted, unforgettable finish.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d2"><div class="mc-zh">阿薩姆紅茶</div><div class="mc-en">Assam Black</div><div class="mc-desc">Full-bodied and robust, made creamy with homemade soy milk.</div><div class="mc-price">Rp 35.000</div></div>
+    </div>
+    <p class="menu-note rv">+ Jelly Pearl topping Rp 3,000 · Sugar level adjustable · Available iced &amp; hot</p>
+  </div>
+  <div class="mpanel" id="tab-tea">
+    <div class="mgrid">
+      <div class="mc star rv d1"><span class="mc-badge">★ Recommended</span><div class="mc-zh">桂花茶</div><div class="mc-en">Osmanthus Tea</div><div class="mc-desc">Light, floral, calming. No milk — pure aromatic fragrance.</div><div class="mc-price">Rp 32.000</div></div>
+      <div class="mc rv d2"><div class="mc-zh">大紅袍清茶</div><div class="mc-en">Da Hong Pao Tea</div><div class="mc-desc">Powerful roasted character without soy milk. Pure and bold.</div><div class="mc-price">Rp 32.000</div></div>
+      <div class="mc rv d3"><div class="mc-zh">茉莉烏龍</div><div class="mc-en">Jasmine Oolong</div><div class="mc-desc">Two florals in one cup — fresh and sophisticated.</div><div class="mc-price">Rp 32.000</div></div>
+      <div class="mc rv d1"><div class="mc-zh">玫瑰茶</div><div class="mc-en">Rose Tea</div><div class="mc-desc">Romantic, light, visually stunning rose tea. Indulgent.</div><div class="mc-price">Rp 32.000</div></div>
+    </div>
+    <p class="menu-note rv">Brewed fresh daily · No milk · No added sugar</p>
+  </div>
+  <div class="mpanel" id="tab-frt">
+    <div class="mgrid">
+      <div class="mc star rv d1"><span class="mc-badge">★ Signature</span><div class="mc-zh">粉紅芭樂黑茶</div><div class="mc-en">Pink Guava Hei Cha</div><div class="mc-desc">Fresh pink guava + bold black tea + ruby jelly. A fruit burst.</div><div class="mc-price">Rp 38.000</div></div>
+      <div class="mc rv d2"><div class="mc-zh">芋頭麻糬黑茶</div><div class="mc-en">Yù Tou Mochi</div><div class="mc-desc">Creamy purple taro with chewy mochi over Dieng black tea.</div><div class="mc-price">Rp 38.000</div></div>
+      <div class="mc rv d3"><div class="mc-zh">荔枝烏龍</div><div class="mc-en">Lychee Oolong</div><div class="mc-desc">Juicy lychee lifts a fragrant oolong. Sweet and refreshing.</div><div class="mc-price">Rp 36.000</div></div>
+      <div class="mc rv d1"><div class="mc-zh">百香果綠茶</div><div class="mc-en">Passionfruit Green</div><div class="mc-desc">Tangy passionfruit over cool green tea. Bright and zippy.</div><div class="mc-price">Rp 36.000</div></div>
+    </div>
+    <p class="menu-note rv">Real fruit, pressed daily · Add ruby jelly or mochi · Iced only</p>
+  </div>
+</section>
+
+<!-- ═══ ICE CREAM SELECTOR ═══ -->
+<section id="scoops" data-screen-label="Ice Cream">
+  <div class="eyebrow ey-dk rv">03 — 愛心雪糕</div>
+  <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);">Tofu Ice Cream.<br><span style="font-family:'Noto Serif SC',serif;font-size:.52em;opacity:.22;font-weight:700;">飲料選擇</span></h2>
+  <p class="rv d1" style="font-size:15px;line-height:1.72;color:rgba(16,28,92,.52);max-width:520px;margin-top:18px;">A creamy, plant-based dessert crafted from blended silken tofu — smooth, dairy-free, and naturally lower in fat. Velvety and indulgent, it appeals to vegans, lactose-intolerant individuals, and anyone who believes dessert should feel as good as it tastes.</p>
+
+  <div class="scoop-stage">
+    <!-- Featured scoop -->
+    <div class="scoop-feature rv d1">
+      <div class="scoop-disc"></div>
+      <img class="scoop-big" id="scoop-big" src="assets/ic-sesame.png" alt="Selected scoop" />
+      <div class="scoop-cap">
+        <div class="scoop-zh" id="scoop-zh">黑芝麻</div>
+        <div class="scoop-name" id="scoop-name">Black Sesame</div>
+        <div class="scoop-desc" id="scoop-desc">Creamy, nutty and intensely deep — a stunning jet-grey scoop finished with honeycomb brittle.</div>
+      </div>
+    </div>
+
+    <!-- Picker -->
+    <div class="scoop-side rv d2">
+      <h3>Choose a flavour</h3>
+      <div class="hint">9 rotating flavours · tap to preview</div>
+      <div class="scoop-grid" id="scoop-grid">
+        <div class="scoop-chip on" data-name="Black Sesame" data-zh="黑芝麻" data-img="assets/ic-sesame.png" data-desc="Creamy, nutty and intensely deep — a stunning jet-grey scoop finished with honeycomb brittle.">
+          <img src="assets/ic-sesame.png" alt="" /><span>Black Sesame</span></div>
+        <div class="scoop-chip" data-name="Coffee Hazelnut" data-zh="榛果咖啡" data-img="assets/ic-coffee.png" data-desc="Bold cold-brew coffee folded with toasted hazelnut. Smooth, grown-up, never bitter.">
+          <img src="assets/ic-coffee.png" alt="" /><span>Coffee Hazelnut</span></div>
+        <div class="scoop-chip" data-name="Macadamia Brittle" data-zh="夏威夷果" data-img="assets/ic-macadamia.png" data-desc="Clean soy-cream base loaded with buttery macadamia and caramel brittle shards.">
+          <img src="assets/ic-macadamia.png" alt="" /><span>Macadamia</span></div>
+        <div class="scoop-chip" data-name="Rum Raisin" data-zh="蘭姆葡萄" data-img="assets/ic-rumraisin.png" data-desc="Plump rum-soaked raisins swirled through a mellow, fragrant cream. A classic.">
+          <img src="assets/ic-rumraisin.png" alt="" /><span>Rum Raisin</span></div>
+        <div class="scoop-chip" data-name="Maple Walnut" data-zh="楓糖核桃" data-img="assets/ic-walnut.png" data-desc="Toasted walnuts and warm maple in a soft, comforting soy-cream scoop.">
+          <img src="assets/ic-walnut.png" alt="" /><span>Maple Walnut</span></div>
+        <div class="scoop-chip" data-name="Biscoff Crumble" data-zh="比斯可夫" data-img="assets/ic-biscoff.png" data-desc="Spiced speculoos cream crowned with caramelised biscuit crumble.">
+          <img src="assets/ic-biscoff.png" alt="" /><span>Biscoff</span></div>
+        <div class="scoop-chip" data-name="Durian" data-zh="貓山王" data-img="assets/ic-durian.png" data-desc="For the brave — rich Musang King durian, pure and unapologetic.">
+          <img src="assets/ic-durian.png" alt="" /><span>Durian</span></div>
+        <div class="scoop-chip" data-name="Salted Cheese" data-zh="鹹起司" data-img="assets/ic-cheese.png" data-desc="Sweet-and-salty cheese cream — mellow, golden, surprisingly addictive.">
+          <img src="assets/ic-cheese.png" alt="" /><span>Salted Cheese</span></div>
+        <div class="scoop-chip" data-name="Strawberry Shortcake" data-zh="草莓蛋糕" data-img="assets/ic-strawberry.png" data-desc="Fresh strawberry compote and sponge crumble over clean soy-cream.">
+          <img src="assets/ic-strawberry.png" alt="" /><span>Strawberry</span></div>
+      </div>
+
+      <div class="topping-row">
+        <h3 style="margin-bottom:10px;">Add a topping</h3>
+        <div class="topping-chips" id="topping-chips">
+          <button class="tchip on">Honeycomb Brittle</button>
+          <button class="tchip">Mochi</button>
+          <button class="tchip">Ruby Jelly</button>
+          <button class="tchip">Crushed Nuts</button>
+          <button class="tchip">Biscuit Crumble</button>
+        </div>
+      </div>
+
+      <div class="scoop-order">
+        <a href="#locations" class="btn-cobalt">Find a Booth →</a>
+        <span class="scoop-price">Single Rp 28k · Double Rp 45k</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STORY ═══ -->
+<section id="story" data-screen-label="Our Story">
+  <span class="cjk-wm" style="right:-3vw;bottom:-7vw;font-size:34vw;color:rgba(218,83,112,.07);">免</span>
+  <span class="pill-blob" style="left:-70px;top:30px;width:300px;height:170px;background:rgba(45,47,119,.05);"></span>
+  <div class="story-grid">
+    <div class="rv"><img src="assets/logo-lockup-clean.png" alt="Macanria — MACAN x TUTU" class="story-logo" /></div>
+    <div>
+      <div class="eyebrow ey-dk rv">04 — Our Story</div>
+      <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);margin-bottom:22px;">A heritage tea house,<br>brewed for<br>the future.</h2>
+      <p class="story-body rv d2">At Macanria, we set out to revive the beauty of <strong>Chinese tea culture</strong> for a new generation. Every cup begins with premium heritage teas — aged oolongs, jasmine blossoms, Wuyi rock teas — paired with <strong>fresh homemade soy milk</strong> in place of dairy. Lighter on the body, <strong>extraordinary</strong> on the palate.</p>
+      <div class="duo rv d3">
+        <div class="mcard tiger"><img class="mcard-mascot" src="assets/macan-front.png" alt="Macan" /><div class="mcard-zh">老虎</div><div class="mcard-name">Macan · The Tiger</div><div class="mcard-sub">Bold · Strong · Fearless</div><div class="mcard-desc">The brand's soul: navy confidence, bold flavours, no hesitation.</div></div>
+        <div class="mcard rabbit"><img class="mcard-mascot" src="assets/tutu-front.png" alt="Tutu" /><div class="mcard-zh">兔兔</div><div class="mcard-name">Tutu · The Rabbit</div><div class="mcard-sub" style="color:rgba(180,60,80,.45)">Soft · Silky · Sweet</div><div class="mcard-desc">The cream side — silky tofu ice cream, subtle sweetness, unforgettable charm.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GALLERY (user-fillable) ═══ -->
+<section id="gallery" data-screen-label="Gallery">
+  <div class="eyebrow ey-lt rv">05 — Gallery</div>
+  <h2 class="sh sh-lt rv d1" style="font-size:clamp(32px,3.8vw,54px);">From the booth.</h2>
+  <div class="gal-grid rv d1">
+    <div class="span2c span2r" style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-interior-wide.jpg" alt="Macanria interior" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-exterior-tiger.jpg" alt="Macanria exterior tiger" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-interior-tiger.jpg" alt="Macanria interior tiger wall" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-mirror.jpg" alt="Blue convex mirror" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-neko.jpg" alt="Blue maneki neko" /></div>
+    <div class="span2c" style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-exterior-logo.jpg" alt="Macanria storefront" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-bench.jpg" alt="Blue bench detail" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-tiger-head.jpg" alt="Tiger mascot head" /></div>
+  </div>
+  <div class="gal-note"><span style="display:inline-block;width:14px;height:1px;background:var(--rose);"></span>10 outlets — Ashta District 8 · Grand Indonesia · Sarinah · PIK · Taman Anggrek · Chillax · Tribeca · Plaza Indonesia · Lippo Mall Puri · Kokas</div>
+</section>
+
+<!-- ═══ LOCATIONS ═══ -->
+<section id="locations" data-screen-label="Find Us">
+  <span class="cjk-wm" style="left:-3vw;top:24%;font-size:30vw;color:rgba(45,47,119,.045);">虎</span>
+  <div class="eyebrow ey-dk rv">06 — Find Us</div>
+  <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);">Find your nearest<br>Macanria.</h2>
+  <p class="rv d1" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(16,28,92,.35);margin-top:14px;">10 outlets across Jakarta · tap a card to open in Google Maps</p>
+  <div class="lgrid">
+    <a class="lcard flag rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Ashta+District+8+SCBD" target="_blank" rel="noopener"><span class="l-badge">Flagship</span><div class="l-zone">South Jakarta</div><div class="l-name">Ashta District 8</div><div class="l-area">SCBD · 1st Floor</div><div class="l-addr">Ashta 1F Unit 12, Oakwood Tower · Jl. Jend. Sudirman Kav. 52–53, Senayan</div><div class="l-hours">Daily · 08:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d2" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Lippo+Mall+Puri" target="_blank" rel="noopener"><div class="l-num">02</div><div class="l-zone">West Jakarta</div><div class="l-name">Lippo Mall Puri</div><div class="l-area">Puri Indah · 1st Floor</div><div class="l-addr">Unit L1-K02A · Jl. Puri Indah Raya Blok U1, Kembangan</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d3" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Pantai+Indah+Kapuk+PIK" target="_blank" rel="noopener"><div class="l-num">03</div><div class="l-zone">North Jakarta</div><div class="l-name">Pantai Indah Kapuk</div><div class="l-area">PIK</div><div class="l-addr">Pantai Indah Kapuk, Penjaringan</div><div class="l-hours">Daily · 10:00 – 21:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Grand+Indonesia+West+Mall" target="_blank" rel="noopener"><div class="l-num">04</div><div class="l-zone">Central Jakarta</div><div class="l-name">Grand Indonesia</div><div class="l-area">West Mall · LG Floor</div><div class="l-addr">Jl. M.H. Thamrin No. 1, Menteng</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d2" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Hublife+Taman+Anggrek" target="_blank" rel="noopener"><div class="l-num">05</div><div class="l-zone">West Jakarta</div><div class="l-name">Hublife Taman Anggrek</div><div class="l-area">Letjen S. Parman · 1st Floor</div><div class="l-addr">Jl. Letjen S. Parman, Tanjung Duren</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d3" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Sarinah+Thamrin" target="_blank" rel="noopener"><div class="l-num">06</div><div class="l-zone">Central Jakarta</div><div class="l-name">Sarinah</div><div class="l-area">M.H. Thamrin · GF Floor</div><div class="l-addr">Jl. M.H. Thamrin No. 11, Menteng</div><div class="l-hours">Mon–Sat 08:00–22:00 · Sun 07:00–22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Chillax+Sudirman" target="_blank" rel="noopener"><div class="l-num">07</div><div class="l-zone">Central Jakarta</div><div class="l-name">Chillax Sudirman</div><div class="l-area">Sudirman</div><div class="l-addr">Jl. Jend. Sudirman, Tanah Abang</div><div class="l-hours">Mon–Sat 08:00–22:00 · Sun 07:00–22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d2" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Tribeca+Central+Park" target="_blank" rel="noopener"><div class="l-num">08</div><div class="l-zone">West Jakarta</div><div class="l-name">Tribeca Park</div><div class="l-area">Central Park</div><div class="l-addr">Jl. Letjen S. Parman Kav. 28, Tanjung Duren</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d3" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Plaza+Indonesia" target="_blank" rel="noopener"><div class="l-num">09</div><div class="l-zone">Central Jakarta</div><div class="l-name">Plaza Indonesia</div><div class="l-area">Thamrin · Level 5</div><div class="l-addr">Jl. M.H. Thamrin Kav. 28–30, Menteng</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Kota+Kasablanka+Food+Society" target="_blank" rel="noopener"><div class="l-num">10</div><div class="l-zone">South Jakarta</div><div class="l-name">Kota Kasablanka</div><div class="l-area">Food Society · UG Floor</div><div class="l-addr">Jl. Casablanca Raya Kav. 88, Tebet</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer data-screen-label="Footer">
+  <div class="f-top">
+    <div><div class="f-wm">MACANRIA<span class="dot">.</span><span class="logo-cjk">免免</span></div><div class="f-cjk">豆漿以茶 · 愛心雪糕</div><p class="f-tag">Homemade soy milk tea &amp; silken tofu ice cream. Dairy-free, lighter, never boring. Jakarta, Indonesia.</p></div>
+    <div class="f-col"><h4>Menu</h4><ul><li><a href="#menu">Soymilk Tea</a></li><li><a href="#menu">Pure Tea</a></li><li><a href="#scoops">Tofu Ice Cream</a></li></ul></div>
+    <div class="f-col"><h4>Order</h4><ul><li><a href="https://gofood.co.id" target="_blank">GoFood</a></li><li><a href="https://grab.com" target="_blank">GrabFood</a></li><li><a href="https://shopee.co.id" target="_blank">ShopeeFood</a></li></ul></div>
+    <div class="f-col"><h4>Info</h4><ul><li><a href="#story">Our Story</a></li><li><a href="#locations">Locations</a></li><li><a href="https://instagram.com/macanria" target="_blank">@macanria</a></li></ul></div>
+  </div>
+  <div class="f-bot"><span class="f-copy">© 2026 Macanria · All rights reserved · Jakarta, Indonesia</span><div class="f-soc"><a href="https://instagram.com/macanria" target="_blank">Instagram</a><a href="https://tiktok.com/@macanria" target="_blank">TikTok</a><a href="https://gofood.co.id" target="_blank">GoFood</a></div></div>
+</footer>
+
+<script>
+// ═══ PARALLAX 3D SCROLL ENGINE ═══
+const scenes  = [1,2,3,4].map(n=>document.getElementById('scene'+n));
+const cupFixed= document.getElementById('cup-fixed');
+const cupWrap = document.getElementById('cup-wrap');
+const cups    = {silver:document.getElementById('cup-silver'),guava:document.getElementById('cup-guava'),mochi:document.getElementById('cup-mochi')};
+const nav     = document.getElementById('nav');
+const navLogo = document.getElementById('nav-logo');
+const navLinks= document.getElementById('nav-links');
+const lineupEls=document.querySelectorAll('.li-item');
+
+let raf=false, lineupShown=false, activeCup='silver';
+const lerp=(a,b,t)=>a+(b-a)*t;
+const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+const easeOut=t=>1-Math.pow(1-t,3);
+const easeIn=t=>t*t*t;
+
+function progress(el){const r=el.getBoundingClientRect();return clamp(-r.top/(el.offsetHeight-window.innerHeight),0,1);}
+function activeScene(){
+  for(let i=0;i<4;i++){const r=scenes[i].getBoundingClientRect();
+    if(r.top<=2&&r.bottom>window.innerHeight*.4) return {idx:i,p:progress(scenes[i])};}
+  return null;
+}
+function setCup(which){
+  if(activeCup===which) return;
+  activeCup=which;
+  for(const k in cups) cups[k].style.opacity = (k===which)?'1':'0';
+}
+
+function tick(){
+  raf=false;
+  const past=scenes[3].getBoundingClientRect().bottom<=0;
+  const before=scenes[0].getBoundingClientRect().top>2;
+  const sc=activeScene();
+
+  // Nav appearance
+  const scroll=window.scrollY;
+  const darkNav = past || scroll > scenes[3].getBoundingClientRect().top+window.scrollY-100;
+  if(darkNav){nav.className='dark';navLogo.className='logo lt';setNL('nl-lt');}
+  else if(scroll>60){nav.className='glass';navLogo.className='logo dk';setNL('nl-dk');}
+  else{nav.className='';navLogo.className='logo dk';setNL('nl-dk');}
+
+  if(past||before||!sc){cupFixed.style.opacity='0';return;}
+
+  const {idx,p}=sc;
+  let ry=0,rx=0,scale=1,ty=0,opacity=1;
+
+  if(idx===0){
+    setCup('silver');
+    const rise=clamp(p/.3,0,1);
+    scale=lerp(.6,1.0,easeOut(rise));
+    ty=lerp(110,0,easeOut(rise));
+    ry=lerp(-18,8,easeOut(rise));
+    rx=lerp(14,-3,easeOut(rise));
+    opacity = p>.8?lerp(1,0,easeIn(clamp((p-.8)/.2,0,1))):1;
+  } else if(idx===1){
+    setCup('guava');
+    const enter=clamp(p/.2,0,1);
+    scale=lerp(1.0,1.12,p);
+    ry=lerp(8,-14,p); rx=lerp(-3,5,p);
+    opacity = p>.8?lerp(1,0,easeIn(clamp((p-.8)/.2,0,1))):easeOut(enter);
+  } else if(idx===2){
+    setCup('mochi');
+    const enter=clamp(p/.2,0,1);
+    scale=lerp(1.12,1.0,p);
+    ry=lerp(-14,18,p); rx=lerp(5,-6,p);
+    opacity = p>.82?lerp(1,0,easeIn(clamp((p-.82)/.18,0,1))):easeOut(enter);
+    if(p>.6&&!lineupShown){lineupShown=true;lineupEls.forEach(e=>e.classList.add('show'));}
+    else if(p<.45&&lineupShown){lineupShown=false;lineupEls.forEach(e=>e.classList.remove('show'));}
+  } else {
+    // Cup lands into the lineup centre position
+    setCup('silver');
+    const liImg=document.querySelector('.li-item:nth-child(2) .li-img');
+    let tX=0,tY=0,tScale=0.38;
+    if(liImg){
+      const r=liImg.getBoundingClientRect();
+      tX=(r.left+r.width*.5)-window.innerWidth*.5;
+      tY=(r.top+r.height*.5)-window.innerHeight*.5;
+      const fh=cups.silver.offsetHeight;
+      if(fh>0)tScale=r.height/fh;
+    }
+    const t4=easeOut(clamp(p/.65,0,1));
+    const sc4=lerp(1.0,tScale,t4);
+    const tx4=lerp(0,tX,t4),ty4=lerp(0,tY,t4);
+    opacity=p>.5?lerp(1,0,easeIn(clamp((p-.5)/.5,0,1))):1;
+    // Side cups appear early; centre cup only once fixed cup is nearly gone
+    if(p>.25){lineupEls[0].classList.add('show');lineupEls[2].classList.add('show');}
+    if(p>.88&&!lineupShown){lineupShown=true;lineupEls[1].classList.add('show');}
+    else if(p<.2&&lineupShown){lineupShown=false;lineupEls.forEach(e=>e.classList.remove('show'));}
+    cupWrap.style.transform=`perspective(1200px) translateX(${tx4.toFixed(1)}px) translateY(${ty4.toFixed(1)}px) scale(${sc4.toFixed(3)})`;
+    cupFixed.style.opacity=String(clamp(opacity,0,1));
+    return;
+  }
+
+  cupWrap.style.transform=`perspective(1200px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${scale.toFixed(3)}) translateY(${ty.toFixed(1)}px)`;
+  cupFixed.style.opacity=String(clamp(opacity,0,1));
+}
+function setNL(cls){navLinks.querySelectorAll('a').forEach(a=>{a.classList.remove('nl-lt','nl-dk');a.classList.add(cls);});}
+
+window.addEventListener('scroll',()=>{if(!raf){raf=true;requestAnimationFrame(tick);}},{passive:true});
+window.addEventListener('resize',tick);
+tick();
+
+// ═══ MENU TABS ═══
+document.querySelectorAll('.mtab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const id=btn.dataset.tab;
+    document.querySelectorAll('.mtab').forEach(b=>b.classList.remove('on'));
+    document.querySelectorAll('.mpanel').forEach(p=>p.classList.remove('on'));
+    btn.classList.add('on');
+    const panel=document.getElementById('tab-'+id);panel.classList.add('on');
+    panel.querySelectorAll('.rv').forEach(el=>{el.classList.remove('in');requestAnimationFrame(()=>setTimeout(()=>el.classList.add('in'),40));});
+  });
+});
+
+// ═══ ICE CREAM SELECTOR ═══
+const scoopBig=document.getElementById('scoop-big');
+const scoopName=document.getElementById('scoop-name');
+const scoopZh=document.getElementById('scoop-zh');
+const scoopDesc=document.getElementById('scoop-desc');
+document.querySelectorAll('.scoop-chip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('.scoop-chip').forEach(c=>c.classList.remove('on'));
+    chip.classList.add('on');
+    scoopBig.style.opacity='0';
+    setTimeout(()=>{
+      scoopBig.src=chip.dataset.img;
+      scoopName.textContent=chip.dataset.name;
+      scoopZh.textContent=chip.dataset.zh;
+      scoopDesc.textContent=chip.dataset.desc;
+      scoopBig.style.opacity='1';
+    },160);
+  });
+});
+scoopBig.style.transition='opacity .16s ease';
+document.querySelectorAll('#topping-chips .tchip').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('#topping-chips .tchip').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+  });
+});
+
+// ═══ SCROLL REVEAL ═══
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+// ═══ SMOOTH SCROLL ═══
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();window.scrollTo({top:t.getBoundingClientRect().top+window.scrollY-80,behavior:'smooth'});}});
+});
+</script>
+</body>
+</html>
