@@ -264,13 +264,15 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   #s3b{font-size:clamp(46px,12.5vw,100px);transform:translateY(calc(-50% + 27vh))!important;}
   /* Scene panels hidden on mobile — scenes are bold type + cup only */
   .sc-right,.sc-left{display:none!important;}
-  /* SCENE 4 — heading + lineup both anchored to center (no big gap) */
-  #s4head{top:50%!important;transform:translateY(calc(-50% - 29vh))!important;}
+  /* SCENE 4 — center the whole group in the pin (kills the empty band) */
+  .s4 .pin{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5vh;padding:0 20px;}
+  #s4head{position:static!important;transform:none!important;top:auto!important;}
   #s4head .bt{font-size:clamp(44px,12vw,92px)!important;}
-  #lineup{flex-direction:row;align-items:center;gap:16px;top:53%;bottom:auto;transform:translateY(-50%);justify-content:center;padding:0 16px;}
-  #lineup .li-item:nth-child(1) img,#lineup .li-item:nth-child(3) img{height:124px!important;}
-  #lineup .li-item:nth-child(2) img{height:160px!important;}
-  .li-lbl{font-size:8px;}
+  #lineup{position:static!important;transform:none!important;top:auto!important;bottom:auto!important;flex-direction:row;align-items:flex-end;gap:18px;justify-content:center;width:100%;}
+  #lineup .li-item:nth-child(1) img,#lineup .li-item:nth-child(3) img{height:128px!important;}
+  #lineup .li-item:nth-child(2) img{height:172px!important;}
+  .li-lbl{font-size:8px;text-align:center;}
+  .s4 .pin a[href="#menu"]{position:static!important;transform:none!important;bottom:auto!important;left:auto!important;margin-top:1vh;}
   /* SECTIONS padding */
   #menu,#scoops,#story,#gallery,#locations{padding:64px 28px;}
   footer{padding:56px 28px 36px;}
@@ -293,7 +295,15 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   .span2c,.span2r{grid-column:auto;grid-row:auto;}
   /* LOCATIONS */
   .lgrid{grid-template-columns:1fr 1fr;gap:10px;}
-  .lcard.flag{grid-column:1/-1;flex-direction:column;}
+  .lcard{padding:20px 18px;}
+  .lcard.flag{grid-column:1/-1;flex-direction:column;align-items:flex-start;text-align:left;column-gap:0;row-gap:0;padding:22px 20px;}
+  .lcard.flag .l-badge{flex:0 0 auto;margin-bottom:13px;}
+  .lcard.flag .l-zone{margin-bottom:3px;}
+  .lcard.flag .l-name{font-size:21px;margin-bottom:3px;}
+  .lcard.flag .l-area{margin-bottom:0;}
+  .lcard.flag .l-addr{flex:0 0 auto;}
+  .lcard.flag .l-hours{margin-top:8px;}
+  .lcard.flag .l-map{margin-top:14px;}
   /* FOOTER */
   .f-top{grid-template-columns:1fr 1fr;gap:28px;}
 }
