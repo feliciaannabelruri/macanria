@@ -3,7 +3,7 @@ const fs   = require('fs');
 const path = require('path');
 
 const PORT = 3001;
-const ROOT = __dirname;
+const ROOT = path.join(__dirname, '..', 'frontend');
 
 const MIME = {
   '.html':'.html','.css':'text/css','.js':'application/javascript',
@@ -60,10 +60,9 @@ http.createServer((req, res) => {
 
 }).listen(PORT, () => {
   console.log('');
-  console.log('  Macanria Admin Server siap.');
+  console.log('  Macanria Server siap.');
   console.log('');
-  console.log('  Admin panel  →  http://localhost:' + PORT + '/admin.html');
-  console.log('  Website      →  http://localhost:' + PORT + '/');
+  console.log('  Website  →  http://localhost:' + PORT + '/');
   console.log('');
   console.log('  Tekan Ctrl+C untuk stop.');
   console.log('');
