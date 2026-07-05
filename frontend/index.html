@@ -20,6 +20,10 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+}
 body{font-family:'Space Grotesk',sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -41,17 +45,17 @@ body{font-family:'Space Grotesk',sans-serif;color:var(--ink);background:#fff;-we
 
 /* ── FIXED CUP (transparent PNG, real 3D parallax) ── */
 #cup-fixed{position:fixed;inset:0;z-index:50;pointer-events:none;display:flex;align-items:center;justify-content:center;}
-#cup-wrap{will-change:transform;transform-origin:50% 50%;position:relative;}
+#cup-wrap{will-change:transform;transform-origin:50% 50%;position:relative;backface-visibility:hidden;}
 .cup-img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transition:opacity .55s ease;filter:drop-shadow(0 40px 60px rgba(16,28,92,.28));}
-#cup-silver{height:74vh;}
-#cup-guava{height:80vh;}
-#cup-mochi{height:86vh;}
+#cup-silver{height:74vh;height:74svh;}
+#cup-guava{height:80vh;height:80svh;}
+#cup-mochi{height:86vh;height:86svh;}
 
 /* ── SCENES ── */
 .scene{position:relative;}
-.s1,.s2,.s3{height:340vh;}
-.s4{height:300vh;}
-.pin{position:sticky;top:0;height:100vh;overflow:hidden;}
+.s1,.s2,.s3{height:340vh;height:340svh;}
+.s4{height:300vh;height:300svh;}
+.pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;}
 .s1 .pin,.s2 .pin{background:#fff;}
 .s3 .pin{background:var(--cs);}
 .s4 .pin{background:var(--cream);}
@@ -191,6 +195,15 @@ a.btn-outline:hover{background:rgba(16,28,92,.12);}
 .span2r{grid-row:span 2;}
 .gal-note{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:24px;display:flex;align-items:center;gap:8px;}
 
+/* ── FIVE SENSES ── */
+#senses{background:var(--cs);padding:100px 80px;position:relative;overflow:hidden;isolation:isolate;}
+.sense-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:44px;}
+.sense-card{background:#fff;border-radius:18px;padding:28px 22px;border:1.5px solid rgba(16,28,92,.07);transition:transform .2s,box-shadow .2s,border-color .2s;}
+.sense-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(16,28,92,.1);border-color:var(--cobalt);}
+.sense-num{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--cobalt);opacity:.5;margin-bottom:14px;}
+.sense-name{font-family:var(--display);font-size:20px;font-weight:700;color:var(--ink);margin-bottom:10px;}
+.sense-desc{font-size:13px;line-height:1.68;color:rgba(16,28,92,.55);}
+
 /* ── LOCATIONS ── */
 #locations{background:var(--cs);padding:100px 80px;position:relative;overflow:hidden;isolation:isolate;}
 .lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px;}
@@ -246,6 +259,7 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   /* NAV */
   .nav-links{display:none;}
   #nav{padding:0 22px;}
+  #nav.glass,#nav.dark{backdrop-filter:blur(8px);}
   /* HERO — REAL parallax, same as desktop (white bg, big type, fixed cup) */
   #s1-mobile-cup{display:none!important;}
   #s1-info-m{display:none!important;}
@@ -253,9 +267,9 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   #s1-ctas{bottom:54px!important;gap:10px;}
   #s1-hint{display:flex!important;flex-direction:column;align-items:center;gap:6px;position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:60;}
   /* CUP SIZES — tuned for phone */
-  #cup-silver{height:40vh;}
-  #cup-guava{height:44vh;}
-  #cup-mochi{height:48vh;}
+  #cup-silver{height:40vh;height:40svh;}
+  #cup-guava{height:44vh;height:44svh;}
+  #cup-mochi{height:48vh;height:48svh;}
   /* SCENE TYPE — bracket the cup at center (height-independent, like desktop) */
   #s2a,#s2b,#s3a,#s3b{left:0!important;right:0!important;text-align:center!important;white-space:nowrap!important;top:50%!important;bottom:auto!important;}
   #s2a{font-size:clamp(56px,15vw,118px);transform:translateY(calc(-50% - 25vh))!important;}
@@ -274,7 +288,7 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   .li-lbl{font-size:8px;text-align:center;}
   .s4 .pin a[href="#menu"]{position:static!important;transform:none!important;bottom:auto!important;left:auto!important;margin-top:1vh;}
   /* SECTIONS padding */
-  #menu,#scoops,#story,#gallery,#locations{padding:64px 28px;}
+  #menu,#scoops,#story,#senses,#gallery,#locations{padding:64px 28px;}
   footer{padding:56px 28px 36px;}
   /* MENU — stacked full-width pills */
   .mtabs{flex-direction:column;width:100%;border-radius:18px;gap:6px;padding:6px;margin-bottom:28px;}
@@ -290,6 +304,8 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   .mcard{overflow:hidden;padding:18px 14px;}
   .mcard-mascot{height:100px;right:-4px;bottom:-12px;}
   .mcard-zh{font-size:20px;}
+  /* FIVE SENSES */
+  .sense-grid{grid-template-columns:1fr 1fr;gap:12px;}
   /* GALLERY */
   .gal-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px;gap:10px;}
   .span2c,.span2r{grid-column:auto;grid-row:auto;}
@@ -312,18 +328,19 @@ footer{background:var(--ink);padding:80px 80px 44px;}
 @media(max-width:500px){
   .nav-btn{font-size:10px;padding:7px 12px;}
   .logo-cjk{display:none;}
-  #cup-silver{height:34vh;}
-  #cup-guava{height:38vh;}
-  #cup-mochi{height:42vh;}
+  #cup-silver{height:34vh;height:34svh;}
+  #cup-guava{height:38vh;height:38svh;}
+  #cup-mochi{height:42vh;height:42svh;}
   #s2a,#s2b{font-size:clamp(50px,16vw,84px);}
   #s3a,#s3b{font-size:clamp(40px,13vw,72px);}
   #s4head .bt{font-size:clamp(40px,13vw,72px)!important;}
   #lineup{gap:8px;}
   #lineup .li-item:nth-child(1) img,#lineup .li-item:nth-child(3) img{height:96px!important;}
   #lineup .li-item:nth-child(2) img{height:124px!important;}
-  #menu,#scoops,#story,#gallery,#locations{padding:48px 18px;}
+  #menu,#scoops,#story,#senses,#gallery,#locations{padding:48px 18px;}
   footer{padding:48px 18px 28px;}
   .mgrid{grid-template-columns:1fr;gap:10px;}
+  .sense-grid{grid-template-columns:1fr;}
   .lgrid{grid-template-columns:1fr!important;}
   .duo{grid-template-columns:1fr;}
   .gal-grid{grid-template-columns:1fr 1fr;grid-auto-rows:140px;}
@@ -591,9 +608,22 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   </div>
 </section>
 
+<!-- ═══ FIVE SENSES ═══ -->
+<section id="senses" data-screen-label="Five Senses">
+  <div class="eyebrow ey-dk rv">05 — The Experience</div>
+  <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);">A cup for<br>every sense.</h2>
+  <div class="sense-grid rv d2">
+    <div class="sense-card"><div class="sense-num">01</div><div class="sense-name">Sight</div><p class="sense-desc">We've designed a sanctuary for your eyes — a modern, minimalist space flooded with crisp, bright light that gently puts your mind at ease the moment you walk through the door.</p></div>
+    <div class="sense-card"><div class="sense-num">02</div><div class="sense-name">Smell</div><p class="sense-desc">The enchanting scent of tea fills the air, creating a serene sanctuary for your mind while your order is crafted.</p></div>
+    <div class="sense-card"><div class="sense-num">03</div><div class="sense-name">Sound</div><p class="sense-desc">Immerse yourself in calming rhythms that elevate your spirits as you wait and savor our signature blends.</p></div>
+    <div class="sense-card"><div class="sense-num">04</div><div class="sense-name">Touch</div><p class="sense-desc">Hold our cup and feel the genuine passion and quality in your hands.</p></div>
+    <div class="sense-card"><div class="sense-num">05</div><div class="sense-name">Taste</div><p class="sense-desc">Prepare your palate for a delightful plot twist — a beautiful, unexpected friendship between velvety soymilk and bold tea.</p></div>
+  </div>
+</section>
+
 <!-- ═══ GALLERY (user-fillable) ═══ -->
 <section id="gallery" data-screen-label="Gallery">
-  <div class="eyebrow ey-lt rv">05 — Gallery</div>
+  <div class="eyebrow ey-lt rv">06 — Gallery</div>
   <h2 class="sh sh-lt rv d1" style="font-size:clamp(32px,3.8vw,54px);">From the booth.</h2>
   <div class="gal-grid rv d1">
     <div class="span2c span2r" style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-interior-wide.jpg" alt="Macanria interior" /></div>
@@ -611,7 +641,7 @@ footer{background:var(--ink);padding:80px 80px 44px;}
 <!-- ═══ LOCATIONS ═══ -->
 <section id="locations" data-screen-label="Find Us">
   <span class="cjk-wm" style="left:-3vw;top:24%;font-size:30vw;color:rgba(45,47,119,.045);">虎</span>
-  <div class="eyebrow ey-dk rv">06 — Find Us</div>
+  <div class="eyebrow ey-dk rv">07 — Find Us</div>
   <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);">Find your nearest<br>Macanria.</h2>
   <p class="rv d1" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(16,28,92,.35);margin-top:14px;">10 outlets across Jakarta · tap a card to open in Google Maps</p>
   <div class="lgrid">
@@ -649,17 +679,25 @@ const nav     = document.getElementById('nav');
 const navLogo = document.getElementById('nav-logo');
 const navLinks= document.getElementById('nav-links');
 const lineupEls=document.querySelectorAll('.li-item');
+// Centre item's opacity is scroll-driven (see tick), not CSS-timed, so it
+// stays in lock-step with the floating cup's fade-out at any scroll speed —
+// only the entrance slide (transform) still eases on its own clock.
+lineupEls[1].style.transition='transform .6s ease';
 
-let raf=false, lineupShown=false, activeCup='silver';
+let raf=false, lineupShown=false, activeCup='silver', navState=null, cupSilverH=cups.silver.offsetHeight;
 const lerp=(a,b,t)=>a+(b-a)*t;
 const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
 const easeOut=t=>1-Math.pow(1-t,3);
 const easeIn=t=>t*t*t;
 
-function progress(el){const r=el.getBoundingClientRect();return clamp(-r.top/(el.offsetHeight-window.innerHeight),0,1);}
 function activeScene(){
-  for(let i=0;i<4;i++){const r=scenes[i].getBoundingClientRect();
-    if(r.top<=2&&r.bottom>window.innerHeight*.4) return {idx:i,p:progress(scenes[i])};}
+  for(let i=0;i<4;i++){
+    const el=scenes[i], r=el.getBoundingClientRect();
+    if(r.top<=2&&r.bottom>window.innerHeight*.4){
+      const p=clamp(-r.top/(el.offsetHeight-window.innerHeight),0,1);
+      return {idx:i,p};
+    }
+  }
   return null;
 }
 function setCup(which){
@@ -667,19 +705,35 @@ function setCup(which){
   activeCup=which;
   for(const k in cups) cups[k].style.opacity = (k===which)?'1':'0';
 }
+function setNav(state){
+  if(navState===state) return;
+  navState=state;
+  nav.className=state.cls;
+  navLogo.className=state.logo;
+  setNL(state.nl);
+}
+function setNL(cls){navLinks.querySelectorAll('a').forEach(a=>{a.classList.remove('nl-lt','nl-dk');a.classList.add(cls);});}
 
 function tick(){
   raf=false;
-  const past=scenes[3].getBoundingClientRect().bottom<=0;
-  const before=scenes[0].getBoundingClientRect().top>2;
-  const sc=activeScene();
-
-  // Nav appearance
+  // ── READS (batched, no writes yet — avoids forced synchronous layout) ──
+  const s3rect=scenes[3].getBoundingClientRect();
+  const s0rect=scenes[0].getBoundingClientRect();
   const scroll=window.scrollY;
-  const darkNav = past || scroll > scenes[3].getBoundingClientRect().top+window.scrollY-100;
-  if(darkNav){nav.className='dark';navLogo.className='logo lt';setNL('nl-lt');}
-  else if(scroll>60){nav.className='glass';navLogo.className='logo dk';setNL('nl-dk');}
-  else{nav.className='';navLogo.className='logo dk';setNL('nl-dk');}
+  const sc=activeScene();
+  const past=s3rect.bottom<=0;
+  const before=s0rect.top>2;
+  const darkNav = past || scroll > s3rect.top+scroll-100;
+  let liRect=null;
+  if(sc&&sc.idx===3){
+    const liImg=document.querySelector('.li-item:nth-child(2) .li-img');
+    if(liImg) liRect=liImg.getBoundingClientRect();
+  }
+
+  // ── WRITES ──
+  if(darkNav) setNav({cls:'dark',logo:'logo lt',nl:'nl-lt'});
+  else if(scroll>60) setNav({cls:'glass',logo:'logo dk',nl:'nl-dk'});
+  else setNav({cls:'',logo:'logo dk',nl:'nl-dk'});
 
   if(past||before||!sc){cupFixed.style.opacity='0';return;}
 
@@ -711,23 +765,25 @@ function tick(){
   } else {
     // Cup lands into the lineup centre position
     setCup('silver');
-    const liImg=document.querySelector('.li-item:nth-child(2) .li-img');
     let tX=0,tY=0,tScale=0.38;
-    if(liImg){
-      const r=liImg.getBoundingClientRect();
-      tX=(r.left+r.width*.5)-window.innerWidth*.5;
-      tY=(r.top+r.height*.5)-window.innerHeight*.5;
-      const fh=cups.silver.offsetHeight;
-      if(fh>0)tScale=r.height/fh;
+    if(liRect){
+      tX=(liRect.left+liRect.width*.5)-window.innerWidth*.5;
+      tY=(liRect.top+liRect.height*.5)-window.innerHeight*.5;
+      if(cupSilverH>0)tScale=liRect.height/cupSilverH;
     }
     const t4=easeOut(clamp(p/.65,0,1));
     const sc4=lerp(1.0,tScale,t4);
     const tx4=lerp(0,tX,t4),ty4=lerp(0,tY,t4);
     opacity=p>.5?lerp(1,0,easeIn(clamp((p-.5)/.5,0,1))):1;
-    // Side cups appear early; centre cup only once fixed cup is nearly gone
+    // Side cups appear early with a normal CSS-timed reveal (not time-critical).
     if(p>.25){lineupEls[0].classList.add('show');lineupEls[2].classList.add('show');}
-    if(p>.88&&!lineupShown){lineupShown=true;lineupEls[1].classList.add('show');}
-    else if(p<.2&&lineupShown){lineupShown=false;lineupEls.forEach(e=>e.classList.remove('show'));}
+    // Centre cup: slide-in triggers early, but its opacity is set every frame
+    // below as the exact complement of the floating cup's fade — the two
+    // always sum to 1, so there's never a gap where neither is visible,
+    // no matter how fast the user scrolls.
+    if(p>.4&&!lineupShown){lineupShown=true;lineupEls[1].classList.add('show');}
+    else if(p<.2&&lineupShown){lineupShown=false;lineupEls.forEach(e=>e.classList.remove('show'));lineupEls[1].style.opacity='';}
+    if(lineupShown) lineupEls[1].style.opacity=String(clamp(1-opacity,0,1));
     cupWrap.style.transform=`perspective(1200px) translateX(${tx4.toFixed(1)}px) translateY(${ty4.toFixed(1)}px) scale(${sc4.toFixed(3)})`;
     cupFixed.style.opacity=String(clamp(opacity,0,1));
     return;
@@ -736,10 +792,15 @@ function tick(){
   cupWrap.style.transform=`perspective(1200px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${scale.toFixed(3)}) translateY(${ty.toFixed(1)}px)`;
   cupFixed.style.opacity=String(clamp(opacity,0,1));
 }
-function setNL(cls){navLinks.querySelectorAll('a').forEach(a=>{a.classList.remove('nl-lt','nl-dk');a.classList.add(cls);});}
 
+let resizeRaf=false;
+function onResize(){
+  cupSilverH=cups.silver.offsetHeight;
+  if(!resizeRaf){resizeRaf=true;requestAnimationFrame(()=>{resizeRaf=false;tick();});}
+}
 window.addEventListener('scroll',()=>{if(!raf){raf=true;requestAnimationFrame(tick);}},{passive:true});
-window.addEventListener('resize',tick);
+window.addEventListener('resize',onResize,{passive:true});
+window.addEventListener('orientationchange',onResize,{passive:true});
 tick();
 
 // ═══ MENU TABS ═══
