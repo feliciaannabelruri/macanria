@@ -432,7 +432,7 @@
     gallery: ["Galeri", "Ticker & delapan foto."],
     locations: ["Lokasi Outlet", "Daftar outlet (1-40)."],
     footer: ["Footer", "Title, subtext, deskripsi, copyright, link (maks 8/grup)."],
-    parallax: ["Parallax", "Ganti gambar cup pada animasi parallax."]
+    parallax: ["Parallax (Gambar)", "Ganti gambar cup pada animasi parallax."]
   };
   var RENDERERS = {
     menu: C.renderMenu, scoops: C.renderScoops, story: C.renderStory,

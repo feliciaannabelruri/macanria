@@ -387,9 +387,9 @@
   C.renderParallax = function (px, host) {
     px = px || {};
     var SLOTS = [
-      { key: "cupSilver", zoom: "zoomSilver", label: "Cup 1", def: "1.0" },
-      { key: "cupGuava",  zoom: "zoomGuava",  label: "Cup 2",   def: "1.12" },
-      { key: "cupMochi",  zoom: "zoomMochi",  label: "Cup 3", def: "1.0" }
+      { key: "cupSilver", zoom: "zoomSilver", label: "Cup Silver (Soymilk Tea)", def: "1.0" },
+      { key: "cupGuava",  zoom: "zoomGuava",  label: "Cup Guava (Pink Guava)",   def: "1.12" },
+      { key: "cupMochi",  zoom: "zoomMochi",  label: "Cup Mochi (Yu Tou Mochi)", def: "1.0" }
     ];
     SLOTS.forEach(function (s) {
       var c = card();
@@ -432,7 +432,7 @@
     gallery: ["Galeri", "Ticker & delapan foto."],
     locations: ["Lokasi Outlet", "Daftar outlet (1-40)."],
     footer: ["Footer", "Title, subtext, deskripsi, copyright, link (maks 8/grup)."],
-    parallax: ["Parallax", "Ganti gambar cup pada animasi parallax."]
+    parallax: ["Parallax (Gambar)", "Ganti gambar cup pada animasi parallax."]
   };
   var RENDERERS = {
     menu: C.renderMenu, scoops: C.renderScoops, story: C.renderStory,

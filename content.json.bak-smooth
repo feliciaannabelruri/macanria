@@ -552,9 +552,8 @@
     "cupSilver": "assets/cup-silver.png",
     "cupGuava": "assets/cup-guava-t.png",
     "cupMochi": "assets/cup-mochi-t.png",
-    "zoomSilver": "1.0",
+    "zoomSilver": "1.12",
     "zoomGuava": "1.12",
-    "zoomMochi": "1.0",
-    "smooth": "0.05"
+    "zoomMochi": "1.0"
   }
 }

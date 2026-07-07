@@ -632,18 +632,14 @@ const easeIn=t=>t*t*t;
 const PZ=(k,def)=>{var c=window.__parallaxCfg;var v=(c&&c[k]!=null)?parseFloat(c[k]):NaN;return isNaN(v)?def:clamp(v,0.2,10);};
 
 function activeScene(){
-  // Pilih scene terakhir yang bagian atasnya sudah melewati viewport-top.
-  // Tidak pernah mengembalikan null selama masih di area scene0..scene3,
-  // supaya cup tidak hilang sesaat di perbatasan antar-scene.
-  var chosen=-1;
-  for(var i=0;i<4;i++){
-    var r=scenes[i].getBoundingClientRect();
-    if(r.top<=2 && r.bottom>0) chosen=i;
+  for(let i=0;i<4;i++){
+    const el=scenes[i], r=el.getBoundingClientRect();
+    if(r.top<=2&&r.bottom>window.innerHeight*.4){
+      const p=clamp(-r.top/(el.offsetHeight-window.innerHeight),0,1);
+      return {idx:i,p};
+    }
   }
-  if(chosen<0) return null;
-  var el=scenes[chosen];
-  var p=clamp(-el.getBoundingClientRect().top/(el.offsetHeight-window.innerHeight),0,1);
-  return {idx:chosen,p:p};
+  return null;
 }
 function setCup(which){
   if(activeCup===which) return;

@@ -194,8 +194,7 @@
     window.__parallaxCfg = {
       zoomSilver: px.zoomSilver,
       zoomGuava:  px.zoomGuava,
-      zoomMochi:  px.zoomMochi,
-      smooth:     px.smooth
+      zoomMochi:  px.zoomMochi
     };
     // Minta engine render ulang frame agar zoom baru langsung terpakai
     if (typeof window.__pxTick === "function") window.__pxTick();

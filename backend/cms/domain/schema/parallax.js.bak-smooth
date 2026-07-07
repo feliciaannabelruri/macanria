@@ -18,7 +18,6 @@ export default obj(
     zoomSilver: str(6),
     zoomGuava:  str(6),
     zoomMochi:  str(6),
-    smooth: str(6),
   },
   ["cupSilver", "cupGuava", "cupMochi"]
 );

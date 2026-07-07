@@ -632,31 +632,19 @@ const easeIn=t=>t*t*t;
 const PZ=(k,def)=>{var c=window.__parallaxCfg;var v=(c&&c[k]!=null)?parseFloat(c[k]):NaN;return isNaN(v)?def:clamp(v,0.2,10);};
 
 function activeScene(){
-  // Pilih scene terakhir yang bagian atasnya sudah melewati viewport-top.
-  // Tidak pernah mengembalikan null selama masih di area scene0..scene3,
-  // supaya cup tidak hilang sesaat di perbatasan antar-scene.
-  var chosen=-1;
-  for(var i=0;i<4;i++){
-    var r=scenes[i].getBoundingClientRect();
-    if(r.top<=2 && r.bottom>0) chosen=i;
+  for(let i=0;i<4;i++){
+    const el=scenes[i], r=el.getBoundingClientRect();
+    if(r.top<=2&&r.bottom>window.innerHeight*.4){
+      const p=clamp(-r.top/(el.offsetHeight-window.innerHeight),0,1);
+      return {idx:i,p};
+    }
   }
-  if(chosen<0) return null;
-  var el=scenes[chosen];
-  var p=clamp(-el.getBoundingClientRect().top/(el.offsetHeight-window.innerHeight),0,1);
-  return {idx:chosen,p:p};
+  return null;
 }
 function setCup(which){
   if(activeCup===which) return;
   activeCup=which;
   for(const k in cups) cups[k].style.opacity = (k===which)?'1':'0';
-}
-// CROSSFADE: set opacity tiap cup langsung (0..1). Dipakai di zona transisi
-// agar dua cup bisa tampil bersamaan -> tidak pernah ada gap kosong.
-function crossCup(sv,gv,mc){
-  activeCup=null;
-  cups.silver.style.opacity=String(clamp(sv,0,1));
-  cups.guava.style.opacity =String(clamp(gv,0,1));
-  cups.mochi.style.opacity =String(clamp(mc,0,1));
 }
 function setNav(state){
   if(navState===state) return;
@@ -694,30 +682,30 @@ function tick(){
   let ry=0,rx=0,scale=1,ty=0,opacity=1;
 
   if(idx===0){
-    crossCup(1-clamp((p-.82)/.18,0,1), clamp((p-.82)/.18,0,1), 0);
+    setCup('silver');
     const rise=clamp(p/.3,0,1);
     scale=lerp(.6,PZ('zoomSilver',1.0),easeOut(rise));
     ty=lerp(110,0,easeOut(rise));
     ry=lerp(-18,8,easeOut(rise));
     rx=lerp(14,-3,easeOut(rise));
-    opacity = 1;
+    opacity = p>.8?lerp(1,0,easeIn(clamp((p-.8)/.2,0,1))):1;
   } else if(idx===1){
-    crossCup(0, 1-clamp((p-.82)/.18,0,1), clamp((p-.82)/.18,0,1));
+    setCup('guava');
     const enter=clamp(p/.2,0,1);
     scale=lerp(1.0,PZ('zoomGuava',1.12),p);
     ry=lerp(8,-14,p); rx=lerp(-3,5,p);
-    opacity = 1;
+    opacity = p>.8?lerp(1,0,easeIn(clamp((p-.8)/.2,0,1))):easeOut(enter);
   } else if(idx===2){
-    crossCup(clamp((p-.82)/.18,0,1), 0, 1-clamp((p-.82)/.18,0,1));
+    setCup('mochi');
     const enter=clamp(p/.2,0,1);
     scale=lerp(1.12,PZ('zoomMochi',1.0),p);
     ry=lerp(-14,18,p); rx=lerp(5,-6,p);
-    opacity = 1;
+    opacity = p>.82?lerp(1,0,easeIn(clamp((p-.82)/.18,0,1))):easeOut(enter);
     if(p>.6&&!lineupShown){lineupShown=true;lineupEls.forEach(e=>e.classList.add('show'));}
     else if(p<.45&&lineupShown){lineupShown=false;lineupEls.forEach(e=>e.classList.remove('show'));}
   } else {
     // Cup lands into the lineup centre position
-    crossCup(1,0,0);
+    setCup('silver');
     let tX=0,tY=0,tScale=0.38;
     if(liRect){
       tX=(liRect.left+liRect.width*.5)-window.innerWidth*.5;
@@ -737,15 +725,12 @@ function tick(){
     if(p>.4&&!lineupShown){lineupShown=true;lineupEls[1].classList.add('show');}
     else if(p<.2&&lineupShown){lineupShown=false;lineupEls.forEach(e=>e.classList.remove('show'));lineupEls[1].style.opacity='';}
     if(lineupShown) lineupEls[1].style.opacity=String(clamp(1-opacity,0,1));
-    PXActive=false;
     cupWrap.style.transform=`perspective(1200px) translateX(${tx4.toFixed(1)}px) translateY(${ty4.toFixed(1)}px) scale(${sc4.toFixed(3)})`;
     cupFixed.style.opacity=String(clamp(opacity,0,1));
     return;
   }
 
-  // Scene 0/1/2: set TARGET (di-smooth oleh pxLoop), jangan tulis transform langsung
-  PXT.rx=rx; PXT.ry=ry; PXT.scale=scale; PXT.ty=ty; PXActive=true;
-  cupFixed.style.opacity=String(clamp(opacity,0,1));
+  cupWrap.style.transform=`perspective(1200px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${scale.toFixed(3)}) translateY(${ty.toFixed(1)}px)`;
   cupFixed.style.opacity=String(clamp(opacity,0,1));
 }
 
@@ -758,22 +743,6 @@ window.addEventListener('scroll',()=>{if(!raf){raf=true;requestAnimationFrame(ti
 window.addEventListener('resize',onResize,{passive:true});
 window.addEventListener('orientationchange',onResize,{passive:true});
 window.__pxTick=tick;
-// SMOOTHING: lerp nilai tampilan mengejar target tiap frame (rAF loop kontinu).
-var PXT={rx:0,ry:0,scale:1,ty:0};   // target dari tick()
-var PXD={rx:0,ry:0,scale:1,ty:0};   // nilai yang sedang ditampilkan
-var PXActive=false, PXInit=false;
-function pxSmooth(){var c=window.__parallaxCfg;var s=(c&&c.smooth!=null&&c.smooth!=="")?parseFloat(c.smooth):0.15;return isNaN(s)?0.15:clamp(s,0.05,1);}
-function pxLoop(){
-  if(PXActive){
-    var k=pxSmooth();
-    if(!PXInit){PXD.rx=PXT.rx;PXD.ry=PXT.ry;PXD.scale=PXT.scale;PXD.ty=PXT.ty;PXInit=true;}
-    PXD.rx+=(PXT.rx-PXD.rx)*k; PXD.ry+=(PXT.ry-PXD.ry)*k;
-    PXD.scale+=(PXT.scale-PXD.scale)*k; PXD.ty+=(PXT.ty-PXD.ty)*k;
-    cupWrap.style.transform="perspective(1200px) rotateY("+PXD.ry.toFixed(2)+"deg) rotateX("+PXD.rx.toFixed(2)+"deg) scale("+PXD.scale.toFixed(3)+") translateY("+PXD.ty.toFixed(1)+"px)";
-  } else { PXInit=false; }
-  requestAnimationFrame(pxLoop);
-}
-requestAnimationFrame(pxLoop);
 tick();
 
 // ═══ MENU TABS ═══
