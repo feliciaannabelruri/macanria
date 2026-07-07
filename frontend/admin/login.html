@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Macanria CMS — Masuk</title>
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body class="login-body">
+  <main class="login-card">
+    <h1>Macanria CMS</h1>
+    <p class="login-sub">Panel Admin — silakan masuk</p>
+    <form id="loginForm" autocomplete="off">
+      <label for="pw">Kata sandi admin</label>
+      <input type="password" id="pw" name="password" required autocomplete="current-password" />
+      <button type="submit" id="loginBtn">Masuk</button>
+      <p id="loginMsg" class="msg" role="alert" aria-live="polite"></p>
+    </form>
+  </main>
+  <script>
+  (function () {
+    "use strict";
+    var form = document.getElementById("loginForm");
+    var btn = document.getElementById("loginBtn");
+    var msg = document.getElementById("loginMsg");
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      msg.textContent = ""; msg.className = "msg";
+      btn.disabled = true; btn.textContent = "Memeriksa...";
+      var pw = document.getElementById("pw").value;
+      fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: pw })
+      })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (res.ok && res.j && res.j.ok) {
+          window.location.href = "./";
+        } else {
+          msg.textContent = (res.j && res.j.error) ? res.j.error : "Gagal masuk.";
+          msg.classList.add("err");
+          btn.disabled = false; btn.textContent = "Masuk";
+        }
+      })
+      .catch(function () {
+        msg.textContent = "Tidak dapat terhubung ke server.";
+        msg.classList.add("err");
+        btn.disabled = false; btn.textContent = "Masuk";
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

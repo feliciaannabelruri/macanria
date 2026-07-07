@@ -1,0 +1,556 @@
+{
+  "general": {
+    "heroTaglineDesktop": "MACANRIA.",
+    "heroTaglineMobile": "Homemade Soy Milk Tea & Tofu Ice Cream",
+    "heroZh": "豆漿以茶",
+    "marqueeItems": [
+      "豆漿以茶",
+      "Homemade Soy",
+      "Heritage Tea",
+      "Dairy-Free",
+      "Counter-Fresh",
+      "Jakarta 2024",
+      "老虎兔兔"
+    ],
+    "featuredCards": [
+      {
+        "tag": "Hei Cha Series",
+        "zh": "粉紅芭樂黑茶",
+        "name": "Pink Guava",
+        "desc": "Fresh-pressed pink guava meets our bold heritage black tea. A burst of fruit in every sip.",
+        "img": "/uploads/placeholder.jpg",
+        "specs": [
+          {
+            "label": "Tea Base",
+            "value": "Hei Cha",
+            "sub": "Heritage black tea · Fujian"
+          },
+          {
+            "label": "Fruit",
+            "value": "Pink Guava",
+            "sub": "Cold-pressed every morning"
+          },
+          {
+            "label": "Topping",
+            "value": "Ruby Jelly",
+            "sub": "Hand-cut daily"
+          },
+          {
+            "label": "Dairy",
+            "value": "Free",
+            "sub": "100% homemade soy milk"
+          },
+          {
+            "label": "Price",
+            "value": "Rp 38k",
+            "sub": "Sugar level adjustable"
+          }
+        ]
+      },
+      {
+        "tag": "Dieng Hei Cha Series",
+        "zh": "芋頭麻糬黑茶",
+        "name": "Yu Tou Mochi",
+        "desc": "Creamy purple taro blended with soft mochi pieces, layered over our bold Dieng black tea.",
+        "img": "/uploads/placeholder.jpg",
+        "specs": [
+          {
+            "label": "Tea Base",
+            "value": "Dieng Hei Cha",
+            "sub": "Highland black tea"
+          },
+          {
+            "label": "Star",
+            "value": "Purple Taro",
+            "sub": "Creamy ube · Blended fresh"
+          },
+          {
+            "label": "Topping",
+            "value": "Mochi",
+            "sub": "Soft & chewy bites"
+          },
+          {
+            "label": "Dairy",
+            "value": "Free",
+            "sub": "Vegan-friendly"
+          },
+          {
+            "label": "Price",
+            "value": "Rp 38k",
+            "sub": "Sugar level adjustable"
+          }
+        ]
+      }
+    ],
+    "lineup": {
+      "eyebrow": "Our Menu",
+      "headline": "Pick your flavour.",
+      "zh": "選你的味道",
+      "items": [
+        {
+          "name": "Pink Guava",
+          "price": "38k",
+          "img": "/uploads/placeholder.jpg"
+        },
+        {
+          "name": "Soymilk Tea",
+          "price": "From 35k",
+          "img": "/uploads/placeholder.jpg"
+        },
+        {
+          "name": "Yu Tou Mochi",
+          "price": "38k",
+          "img": "/uploads/placeholder.jpg"
+        }
+      ],
+      "footerAnchor": "Full Menu Below"
+    }
+  },
+  "menu": {
+    "categories": {
+      "soymilk": {
+        "label": "Soymilk Tea",
+        "zh": "豆漿",
+        "note": "+ Jelly Pearl topping Rp 3,000 · Sugar level adjustable · Available iced & hot",
+        "items": [
+          {
+            "name": "Osmanthus Oolong",
+            "zh": "桂花烏龍",
+            "desc": "Delicate osmanthus blossom with premium oolong. Naturally sweet, elegant.",
+            "price": "Rp 35.000",
+            "badge": "Bestseller"
+          },
+          {
+            "name": "Earl Grey",
+            "zh": "伯爵茶",
+            "desc": "Classic Earl Grey meets fresh homemade soy milk. Calming and refined.",
+            "price": "Rp 35.000",
+            "badge": ""
+          },
+          {
+            "name": "White Peach Oolong",
+            "zh": "白桃烏龍",
+            "desc": "Light white peach rounds out a smooth, refreshing oolong base.",
+            "price": "Rp 35.000",
+            "badge": ""
+          },
+          {
+            "name": "Jasmine",
+            "zh": "茉莉花",
+            "desc": "Fragrant jasmine — light, floral, perfect on a warm day.",
+            "price": "Rp 35.000",
+            "badge": ""
+          },
+          {
+            "name": "Tie Guan Yin",
+            "zh": "鐵觀音",
+            "desc": "Semi-fermented oolong with a distinctive floral character. Balanced.",
+            "price": "Rp 35.000",
+            "badge": ""
+          },
+          {
+            "name": "Yunnan Pu Er",
+            "zh": "雲南普洱",
+            "desc": "Deep, earthy Yunnan pu-erh — for the serious tea lover.",
+            "price": "Rp 35.000",
+            "badge": ""
+          },
+          {
+            "name": "Da Hong Pao",
+            "zh": "大紅袍",
+            "desc": "Legendary Wuyi oolong. Bold, roasted, unforgettable finish.",
+            "price": "Rp 35.000",
+            "badge": ""
+          },
+          {
+            "name": "Assam Black",
+            "zh": "阿薩姆紅茶",
+            "desc": "Full-bodied and robust, made creamy with homemade soy milk.",
+            "price": "Rp 35.000",
+            "badge": ""
+          }
+        ]
+      },
+      "pure": {
+        "label": "Pure Tea",
+        "zh": "清茶",
+        "note": "Brewed fresh daily · No milk · No added sugar",
+        "items": [
+          {
+            "name": "Osmanthus Tea",
+            "zh": "桂花茶",
+            "desc": "Light, floral, calming. No milk — pure aromatic fragrance.",
+            "price": "Rp 32.000",
+            "badge": "Recommended"
+          },
+          {
+            "name": "Da Hong Pao Tea",
+            "zh": "大紅袍清茶",
+            "desc": "Powerful roasted character without soy milk. Pure and bold.",
+            "price": "Rp 32.000",
+            "badge": ""
+          },
+          {
+            "name": "Jasmine Oolong",
+            "zh": "茉莉烏龍",
+            "desc": "Two florals in one cup — fresh and sophisticated.",
+            "price": "Rp 32.000",
+            "badge": ""
+          },
+          {
+            "name": "Rose Tea",
+            "zh": "玫瑰茶",
+            "desc": "Romantic, light, visually stunning rose tea. Indulgent.",
+            "price": "Rp 32.000",
+            "badge": ""
+          }
+        ]
+      },
+      "fruit": {
+        "label": "Fruit Tea",
+        "zh": "果茶",
+        "note": "Real fruit, pressed daily · Add ruby jelly or mochi · Iced only",
+        "items": [
+          {
+            "name": "Pink Guava Hei Cha",
+            "zh": "粉紅芭樂黑茶",
+            "desc": "Fresh pink guava + bold black tea + ruby jelly. A fruit burst.",
+            "price": "Rp 38.000",
+            "badge": "Signature"
+          },
+          {
+            "name": "Yu Tou Mochi",
+            "zh": "芋頭麻糬黑茶",
+            "desc": "Creamy purple taro with chewy mochi over Dieng black tea.",
+            "price": "Rp 38.000",
+            "badge": ""
+          },
+          {
+            "name": "Lychee Oolong",
+            "zh": "荔枝烏龍",
+            "desc": "Juicy lychee lifts a fragrant oolong. Sweet and refreshing.",
+            "price": "Rp 36.000",
+            "badge": ""
+          },
+          {
+            "name": "Passionfruit Green",
+            "zh": "百香果綠茶",
+            "desc": "Tangy passionfruit over cool green tea. Bright and zippy.",
+            "price": "Rp 36.000",
+            "badge": ""
+          }
+        ]
+      }
+    }
+  },
+  "scoops": {
+    "intro": "A creamy, plant-based dessert crafted from blended silken tofu — smooth, dairy-free, and naturally lower in fat. Velvety and indulgent, it appeals to vegans, lactose-intolerant individuals, and anyone who believes dessert should feel as good as it tastes.",
+    "price": "Single Rp 28k · Double Rp 45k",
+    "flavours": [
+      {
+        "name": "Black Sesame",
+        "zh": "黑芝麻",
+        "desc": "Creamy, nutty and intensely deep — a stunning jet-grey scoop finished with honeycomb brittle.",
+        "img": "assets/ic-sesame.png"
+      },
+      {
+        "name": "Coffee Hazelnut",
+        "zh": "榛果咖啡",
+        "desc": "Bold cold-brew coffee folded with toasted hazelnut. Smooth, grown-up, never bitter.",
+        "img": "assets/ic-coffee.png"
+      },
+      {
+        "name": "Macadamia Brittle",
+        "zh": "夏威夷果",
+        "desc": "Clean soy-cream base loaded with buttery macadamia and caramel brittle shards.",
+        "img": "assets/ic-macadamia.png"
+      },
+      {
+        "name": "Rum Raisin",
+        "zh": "蘭姆葡萄",
+        "desc": "Plump rum-soaked raisins swirled through a mellow, fragrant cream. A classic.",
+        "img": "assets/ic-rumraisin.png"
+      },
+      {
+        "name": "Maple Walnut",
+        "zh": "楓糖核桃",
+        "desc": "Toasted walnuts and warm maple in a soft, comforting soy-cream scoop.",
+        "img": "assets/ic-walnut.png"
+      },
+      {
+        "name": "Biscoff Crumble",
+        "zh": "比斯可夫",
+        "desc": "Spiced speculoos cream crowned with caramelised biscuit crumble.",
+        "img": "assets/ic-biscoff.png"
+      },
+      {
+        "name": "Durian",
+        "zh": "貓山王",
+        "desc": "For the brave — rich Musang King durian, pure and unapologetic.",
+        "img": "assets/ic-durian.png"
+      },
+      {
+        "name": "Salted Cheese",
+        "zh": "鹹起司",
+        "desc": "Sweet-and-salty cheese cream — mellow, golden, surprisingly addictive.",
+        "img": "assets/ic-cheese.png"
+      },
+      {
+        "name": "Strawberry Shortcake",
+        "zh": "草莓蛋糕",
+        "desc": "Fresh strawberry compote and sponge crumble over clean soy-cream.",
+        "img": "assets/ic-strawberry.png"
+      }
+    ],
+    "toppings": [
+      "Honeycomb Brittle",
+      "Mochi",
+      "Ruby Jelly",
+      "Crushed Nuts",
+      "Biscuit Crumble"
+    ]
+  },
+  "story": {
+    "title": "A heritage tea house, brewed for the future.",
+    "body": "At Macanria, we set out to revive the beauty of Chinese tea culture for a new generation. Every cup begins with premium heritage teas — aged oolongs, jasmine blossoms, Wuyi rock teas — paired with fresh homemade soy milk in place of dairy. Lighter on the body, extraordinary on the palate.",
+    "mascots": [
+      {
+        "zh": "老虎",
+        "name": "Macan · The Tiger",
+        "tagline": "Bold · Strong · Fearless",
+        "desc": "The brand's soul: navy confidence, bold flavours, no hesitation.",
+        "img": "assets/macan-front.png"
+      },
+      {
+        "zh": "兔兔",
+        "name": "Tutu · The Rabbit",
+        "tagline": "Soft · Silky · Sweet",
+        "desc": "The cream side — silky tofu ice cream, subtle sweetness, unforgettable charm.",
+        "img": "assets/tutu-front.png"
+      }
+    ]
+  },
+  "senses": {
+    "title": "A cup for every sense.",
+    "items": [
+      {
+        "key": "Sight",
+        "text": "We've designed a sanctuary for your eyes — a modern, minimalist space flooded with crisp, bright light that gently puts your mind at ease the moment you walk through the door."
+      },
+      {
+        "key": "Smell",
+        "text": "The enchanting scent of tea fills the air, creating a serene sanctuary for your mind while your order is crafted."
+      },
+      {
+        "key": "Sound",
+        "text": "Immerse yourself in calming rhythms that elevate your spirits as you wait and savor our signature blends."
+      },
+      {
+        "key": "Touch",
+        "text": "Hold our cup and feel the genuine passion and quality in your hands."
+      },
+      {
+        "key": "Taste",
+        "text": "Prepare your palate for a delightful plot twist — a beautiful, unexpected friendship between velvety soymilk and bold tea."
+      }
+    ]
+  },
+  "gallery": {
+    "ticker": "10 outlets — Ashta District 8 · Grand Indonesia · Sarinah · PIK · Taman Anggrek · Chillax · Tribeca · Plaza Indonesia · Lippo Mall Puri · Kokas",
+    "photos": [
+      {
+        "img": "assets/photo-interior-wide.jpg",
+        "layout": "span2c span2r"
+      },
+      {
+        "img": "assets/photo-exterior-tiger.jpg",
+        "layout": ""
+      },
+      {
+        "img": "assets/photo-interior-tiger.jpg",
+        "layout": ""
+      },
+      {
+        "img": "assets/photo-mirror.jpg",
+        "layout": ""
+      },
+      {
+        "img": "assets/photo-neko.jpg",
+        "layout": ""
+      },
+      {
+        "img": "assets/photo-exterior-logo.jpg",
+        "layout": "span2c"
+      },
+      {
+        "img": "assets/photo-bench.jpg",
+        "layout": ""
+      },
+      {
+        "img": "assets/photo-tiger-head.jpg",
+        "layout": ""
+      }
+    ]
+  },
+  "locations": {
+    "outlets": [
+      {
+        "flagship": true,
+        "region": "South Jakarta",
+        "name": "Ashta District 8",
+        "area": "SCBD · 1st Floor",
+        "address": "Ashta 1F Unit 12, Oakwood Tower · Jl. Jend. Sudirman Kav. 52-53, Senayan",
+        "hours": "Daily · 08:00 - 22:00 WIB",
+        "maps": "https://www.google.com/maps/search/?api=1&query=MacanRia+Ashta+District+8+SCBD"
+      },
+      {
+        "flagship": false,
+        "region": "West Jakarta",
+        "name": "Lippo Mall Puri",
+        "area": "Puri Indah · 1st Floor",
+        "address": "Unit L1-K02A · Jl. Puri Indah Raya Blok U1, Kembangan",
+        "hours": "Daily · 10:00 - 22:00 WIB",
+        "maps": "https://www.google.com/maps/search/?api=1&query=MacanRia+Lippo+Mall+Puri"
+      },
+      {
+        "flagship": false,
+        "region": "North Jakarta",
+        "name": "Pantai Indah Kapuk",
+        "area": "PIK",
+        "address": "Pantai Indah Kapuk, Penjaringan",
+        "hours": "Daily · 10:00 - 21:00 WIB",
+        "maps": "https://www.google.com/maps/search/?api=1&query=MacanRia+Pantai+Indah+Kapuk+PIK"
+      },
+      {
+        "flagship": false,
+        "region": "Central Jakarta",
+        "name": "Grand Indonesia",
+        "area": "West Mall · LG Floor",
+        "address": "Jl. M.H. Thamrin No. 1, Menteng",
+        "hours": "Daily · 10:00 - 22:00 WIB",
+        "maps": "https://www.google.com/maps/search/?api=1&query=MacanRia+Grand+Indonesia+West+Mall"
+      },
+      {
+        "flagship": false,
+        "region": "West Jakarta",
+        "name": "Hublife Taman Anggrek",
+        "area": "Letjen S. Parman · 1st Floor",
+        "address": "Jl. Letjen S. Parman, Tanjung Duren",
+        "hours": "Daily · 10:00 - 22:00 WIB",
+        "maps": "https://www.google.com/maps/search/?api=1&query=MacanRia+Hublife+Taman+Anggrek"
+      },
+      {
+        "flagship": false,
+        "region": "Central Jakarta",
+        "name": "Sarinah",
+        "area": "M.H. Thamrin · GF Floor",
+        "address": "Jl. M.H. Thamrin No. 11, Menteng",
+        "hours": "Mon-Sat 08:00-22:00 · Sun 07:00-22:00 WIB",
+        "maps": "https://www.google.com/maps/search/?api=1&query=MacanRia+Sarinah+Thamrin"
+      },
+      {
+        "flagship": false,
+        "region": "Central Jakarta",
+        "name": "Chillax Sudirman",
+        "area": "Sudirman",
+        "address": "Jl. Jend. Sudirman, Tanah Abang",
+        "hours": "Mon-Sat 08:00-22:00 · Sun 07:00-22:00 WIB",
+        "maps": "https://www.google.com/maps/search/?api=1&query=MacanRia+Chillax+Sudirman"
+      },
+      {
+        "flagship": false,
+        "region": "West Jakarta",
+        "name": "Tribeca Park",
+        "area": "Central Park",
+        "address": "Jl. Letjen S. Parman Kav. 28, Tanjung Duren",
+        "hours": "Daily · 10:00 - 22:00 WIB",
+        "maps": "https://www.google.com/maps/search/?api=1&query=MacanRia+Tribeca+Central+Park"
+      },
+      {
+        "flagship": false,
+        "region": "Central Jakarta",
+        "name": "Plaza Indonesia",
+        "area": "Thamrin · Level 5",
+        "address": "Jl. M.H. Thamrin Kav. 28-30, Menteng",
+        "hours": "Daily · 10:00 - 22:00 WIB",
+        "maps": "https://www.google.com/maps/search/?api=1&query=MacanRia+Plaza+Indonesia"
+      },
+      {
+        "flagship": false,
+        "region": "South Jakarta",
+        "name": "Kota Kasablanka",
+        "area": "Food Society · UG Floor",
+        "address": "Jl. Casablanca Raya Kav. 88, Tebet",
+        "hours": "Daily · 10:00 - 22:00 WIB",
+        "maps": "https://www.google.com/maps/search/?api=1&query=MacanRia+Kota+Kasablanka+Food+Society"
+      }
+    ]
+  },
+  "footer": {
+    "title": "MACANRIA.",
+    "subtext": "豆漿以茶 · 愛心雪糕",
+    "description": "Homemade soy milk tea & silken tofu ice cream. Dairy-free, lighter, never boring. Jakarta, Indonesia.",
+    "menuLinks": [
+      {
+        "label": "Soymilk Tea",
+        "href": "#menu"
+      },
+      {
+        "label": "Pure Tea",
+        "href": "#menu"
+      },
+      {
+        "label": "Tofu Ice Cream",
+        "href": "#scoops"
+      }
+    ],
+    "orderLinks": [
+      {
+        "label": "GoFood",
+        "href": "https://gofood.co.id"
+      },
+      {
+        "label": "GrabFood",
+        "href": "https://grab.com"
+      },
+      {
+        "label": "ShopeeFood",
+        "href": "https://shopee.co.id"
+      }
+    ],
+    "infoLinks": [
+      {
+        "label": "Our Story",
+        "href": "#story"
+      },
+      {
+        "label": "Locations",
+        "href": "#locations"
+      },
+      {
+        "label": "@macanria",
+        "href": "https://instagram.com/macanria"
+      }
+    ],
+    "copyright": "© 2026 Macanria · All rights reserved · Jakarta, Indonesia",
+    "social": [
+      {
+        "label": "Instagram",
+        "href": "https://instagram.com/macanria"
+      },
+      {
+        "label": "TikTok",
+        "href": "https://tiktok.com/@macanria"
+      },
+      {
+        "label": "GoFood",
+        "href": "https://gofood.co.id"
+      }
+    ]
+  },
+  "parallax": {
+    "cupSilver": "assets/cup-silver.png",
+    "cupGuava": "assets/cup-guava-t.png",
+    "cupMochi": "assets/cup-mochi-t.png"
+  }
+}

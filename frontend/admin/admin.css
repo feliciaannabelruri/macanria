@@ -1,0 +1,71 @@
+:root{
+  --ink:#2b2018; --rose:#c04a5e; --rose-d:#a53b4d; --cream:#faf5ee;
+  --line:#e7ddd0; --muted:#8a7d6e; --ok:#2e7d52; --err:#c0392b; --card:#fff;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--cream)}
+a{color:var(--rose)}
+button{cursor:pointer;font:inherit}
+
+/* LOGIN */
+.login-body{display:flex;align-items:center;justify-content:center;min-height:100vh}
+.login-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:36px 32px;width:340px;box-shadow:0 8px 30px rgba(43,32,24,.08)}
+.login-card h1{margin:0 0 4px;font-size:22px;color:var(--rose)}
+.login-sub{margin:0 0 20px;color:var(--muted);font-size:14px}
+.login-card label{display:block;font-size:13px;margin-bottom:6px;font-weight:600}
+.login-card input{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:9px;font-size:15px;margin-bottom:16px}
+.login-card button{width:100%;padding:11px;background:var(--rose);color:#fff;border:0;border-radius:9px;font-size:15px;font-weight:600}
+.login-card button:disabled{opacity:.6;cursor:default}
+.msg{margin:12px 0 0;font-size:13px;min-height:16px}
+.msg.err{color:var(--err)}
+.msg.ok{color:var(--ok)}
+
+/* SHELL */
+.shell{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.sidebar{background:var(--ink);color:#f3ebe0;padding:22px 0;display:flex;flex-direction:column}
+.sidebar .brand{font-size:18px;font-weight:700;padding:0 22px 18px;color:#fff;border-bottom:1px solid rgba(255,255,255,.1)}
+.sidebar nav{display:flex;flex-direction:column;padding:12px 0;flex:1}
+.navlink{background:none;border:0;color:#cbbfb0;text-align:left;padding:11px 22px;font-size:14px;border-left:3px solid transparent}
+.navlink:hover{color:#fff;background:rgba(255,255,255,.05)}
+.navlink.on{color:#fff;background:rgba(192,74,94,.22);border-left-color:var(--rose)}
+.main{display:flex;flex-direction:column;min-width:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 26px;background:#fff;border-bottom:1px solid var(--line)}
+.topbar .status{font-size:13px;color:var(--muted)}
+.topbar .status b{color:var(--ink)}
+.logout{background:none;border:1px solid var(--line);border-radius:8px;padding:7px 14px;font-size:13px;color:var(--ink)}
+.logout:hover{border-color:var(--rose);color:var(--rose)}
+.content{padding:26px;overflow:auto}
+
+/* SECTIONS / FORMS */
+.section{display:none}
+.section.on{display:block}
+.section h2{margin:0 0 4px;font-size:20px}
+.section .hint{margin:0 0 20px;color:var(--muted);font-size:13px}
+.item-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.item-card .row{display:flex;gap:12px;flex-wrap:wrap}
+.field{flex:1 1 220px;margin-bottom:12px}
+.field.full{flex-basis:100%}
+.field label{display:block;font-size:12px;font-weight:600;margin-bottom:5px;color:var(--muted)}
+.field input,.field textarea,.field select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:14px;font-family:inherit}
+.field textarea{min-height:64px;resize:vertical}
+.chk{display:flex;align-items:center;gap:8px;font-size:13px}
+.chk input{width:auto}
+.item-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.item-head .t{font-weight:700;font-size:14px}
+.btn{border:0;border-radius:8px;padding:9px 16px;font-size:14px;font-weight:600}
+.btn-primary{background:var(--rose);color:#fff}
+.btn-primary:hover{background:var(--rose-d)}
+.btn-primary:disabled{opacity:.6;cursor:default}
+.btn-ghost{background:none;border:1px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--rose);color:var(--rose)}
+.btn-del{background:none;border:1px solid #e3c4c4;color:var(--err);border-radius:8px;padding:5px 11px;font-size:12px}
+.btn-del:hover{background:#fbeaea}
+.cat-block{margin-bottom:26px}
+.cat-block>h3{margin:0 0 10px;font-size:15px;color:var(--rose)}
+.actions{display:flex;gap:12px;align-items:center;margin-top:8px;padding-top:16px;border-top:1px solid var(--line)}
+.save-msg{font-size:13px}
+.save-msg.ok{color:var(--ok)}
+.save-msg.err{color:var(--err)}
+.thumb{width:64px;height:64px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.upload-row{display:flex;align-items:center;gap:12px;margin-top:8px}
+.loading{padding:40px;text-align:center;color:var(--muted)}

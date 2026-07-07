@@ -1,0 +1,62 @@
+{
+  "title": "MACANRIA.",
+  "subtext": "豆漿以茶 · 愛心雪糕",
+  "description": "Homemade soy milk tea & silken tofu ice cream. Dairy-free, lighter, never boring. Jakarta, Indonesia.",
+  "menuLinks": [
+    {
+      "label": "Soymilk Tea",
+      "href": "#menu"
+    },
+    {
+      "label": "Pure Tea",
+      "href": "#menu"
+    },
+    {
+      "label": "Tofu Ice Cream",
+      "href": "#scoops"
+    }
+  ],
+  "orderLinks": [
+    {
+      "label": "GoFood",
+      "href": "https://gofood.co.id"
+    },
+    {
+      "label": "GrabFood",
+      "href": "https://grab.com"
+    },
+    {
+      "label": "ShopeeFood",
+      "href": "https://shopee.co.id"
+    }
+  ],
+  "infoLinks": [
+    {
+      "label": "Our Story",
+      "href": "#story"
+    },
+    {
+      "label": "Locations",
+      "href": "#locations"
+    },
+    {
+      "label": "@macanria",
+      "href": "https://instagram.com/macanria"
+    }
+  ],
+  "copyright": "© 2026 Macanria · All rights reserved · Jakarta, Indonesia",
+  "social": [
+    {
+      "label": "Instagram",
+      "href": "https://instagram.com/macanria"
+    },
+    {
+      "label": "TikTok",
+      "href": "https://tiktok.com/@macanria"
+    },
+    {
+      "label": "GoFood",
+      "href": "https://gofood.co.id"
+    }
+  ]
+}

@@ -628,8 +628,6 @@ const lerp=(a,b,t)=>a+(b-a)*t;
 const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
 const easeOut=t=>1-Math.pow(1-t,3);
 const easeIn=t=>t*t*t;
-// PARALLAX ZOOM: baca nilai zoom cup dari CMS (window.__parallaxCfg), clamp 0.2..10, fallback default.
-const PZ=(k,def)=>{var c=window.__parallaxCfg;var v=(c&&c[k]!=null)?parseFloat(c[k]):NaN;return isNaN(v)?def:clamp(v,0.2,10);};
 
 function activeScene(){
   for(let i=0;i<4;i++){
@@ -684,7 +682,7 @@ function tick(){
   if(idx===0){
     setCup('silver');
     const rise=clamp(p/.3,0,1);
-    scale=lerp(.6,PZ('zoomSilver',1.0),easeOut(rise));
+    scale=lerp(.6,1.0,easeOut(rise));
     ty=lerp(110,0,easeOut(rise));
     ry=lerp(-18,8,easeOut(rise));
     rx=lerp(14,-3,easeOut(rise));
@@ -692,13 +690,13 @@ function tick(){
   } else if(idx===1){
     setCup('guava');
     const enter=clamp(p/.2,0,1);
-    scale=lerp(1.0,PZ('zoomGuava',1.12),p);
+    scale=lerp(1.0,1.12,p);
     ry=lerp(8,-14,p); rx=lerp(-3,5,p);
     opacity = p>.8?lerp(1,0,easeIn(clamp((p-.8)/.2,0,1))):easeOut(enter);
   } else if(idx===2){
     setCup('mochi');
     const enter=clamp(p/.2,0,1);
-    scale=lerp(1.12,PZ('zoomMochi',1.0),p);
+    scale=lerp(1.12,1.0,p);
     ry=lerp(-14,18,p); rx=lerp(5,-6,p);
     opacity = p>.82?lerp(1,0,easeIn(clamp((p-.82)/.18,0,1))):easeOut(enter);
     if(p>.6&&!lineupShown){lineupShown=true;lineupEls.forEach(e=>e.classList.add('show'));}
@@ -742,7 +740,6 @@ function onResize(){
 window.addEventListener('scroll',()=>{if(!raf){raf=true;requestAnimationFrame(tick);}},{passive:true});
 window.addEventListener('resize',onResize,{passive:true});
 window.addEventListener('orientationchange',onResize,{passive:true});
-window.__pxTick=tick;
 tick();
 
 // ═══ MENU TABS ═══

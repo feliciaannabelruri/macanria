@@ -372,9 +372,9 @@ footer{background:var(--ink);padding:80px 80px 44px;}
 <!-- ═══ FLOATING CUP (transparent PNG · 3D parallax) ═══ -->
 <div id="cup-fixed" aria-hidden="true">
   <div id="cup-wrap">
-    <img class="cup-img" id="cup-silver" data-px="cupSilver" src="assets/cup-silver.png" alt="" />
-    <img class="cup-img" id="cup-guava" data-px="cupGuava"  src="assets/cup-guava-t.png" alt="" style="opacity:0" />
-    <img class="cup-img" id="cup-mochi" data-px="cupMochi"  src="assets/cup-mochi-t.png" alt="" style="opacity:0" />
+    <img class="cup-img" id="cup-silver" src="assets/cup-silver.png" alt="" />
+    <img class="cup-img" id="cup-guava"  src="assets/cup-guava-t.png" alt="" style="opacity:0" />
+    <img class="cup-img" id="cup-mochi"  src="assets/cup-mochi-t.png" alt="" style="opacity:0" />
   </div>
 </div>
 
@@ -384,7 +384,7 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   <div class="bt" id="s1a">MA</div>
   <div class="bt" id="s1b">MACANRIA<span style="color:var(--rose)">.</span></div>
 
-  <img id="s1-mobile-cup" data-px="cupSilver" src="assets/cup-silver.png" alt="Macanria cup" />
+  <img id="s1-mobile-cup" src="assets/cup-silver.png" alt="Macanria cup" />
 
   <div id="s1-info-m" style="position:absolute;left:58px;bottom:106px;z-index:60;display:none;">
     <div class="mono tag" style="color:rgba(16,28,92,.38);display:flex;align-items:center;margin-bottom:9px;">
@@ -468,9 +468,9 @@ footer{background:var(--ink);padding:80px 80px 44px;}
     <div style="font-family:'Noto Serif SC',serif;font-size:16px;letter-spacing:.2em;color:rgba(16,28,92,.18);margin-top:10px;">選你的味道</div>
   </div>
   <div id="lineup">
-    <div class="li-item"><img src="assets/cup-guava-t.png" alt="Pink Guava" data-px="cupGuava" class="li-img" style="height:230px;" /><span class="li-lbl">Pink Guava · 38k</span></div>
-    <div class="li-item" style="margin-bottom:24px;"><img src="assets/cup-silver.png" alt="Soymilk Tea" data-px="cupSilver" class="li-img" style="height:270px;" /><span class="li-lbl">Soymilk Tea · From 35k</span></div>
-    <div class="li-item"><img src="assets/cup-mochi-t.png" alt="Yu Tou Mochi" data-px="cupMochi" class="li-img" style="height:230px;" /><span class="li-lbl">Yù Tou Mochi · 38k</span></div>
+    <div class="li-item"><img src="assets/cup-guava-t.png" alt="Pink Guava" class="li-img" style="height:230px;" /><span class="li-lbl">Pink Guava · 38k</span></div>
+    <div class="li-item" style="margin-bottom:24px;"><img src="assets/cup-silver.png" alt="Soymilk Tea" class="li-img" style="height:270px;" /><span class="li-lbl">Soymilk Tea · From 35k</span></div>
+    <div class="li-item"><img src="assets/cup-mochi-t.png" alt="Yù Tou Mochi" class="li-img" style="height:230px;" /><span class="li-lbl">Yù Tou Mochi · 38k</span></div>
   </div>
   <a href="#menu" style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:60;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(16,28,92,.28);text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:6px;">
     <div style="width:1px;height:26px;background:linear-gradient(to bottom,transparent,rgba(16,28,92,.16));animation:pulse 2.2s ease-in-out infinite;"></div>Full Menu Below
@@ -496,16 +496,35 @@ footer{background:var(--ink);padding:80px 80px 44px;}
     <button class="mtab" data-tab="frt">Fruit Tea 果茶</button>
   </div>
   <div class="mpanel on" id="tab-smt">
-    <div class="mgrid"></div>
-      <p class="menu-note rv"></p>
+    <div class="mgrid">
+      <div class="mc star rv d1"><span class="mc-badge">★ Bestseller</span><div class="mc-zh">桂花烏龍</div><div class="mc-en">Osmanthus Oolong</div><div class="mc-desc">Delicate osmanthus blossom with premium oolong. Naturally sweet, elegant.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d2"><div class="mc-zh">伯爵茶</div><div class="mc-en">Earl Grey</div><div class="mc-desc">Classic Earl Grey meets fresh homemade soy milk. Calming and refined.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d3"><div class="mc-zh">白桃烏龍</div><div class="mc-en">White Peach Oolong</div><div class="mc-desc">Light white peach rounds out a smooth, refreshing oolong base.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d1"><div class="mc-zh">茉莉花</div><div class="mc-en">Jasmine</div><div class="mc-desc">Fragrant jasmine — light, floral, perfect on a warm day.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d2"><div class="mc-zh">鐵觀音</div><div class="mc-en">Tie Guan Yin</div><div class="mc-desc">Semi-fermented oolong with a distinctive floral character. Balanced.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d3"><div class="mc-zh">雲南普洱</div><div class="mc-en">Yunnan Pu Er</div><div class="mc-desc">Deep, earthy Yunnan pu-erh — for the serious tea lover.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d1"><div class="mc-zh">大紅袍</div><div class="mc-en">Da Hong Pao</div><div class="mc-desc">Legendary Wuyi oolong. Bold, roasted, unforgettable finish.</div><div class="mc-price">Rp 35.000</div></div>
+      <div class="mc rv d2"><div class="mc-zh">阿薩姆紅茶</div><div class="mc-en">Assam Black</div><div class="mc-desc">Full-bodied and robust, made creamy with homemade soy milk.</div><div class="mc-price">Rp 35.000</div></div>
+    </div>
+    <p class="menu-note rv">+ Jelly Pearl topping Rp 3,000 · Sugar level adjustable · Available iced &amp; hot</p>
   </div>
   <div class="mpanel" id="tab-tea">
-    <div class="mgrid"></div>
-      <p class="menu-note rv"></p>
+    <div class="mgrid">
+      <div class="mc star rv d1"><span class="mc-badge">★ Recommended</span><div class="mc-zh">桂花茶</div><div class="mc-en">Osmanthus Tea</div><div class="mc-desc">Light, floral, calming. No milk — pure aromatic fragrance.</div><div class="mc-price">Rp 32.000</div></div>
+      <div class="mc rv d2"><div class="mc-zh">大紅袍清茶</div><div class="mc-en">Da Hong Pao Tea</div><div class="mc-desc">Powerful roasted character without soy milk. Pure and bold.</div><div class="mc-price">Rp 32.000</div></div>
+      <div class="mc rv d3"><div class="mc-zh">茉莉烏龍</div><div class="mc-en">Jasmine Oolong</div><div class="mc-desc">Two florals in one cup — fresh and sophisticated.</div><div class="mc-price">Rp 32.000</div></div>
+      <div class="mc rv d1"><div class="mc-zh">玫瑰茶</div><div class="mc-en">Rose Tea</div><div class="mc-desc">Romantic, light, visually stunning rose tea. Indulgent.</div><div class="mc-price">Rp 32.000</div></div>
+    </div>
+    <p class="menu-note rv">Brewed fresh daily · No milk · No added sugar</p>
   </div>
   <div class="mpanel" id="tab-frt">
-    <div class="mgrid"></div>
-      <p class="menu-note rv"></p>
+    <div class="mgrid">
+      <div class="mc star rv d1"><span class="mc-badge">★ Signature</span><div class="mc-zh">粉紅芭樂黑茶</div><div class="mc-en">Pink Guava Hei Cha</div><div class="mc-desc">Fresh pink guava + bold black tea + ruby jelly. A fruit burst.</div><div class="mc-price">Rp 38.000</div></div>
+      <div class="mc rv d2"><div class="mc-zh">芋頭麻糬黑茶</div><div class="mc-en">Yù Tou Mochi</div><div class="mc-desc">Creamy purple taro with chewy mochi over Dieng black tea.</div><div class="mc-price">Rp 38.000</div></div>
+      <div class="mc rv d3"><div class="mc-zh">荔枝烏龍</div><div class="mc-en">Lychee Oolong</div><div class="mc-desc">Juicy lychee lifts a fragrant oolong. Sweet and refreshing.</div><div class="mc-price">Rp 36.000</div></div>
+      <div class="mc rv d1"><div class="mc-zh">百香果綠茶</div><div class="mc-en">Passionfruit Green</div><div class="mc-desc">Tangy passionfruit over cool green tea. Bright and zippy.</div><div class="mc-price">Rp 36.000</div></div>
+    </div>
+    <p class="menu-note rv">Real fruit, pressed daily · Add ruby jelly or mochi · Iced only</p>
   </div>
 </section>
 
@@ -513,7 +532,7 @@ footer{background:var(--ink);padding:80px 80px 44px;}
 <section id="scoops" data-screen-label="Ice Cream">
   <div class="eyebrow ey-dk rv">03 — 愛心雪糕</div>
   <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);">Tofu Ice Cream.<br><span style="font-family:'Noto Serif SC',serif;font-size:.52em;opacity:.22;font-weight:700;">飲料選擇</span></h2>
-  <p class="rv d1" style="font-size:15px;line-height:1.72;color:rgba(16,28,92,.52);max-width:520px;margin-top:18px;"></p>
+  <p class="rv d1" style="font-size:15px;line-height:1.72;color:rgba(16,28,92,.52);max-width:520px;margin-top:18px;">A creamy, plant-based dessert crafted from blended silken tofu — smooth, dairy-free, and naturally lower in fat. Velvety and indulgent, it appeals to vegans, lactose-intolerant individuals, and anyone who believes dessert should feel as good as it tastes.</p>
 
   <div class="scoop-stage">
     <!-- Featured scoop -->
@@ -521,9 +540,9 @@ footer{background:var(--ink);padding:80px 80px 44px;}
       <div class="scoop-disc"></div>
       <img class="scoop-big" id="scoop-big" src="assets/ic-sesame.png" alt="Selected scoop" />
       <div class="scoop-cap">
-        <div class="scoop-zh" id="scoop-zh"></div>
-        <div class="scoop-name" id="scoop-name"></div>
-        <div class="scoop-desc" id="scoop-desc"></div>
+        <div class="scoop-zh" id="scoop-zh">黑芝麻</div>
+        <div class="scoop-name" id="scoop-name">Black Sesame</div>
+        <div class="scoop-desc" id="scoop-desc">Creamy, nutty and intensely deep — a stunning jet-grey scoop finished with honeycomb brittle.</div>
       </div>
     </div>
 
@@ -531,17 +550,41 @@ footer{background:var(--ink);padding:80px 80px 44px;}
     <div class="scoop-side rv d2">
       <h3>Choose a flavour</h3>
       <div class="hint">9 rotating flavours · tap to preview</div>
-      <div class="scoop-grid" id="scoop-grid"></div>
+      <div class="scoop-grid" id="scoop-grid">
+        <div class="scoop-chip on" data-name="Black Sesame" data-zh="黑芝麻" data-img="assets/ic-sesame.png" data-desc="Creamy, nutty and intensely deep — a stunning jet-grey scoop finished with honeycomb brittle.">
+          <img src="assets/ic-sesame.png" alt="" /><span>Black Sesame</span></div>
+        <div class="scoop-chip" data-name="Coffee Hazelnut" data-zh="榛果咖啡" data-img="assets/ic-coffee.png" data-desc="Bold cold-brew coffee folded with toasted hazelnut. Smooth, grown-up, never bitter.">
+          <img src="assets/ic-coffee.png" alt="" /><span>Coffee Hazelnut</span></div>
+        <div class="scoop-chip" data-name="Macadamia Brittle" data-zh="夏威夷果" data-img="assets/ic-macadamia.png" data-desc="Clean soy-cream base loaded with buttery macadamia and caramel brittle shards.">
+          <img src="assets/ic-macadamia.png" alt="" /><span>Macadamia</span></div>
+        <div class="scoop-chip" data-name="Rum Raisin" data-zh="蘭姆葡萄" data-img="assets/ic-rumraisin.png" data-desc="Plump rum-soaked raisins swirled through a mellow, fragrant cream. A classic.">
+          <img src="assets/ic-rumraisin.png" alt="" /><span>Rum Raisin</span></div>
+        <div class="scoop-chip" data-name="Maple Walnut" data-zh="楓糖核桃" data-img="assets/ic-walnut.png" data-desc="Toasted walnuts and warm maple in a soft, comforting soy-cream scoop.">
+          <img src="assets/ic-walnut.png" alt="" /><span>Maple Walnut</span></div>
+        <div class="scoop-chip" data-name="Biscoff Crumble" data-zh="比斯可夫" data-img="assets/ic-biscoff.png" data-desc="Spiced speculoos cream crowned with caramelised biscuit crumble.">
+          <img src="assets/ic-biscoff.png" alt="" /><span>Biscoff</span></div>
+        <div class="scoop-chip" data-name="Durian" data-zh="貓山王" data-img="assets/ic-durian.png" data-desc="For the brave — rich Musang King durian, pure and unapologetic.">
+          <img src="assets/ic-durian.png" alt="" /><span>Durian</span></div>
+        <div class="scoop-chip" data-name="Salted Cheese" data-zh="鹹起司" data-img="assets/ic-cheese.png" data-desc="Sweet-and-salty cheese cream — mellow, golden, surprisingly addictive.">
+          <img src="assets/ic-cheese.png" alt="" /><span>Salted Cheese</span></div>
+        <div class="scoop-chip" data-name="Strawberry Shortcake" data-zh="草莓蛋糕" data-img="assets/ic-strawberry.png" data-desc="Fresh strawberry compote and sponge crumble over clean soy-cream.">
+          <img src="assets/ic-strawberry.png" alt="" /><span>Strawberry</span></div>
       </div>
 
       <div class="topping-row">
         <h3 style="margin-bottom:10px;">Add a topping</h3>
-        <div class="topping-chips" id="topping-chips"></div>
+        <div class="topping-chips" id="topping-chips">
+          <button class="tchip on">Honeycomb Brittle</button>
+          <button class="tchip">Mochi</button>
+          <button class="tchip">Ruby Jelly</button>
+          <button class="tchip">Crushed Nuts</button>
+          <button class="tchip">Biscuit Crumble</button>
+        </div>
       </div>
 
       <div class="scoop-order">
         <a href="#locations" class="btn-cobalt">Find a Booth →</a>
-        <span class="scoop-price"></span>
+        <span class="scoop-price">Single Rp 28k · Double Rp 45k</span>
       </div>
     </div>
   </div>
@@ -556,10 +599,10 @@ footer{background:var(--ink);padding:80px 80px 44px;}
     <div>
       <div class="eyebrow ey-dk rv">04 — Our Story</div>
       <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);margin-bottom:22px;">A heritage tea house,<br>brewed for<br>the future.</h2>
-      <p class="story-body rv d2"></p>
+      <p class="story-body rv d2">At Macanria, we set out to revive the beauty of <strong>Chinese tea culture</strong> for a new generation. Every cup begins with premium heritage teas — aged oolongs, jasmine blossoms, Wuyi rock teas — paired with <strong>fresh homemade soy milk</strong> in place of dairy. Lighter on the body, <strong>extraordinary</strong> on the palate.</p>
       <div class="duo rv d3">
-        <div class="mcard tiger"><img class="mcard-mascot" src="assets/macan-front.png" alt="Macan" /><div class="mcard-zh"></div><div class="mcard-name"></div><div class="mcard-sub"></div><div class="mcard-desc"></div></div>
-        <div class="mcard rabbit"><img class="mcard-mascot" src="assets/tutu-front.png" alt="Tutu" /><div class="mcard-zh"></div><div class="mcard-name"></div><div class="mcard-sub" style="color:rgba(180,60,80,.45)"></div><div class="mcard-desc"></div></div>
+        <div class="mcard tiger"><img class="mcard-mascot" src="assets/macan-front.png" alt="Macan" /><div class="mcard-zh">老虎</div><div class="mcard-name">Macan · The Tiger</div><div class="mcard-sub">Bold · Strong · Fearless</div><div class="mcard-desc">The brand's soul: navy confidence, bold flavours, no hesitation.</div></div>
+        <div class="mcard rabbit"><img class="mcard-mascot" src="assets/tutu-front.png" alt="Tutu" /><div class="mcard-zh">兔兔</div><div class="mcard-name">Tutu · The Rabbit</div><div class="mcard-sub" style="color:rgba(180,60,80,.45)">Soft · Silky · Sweet</div><div class="mcard-desc">The cream side — silky tofu ice cream, subtle sweetness, unforgettable charm.</div></div>
       </div>
     </div>
   </div>
@@ -570,11 +613,11 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   <div class="eyebrow ey-dk rv">05 — The Experience</div>
   <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);">A cup for<br>every sense.</h2>
   <div class="sense-grid rv d2">
-    <div class="sense-card"><div class="sense-num">01</div><div class="sense-name"></div><p class="sense-desc"></p></div>
-    <div class="sense-card"><div class="sense-num">02</div><div class="sense-name"></div><p class="sense-desc"></p></div>
-    <div class="sense-card"><div class="sense-num">03</div><div class="sense-name"></div><p class="sense-desc"></p></div>
-    <div class="sense-card"><div class="sense-num">04</div><div class="sense-name"></div><p class="sense-desc"></p></div>
-    <div class="sense-card"><div class="sense-num">05</div><div class="sense-name"></div><p class="sense-desc"></p></div>
+    <div class="sense-card"><div class="sense-num">01</div><div class="sense-name">Sight</div><p class="sense-desc">We've designed a sanctuary for your eyes — a modern, minimalist space flooded with crisp, bright light that gently puts your mind at ease the moment you walk through the door.</p></div>
+    <div class="sense-card"><div class="sense-num">02</div><div class="sense-name">Smell</div><p class="sense-desc">The enchanting scent of tea fills the air, creating a serene sanctuary for your mind while your order is crafted.</p></div>
+    <div class="sense-card"><div class="sense-num">03</div><div class="sense-name">Sound</div><p class="sense-desc">Immerse yourself in calming rhythms that elevate your spirits as you wait and savor our signature blends.</p></div>
+    <div class="sense-card"><div class="sense-num">04</div><div class="sense-name">Touch</div><p class="sense-desc">Hold our cup and feel the genuine passion and quality in your hands.</p></div>
+    <div class="sense-card"><div class="sense-num">05</div><div class="sense-name">Taste</div><p class="sense-desc">Prepare your palate for a delightful plot twist — a beautiful, unexpected friendship between velvety soymilk and bold tea.</p></div>
   </div>
 </section>
 
@@ -583,8 +626,16 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   <div class="eyebrow ey-lt rv">06 — Gallery</div>
   <h2 class="sh sh-lt rv d1" style="font-size:clamp(32px,3.8vw,54px);">From the booth.</h2>
   <div class="gal-grid rv d1">
+    <div class="span2c span2r" style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-interior-wide.jpg" alt="Macanria interior" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-exterior-tiger.jpg" alt="Macanria exterior tiger" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-interior-tiger.jpg" alt="Macanria interior tiger wall" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-mirror.jpg" alt="Blue convex mirror" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-neko.jpg" alt="Blue maneki neko" /></div>
+    <div class="span2c" style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-exterior-logo.jpg" alt="Macanria storefront" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-bench.jpg" alt="Blue bench detail" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-tiger-head.jpg" alt="Tiger mascot head" /></div>
   </div>
-  <div class="gal-note"></div>
+  <div class="gal-note"><span style="display:inline-block;width:14px;height:1px;background:var(--rose);"></span>10 outlets — Ashta District 8 · Grand Indonesia · Sarinah · PIK · Taman Anggrek · Chillax · Tribeca · Plaza Indonesia · Lippo Mall Puri · Kokas</div>
 </section>
 
 <!-- ═══ LOCATIONS ═══ -->
@@ -594,18 +645,28 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);">Find your nearest<br>Macanria.</h2>
   <p class="rv d1" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(16,28,92,.35);margin-top:14px;">10 outlets across Jakarta · tap a card to open in Google Maps</p>
   <div class="lgrid">
+    <a class="lcard flag rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Ashta+District+8+SCBD" target="_blank" rel="noopener"><span class="l-badge">Flagship</span><div class="l-zone">South Jakarta</div><div class="l-name">Ashta District 8</div><div class="l-area">SCBD · 1st Floor</div><div class="l-addr">Ashta 1F Unit 12, Oakwood Tower · Jl. Jend. Sudirman Kav. 52–53, Senayan</div><div class="l-hours">Daily · 08:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d2" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Lippo+Mall+Puri" target="_blank" rel="noopener"><div class="l-num">02</div><div class="l-zone">West Jakarta</div><div class="l-name">Lippo Mall Puri</div><div class="l-area">Puri Indah · 1st Floor</div><div class="l-addr">Unit L1-K02A · Jl. Puri Indah Raya Blok U1, Kembangan</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d3" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Pantai+Indah+Kapuk+PIK" target="_blank" rel="noopener"><div class="l-num">03</div><div class="l-zone">North Jakarta</div><div class="l-name">Pantai Indah Kapuk</div><div class="l-area">PIK</div><div class="l-addr">Pantai Indah Kapuk, Penjaringan</div><div class="l-hours">Daily · 10:00 – 21:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Grand+Indonesia+West+Mall" target="_blank" rel="noopener"><div class="l-num">04</div><div class="l-zone">Central Jakarta</div><div class="l-name">Grand Indonesia</div><div class="l-area">West Mall · LG Floor</div><div class="l-addr">Jl. M.H. Thamrin No. 1, Menteng</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d2" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Hublife+Taman+Anggrek" target="_blank" rel="noopener"><div class="l-num">05</div><div class="l-zone">West Jakarta</div><div class="l-name">Hublife Taman Anggrek</div><div class="l-area">Letjen S. Parman · 1st Floor</div><div class="l-addr">Jl. Letjen S. Parman, Tanjung Duren</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d3" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Sarinah+Thamrin" target="_blank" rel="noopener"><div class="l-num">06</div><div class="l-zone">Central Jakarta</div><div class="l-name">Sarinah</div><div class="l-area">M.H. Thamrin · GF Floor</div><div class="l-addr">Jl. M.H. Thamrin No. 11, Menteng</div><div class="l-hours">Mon–Sat 08:00–22:00 · Sun 07:00–22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Chillax+Sudirman" target="_blank" rel="noopener"><div class="l-num">07</div><div class="l-zone">Central Jakarta</div><div class="l-name">Chillax Sudirman</div><div class="l-area">Sudirman</div><div class="l-addr">Jl. Jend. Sudirman, Tanah Abang</div><div class="l-hours">Mon–Sat 08:00–22:00 · Sun 07:00–22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d2" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Tribeca+Central+Park" target="_blank" rel="noopener"><div class="l-num">08</div><div class="l-zone">West Jakarta</div><div class="l-name">Tribeca Park</div><div class="l-area">Central Park</div><div class="l-addr">Jl. Letjen S. Parman Kav. 28, Tanjung Duren</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d3" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Plaza+Indonesia" target="_blank" rel="noopener"><div class="l-num">09</div><div class="l-zone">Central Jakarta</div><div class="l-name">Plaza Indonesia</div><div class="l-area">Thamrin · Level 5</div><div class="l-addr">Jl. M.H. Thamrin Kav. 28–30, Menteng</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Kota+Kasablanka+Food+Society" target="_blank" rel="noopener"><div class="l-num">10</div><div class="l-zone">South Jakarta</div><div class="l-name">Kota Kasablanka</div><div class="l-area">Food Society · UG Floor</div><div class="l-addr">Jl. Casablanca Raya Kav. 88, Tebet</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
   </div>
 </section>
 
 <!-- ═══ FOOTER ═══ -->
 <footer data-screen-label="Footer">
   <div class="f-top">
-    <div><div class="f-wm">MACANRIA<span class="dot">.</span><span class="logo-cjk">免免</span></div><div class="f-cjk"></div><p class="f-tag"></p></div>
-    <div class="f-col"><h4>Menu</h4><ul></ul></div>
-    <div class="f-col"><h4>Order</h4><ul></ul></div>
-    <div class="f-col"><h4>Info</h4><ul></ul></div>
+    <div><div class="f-wm">MACANRIA<span class="dot">.</span><span class="logo-cjk">免免</span></div><div class="f-cjk">豆漿以茶 · 愛心雪糕</div><p class="f-tag">Homemade soy milk tea &amp; silken tofu ice cream. Dairy-free, lighter, never boring. Jakarta, Indonesia.</p></div>
+    <div class="f-col"><h4>Menu</h4><ul><li><a href="#menu">Soymilk Tea</a></li><li><a href="#menu">Pure Tea</a></li><li><a href="#scoops">Tofu Ice Cream</a></li></ul></div>
+    <div class="f-col"><h4>Order</h4><ul><li><a href="https://gofood.co.id" target="_blank">GoFood</a></li><li><a href="https://grab.com" target="_blank">GrabFood</a></li><li><a href="https://shopee.co.id" target="_blank">ShopeeFood</a></li></ul></div>
+    <div class="f-col"><h4>Info</h4><ul><li><a href="#story">Our Story</a></li><li><a href="#locations">Locations</a></li><li><a href="https://instagram.com/macanria" target="_blank">@macanria</a></li></ul></div>
   </div>
-  <div class="f-bot"><span class="f-copy"></span><div class="f-soc"></div></div>
+  <div class="f-bot"><span class="f-copy">© 2026 Macanria · All rights reserved · Jakarta, Indonesia</span><div class="f-soc"><a href="https://instagram.com/macanria" target="_blank">Instagram</a><a href="https://tiktok.com/@macanria" target="_blank">TikTok</a><a href="https://gofood.co.id" target="_blank">GoFood</a></div></div>
 </footer>
 
 <script>
@@ -628,8 +689,6 @@ const lerp=(a,b,t)=>a+(b-a)*t;
 const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
 const easeOut=t=>1-Math.pow(1-t,3);
 const easeIn=t=>t*t*t;
-// PARALLAX ZOOM: baca nilai zoom cup dari CMS (window.__parallaxCfg), clamp 0.2..10, fallback default.
-const PZ=(k,def)=>{var c=window.__parallaxCfg;var v=(c&&c[k]!=null)?parseFloat(c[k]):NaN;return isNaN(v)?def:clamp(v,0.2,10);};
 
 function activeScene(){
   for(let i=0;i<4;i++){
@@ -684,7 +743,7 @@ function tick(){
   if(idx===0){
     setCup('silver');
     const rise=clamp(p/.3,0,1);
-    scale=lerp(.6,PZ('zoomSilver',1.0),easeOut(rise));
+    scale=lerp(.6,1.0,easeOut(rise));
     ty=lerp(110,0,easeOut(rise));
     ry=lerp(-18,8,easeOut(rise));
     rx=lerp(14,-3,easeOut(rise));
@@ -692,13 +751,13 @@ function tick(){
   } else if(idx===1){
     setCup('guava');
     const enter=clamp(p/.2,0,1);
-    scale=lerp(1.0,PZ('zoomGuava',1.12),p);
+    scale=lerp(1.0,1.12,p);
     ry=lerp(8,-14,p); rx=lerp(-3,5,p);
     opacity = p>.8?lerp(1,0,easeIn(clamp((p-.8)/.2,0,1))):easeOut(enter);
   } else if(idx===2){
     setCup('mochi');
     const enter=clamp(p/.2,0,1);
-    scale=lerp(1.12,PZ('zoomMochi',1.0),p);
+    scale=lerp(1.12,1.0,p);
     ry=lerp(-14,18,p); rx=lerp(5,-6,p);
     opacity = p>.82?lerp(1,0,easeIn(clamp((p-.82)/.18,0,1))):easeOut(enter);
     if(p>.6&&!lineupShown){lineupShown=true;lineupEls.forEach(e=>e.classList.add('show'));}
@@ -742,7 +801,6 @@ function onResize(){
 window.addEventListener('scroll',()=>{if(!raf){raf=true;requestAnimationFrame(tick);}},{passive:true});
 window.addEventListener('resize',onResize,{passive:true});
 window.addEventListener('orientationchange',onResize,{passive:true});
-window.__pxTick=tick;
 tick();
 
 // ═══ MENU TABS ═══

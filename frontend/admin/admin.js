@@ -1,0 +1,491 @@
+/* admin.js — Macanria CMS. Tulis via PUT /api/content/[section]. 'general' tidak diedit di sini. */
+(function () {
+  "use strict";
+  var STATE = { data: null };
+  var SECTIONS = ["menu","scoops","story","senses","gallery","locations","footer","parallax"];
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function field(labelText, value, opts) {
+    opts = opts || {};
+    var wrap = el("div", "field" + (opts.full ? " full" : ""));
+    wrap.appendChild(el("label", null, labelText));
+    var input;
+    if (opts.textarea) { input = el("textarea"); input.value = value == null ? "" : value; }
+    else { input = el("input"); input.type = opts.type || "text"; input.value = value == null ? "" : value; }
+    if (opts.key) input.setAttribute("data-key", opts.key);
+    if (opts.max) input.setAttribute("maxlength", String(opts.max));
+    wrap.appendChild(input); wrap._input = input;
+    return wrap;
+  }
+  function selectField(labelText, value, options, key) {
+    var wrap = el("div", "field");
+    wrap.appendChild(el("label", null, labelText));
+    var sel = el("select");
+    options.forEach(function (o) {
+      var op = el("option", null, o === "" ? "(none)" : o);
+      op.value = o; if (o === (value == null ? "" : value)) op.selected = true;
+      sel.appendChild(op);
+    });
+    sel.setAttribute("data-key", key);
+    wrap.appendChild(sel); wrap._input = sel;
+    return wrap;
+  }
+  function checkField(labelText, checked, key) {
+    var wrap = el("div", "field");
+    var lab = el("label", "chk");
+    var cb = el("input"); cb.type = "checkbox"; cb.checked = !!checked;
+    cb.setAttribute("data-key", key);
+    lab.appendChild(cb); lab.appendChild(document.createTextNode(" " + labelText));
+    wrap.appendChild(lab); wrap._input = cb;
+    return wrap;
+  }
+  function val(container, key) {
+    var n = container.querySelector('[data-key="' + key + '"]');
+    if (!n) return undefined;
+    return n.type === "checkbox" ? n.checked : n.value;
+  }
+  function guard(r) {
+    if (r.status === 401) { window.location.href = "login.html"; throw new Error("Sesi habis"); }
+    return r;
+  }
+  function loadContent() {
+    return fetch("/api/content", { cache: "no-store", credentials: "same-origin" })
+      .then(guard)
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
+  }
+  function saveSection(section, payload, btn, msg) {
+    btn.disabled = true; var old = btn.textContent; btn.textContent = "Menyimpan...";
+    msg.textContent = ""; msg.className = "save-msg";
+    fetch("/api/content/" + encodeURIComponent(section), {
+      method: "PUT", headers: { "Content-Type": "application/json" },
+      credentials: "same-origin", body: JSON.stringify(payload)
+    })
+      .then(guard)
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (res.ok && res.j && res.j.ok !== false) {
+          STATE.data[section] = payload;
+          msg.textContent = "Tersimpan (lihat hasil di situs)"; msg.classList.add("ok");
+        } else {
+          msg.textContent = "Gagal: " + ((res.j && res.j.error) || "ditolak server"); msg.classList.add("err");
+        }
+      })
+      .catch(function (e) { msg.textContent = "Gagal: " + e.message; msg.classList.add("err"); })
+      .finally(function () { btn.disabled = false; btn.textContent = old; });
+  }
+  function uploadImage(file) {
+    var fd = new FormData(); fd.append("file", file);
+    return fetch("/api/upload", { method: "POST", credentials: "same-origin", body: fd })
+      .then(guard)
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (res.ok && res.j && (res.j.url || res.j.path)) return res.j.url || res.j.path;
+        throw new Error((res.j && res.j.error) || "upload gagal");
+      });
+  }
+  function uploadRow(getUrl, setUrl) {
+    var row = el("div", "upload-row");
+    var img = el("img", "thumb"); img.src = getUrl() || ""; img.alt = "";
+    var file = el("input"); file.type = "file"; file.accept = "image/png,image/jpeg,image/webp";
+    var note = el("span", "save-msg");
+    file.addEventListener("change", function () {
+      if (!file.files || !file.files[0]) return;
+      note.textContent = "Mengunggah..."; note.className = "save-msg";
+      uploadImage(file.files[0])
+        .then(function (url) { setUrl(url); img.src = url; note.textContent = "OK"; note.classList.add("ok"); })
+        .catch(function (e) { note.textContent = e.message; note.classList.add("err"); });
+    });
+    row.appendChild(img); row.appendChild(file); row.appendChild(note);
+    return row;
+  }
+  window.__cms = {
+    STATE: STATE, SECTIONS: SECTIONS, el: el, field: field, selectField: selectField,
+    checkField: checkField, val: val, saveSection: saveSection, uploadRow: uploadRow, loadContent: loadContent
+  };
+})();
+
+/* ===== BLOCK 4b: RENDER FORM ===== */
+(function () {
+  "use strict";
+  var C = window.__cms;
+  var el = C.el, field = C.field, selectField = C.selectField, checkField = C.checkField, val = C.val, uploadRow = C.uploadRow;
+  var BADGES = ["", "Bestseller", "Recommended", "Signature"];
+  var SENSE_KEYS = ["Sight", "Smell", "Sound", "Touch", "Taste"];
+  function head(title, onDel) {
+    var h = el("div", "item-head");
+    h.appendChild(el("span", "t", title));
+    if (onDel) { var b = el("button", "btn-del", "Hapus"); b.type = "button"; b.addEventListener("click", onDel); h.appendChild(b); }
+    return h;
+  }
+  function card() { return el("div", "item-card"); }
+  function row() { return el("div", "row"); }
+  function imgField(r, value) {
+    r.appendChild(field("URL gambar", value, { key: "img", full: true, max: 200 }));
+    var inp = r.querySelector('[data-key="img"]');
+    r.appendChild(uploadRow(function () { return inp.value; }, function (u) { inp.value = u; }));
+  }
+  function limiter(list, addBtn, min, max, msg) {
+    function refresh() {
+      var c = list.querySelectorAll(":scope > .item-card").length;
+      addBtn.disabled = c >= max;
+      list.querySelectorAll(":scope > .item-card .btn-del").forEach(function (b) { b.disabled = c <= min; });
+      if (msg) msg.textContent = c + " / maks " + max + (c < min ? " (minimal " + min + ")" : "");
+    }
+    return refresh;
+  }
+  C.renderMenu = function (m, host) {
+    m = m || { categories: {} };
+    var cats = [["soymilk","Soymilk Tea"],["pure","Pure Tea"],["fruit","Fruit Tea"]];
+    var refs = {};
+    cats.forEach(function (pair) {
+      var key = pair[0], label = pair[1];
+      var cat = (m.categories && m.categories[key]) || {};
+      var block = el("div", "cat-block"); block.appendChild(el("h3", null, label));
+      var meta = card();
+      var mr = row();
+      mr.appendChild(field("Label kategori", cat.label, { key: "label", max: 40 }));
+      mr.appendChild(field("Nama Mandarin", cat.zh, { key: "zh", max: 20 }));
+      meta.appendChild(mr);
+      meta.appendChild(field("Catatan kategori", cat.note, { key: "note", full: true, max: 160 }));
+      block.appendChild(meta);
+      var list = el("div"); var cmsg = el("div", "hint");
+      function addItem(it, refresh) {
+        it = it || {};
+        var r = card(); r.appendChild(head("Produk", function () { list.removeChild(r); if (refresh) refresh(); }));
+        var rr = row();
+        rr.appendChild(field("Nama (EN)", it.name, { key: "name", max: 60 }));
+        rr.appendChild(field("Nama Mandarin", it.zh, { key: "zh", max: 30 }));
+        r.appendChild(rr);
+        var rr2 = row();
+        rr2.appendChild(field("Harga", it.price, { key: "price", max: 20 }));
+        rr2.appendChild(selectField("Badge", it.badge || "", BADGES, "badge"));
+        r.appendChild(rr2);
+        r.appendChild(field("Deskripsi", it.desc, { key: "desc", full: true, textarea: true, max: 200 }));
+        list.appendChild(r);
+      }
+      var add = el("button", "btn btn-ghost", "+ Tambah produk"); add.type = "button";
+      var refresh = limiter(list, add, 1, 30, cmsg);
+      (cat.items || []).forEach(function (it) { addItem(it, refresh); });
+      add.addEventListener("click", function () { addItem({}, refresh); refresh(); });
+      block.appendChild(list); block.appendChild(cmsg); block.appendChild(add);
+      refresh();
+      host.appendChild(block);
+      refs[key] = { meta: meta, list: list };
+    });
+    host._collect = function () {
+      var out = { categories: {} };
+      Object.keys(refs).forEach(function (key) {
+        var items = [];
+        refs[key].list.querySelectorAll(":scope > .item-card").forEach(function (r) {
+          items.push({ name: val(r,"name"), zh: val(r,"zh"), desc: val(r,"desc"), price: val(r,"price"), badge: val(r,"badge") });
+        });
+        out.categories[key] = { label: val(refs[key].meta,"label"), zh: val(refs[key].meta,"zh"), note: val(refs[key].meta,"note"), items: items };
+      });
+      return out;
+    };
+  };
+  C.renderScoops = function (s, host) {
+    s = s || {};
+    var top = card();
+    top.appendChild(field("Intro", s.intro, { key: "intro", full: true, textarea: true, max: 400 }));
+    top.appendChild(field("Harga", s.price, { key: "price", full: true, max: 60 }));
+    host.appendChild(top);
+    var fc = card(); fc.appendChild(head("Varian rasa"));
+    var flist = el("div"); var fmsg = el("div", "hint");
+    function addFlav(f, refresh) {
+      f = f || {};
+      var r = card(); r.appendChild(head("Varian", function () { flist.removeChild(r); if (refresh) refresh(); }));
+      var rr = row();
+      rr.appendChild(field("Nama (EN)", f.name, { key: "name", max: 60 }));
+      rr.appendChild(field("Nama Mandarin", f.zh, { key: "zh", max: 30 }));
+      r.appendChild(rr);
+      r.appendChild(field("Deskripsi", f.desc, { key: "desc", full: true, textarea: true, max: 200 }));
+      imgField(r, f.img || "");
+      flist.appendChild(r);
+    }
+    var addf = el("button", "btn btn-ghost", "+ Tambah varian"); addf.type = "button";
+    var frefresh = limiter(flist, addf, 1, 20, fmsg);
+    (s.flavours || []).forEach(function (f) { addFlav(f, frefresh); });
+    addf.addEventListener("click", function () { addFlav({}, frefresh); frefresh(); });
+    fc.appendChild(flist); fc.appendChild(fmsg); fc.appendChild(addf); frefresh(); host.appendChild(fc);
+    var tc = card(); tc.appendChild(head("Topping"));
+    var tlist = el("div"); var tmsg = el("div", "hint");
+    function addTop(t, refresh) {
+      var r = card(); r.appendChild(head("Topping", function () { tlist.removeChild(r); if (refresh) refresh(); }));
+      r.appendChild(field("Nama topping", t, { key: "name", full: true, max: 40 }));
+      tlist.appendChild(r);
+    }
+    var addt = el("button", "btn btn-ghost", "+ Tambah topping"); addt.type = "button";
+    var trefresh = limiter(tlist, addt, 0, 12, tmsg);
+    (s.toppings || []).forEach(function (t) { addTop(t, trefresh); });
+    addt.addEventListener("click", function () { addTop("", trefresh); trefresh(); });
+    tc.appendChild(tlist); tc.appendChild(tmsg); tc.appendChild(addt); trefresh(); host.appendChild(tc);
+    host._collect = function () {
+      var flavours = [];
+      flist.querySelectorAll(":scope > .item-card").forEach(function (r) {
+        flavours.push({ name: val(r,"name"), zh: val(r,"zh"), desc: val(r,"desc"), img: val(r,"img") });
+      });
+      var toppings = [];
+      tlist.querySelectorAll(":scope > .item-card").forEach(function (r) { toppings.push(val(r, "name")); });
+      return { intro: val(top,"intro"), price: val(top,"price"), flavours: flavours, toppings: toppings };
+    };
+  };
+  C.renderStory = function (st, host) {
+    st = st || {};
+    var c = card();
+    c.appendChild(field("Judul", st.title, { key: "title", full: true, max: 120 }));
+    c.appendChild(field("Isi cerita", st.body, { key: "body", full: true, textarea: true, max: 600 }));
+    host.appendChild(c);
+    var mascots = st.mascots || [];
+    var mrefs = [];
+    var mc = card(); mc.appendChild(head("Kartu maskot (2 tetap)"));
+    [0,1].forEach(function (i) {
+      var m = mascots[i] || {};
+      var r = card(); r.appendChild(head("Maskot " + (i+1)));
+      var rr = row();
+      rr.appendChild(field("Nama", m.name, { key: "name", max: 60 }));
+      rr.appendChild(field("Nama Mandarin", m.zh, { key: "zh", max: 20 }));
+      r.appendChild(rr);
+      r.appendChild(field("Tagline", m.tagline, { key: "tagline", full: true, max: 60 }));
+      r.appendChild(field("Deskripsi", m.desc, { key: "desc", full: true, textarea: true, max: 200 }));
+      imgField(r, m.img || "");
+      mc.appendChild(r); mrefs.push(r);
+    });
+    host.appendChild(mc);
+    host._collect = function () {
+      var mascots = mrefs.map(function (r) {
+        return { zh: val(r,"zh"), name: val(r,"name"), tagline: val(r,"tagline"), desc: val(r,"desc"), img: val(r,"img") };
+      });
+      return { title: val(c,"title"), body: val(c, "body"), mascots: mascots };
+    };
+  };
+  C.renderSenses = function (se, host) {
+    se = se || {};
+    var top = card();
+    top.appendChild(field("Judul", se.title, { key: "title", full: true, max: 120 }));
+    host.appendChild(top);
+    var items = se.items || [];
+    var refs = [];
+    var c = card(); c.appendChild(head("Lima indera (5 tetap)"));
+    [0,1,2,3,4].forEach(function (i) {
+      var it = items[i] || {};
+      var r = card(); r.appendChild(head("Indera " + (i+1)));
+      r.appendChild(selectField("Key", it.key || SENSE_KEYS[i], SENSE_KEYS, "key"));
+      r.appendChild(field("Teks", it.text, { key: "text", full: true, textarea: true, max: 300 }));
+      c.appendChild(r); refs.push(r);
+    });
+    host.appendChild(c);
+    host._collect = function () {
+      return { title: val(top,"title"), items: refs.map(function (r) { return { key: val(r,"key"), text: val(r,"text") }; }) };
+    };
+  };
+  C.renderGallery = function (gl, host) {
+    gl = gl || {};
+    var top = card();
+    top.appendChild(field("Teks ticker", gl.ticker, { key: "ticker", full: true, max: 300 }));
+    host.appendChild(top);
+    var photos = gl.photos || [];
+    var refs = [];
+    var gc = card(); gc.appendChild(head("Foto (8 tetap)"));
+    [0,1,2,3,4,5,6,7].forEach(function (i) {
+      var p = photos[i] || {};
+      var r = card(); r.appendChild(head("Foto " + (i+1)));
+      imgField(r, p.img || "");
+      r.appendChild(field("Layout", p.layout || "", { key: "layout", full: true, max: 40 }));
+      gc.appendChild(r); refs.push(r);
+    });
+    host.appendChild(gc);
+    host._collect = function () {
+      return { ticker: val(top, "ticker"), photos: refs.map(function (r) { return { img: val(r,"img"), layout: val(r,"layout") }; }) };
+    };
+  };
+  C.renderLocations = function (lo, host) {
+    lo = lo || {};
+    var gc = card(); gc.appendChild(head("Outlet"));
+    var list = el("div"); var msg = el("div", "hint");
+    function addOutlet(o, refresh) {
+      o = o || {};
+      var r = card(); r.appendChild(head("Outlet", function () { list.removeChild(r); if (refresh) refresh(); }));
+      var rr = row();
+      rr.appendChild(field("Nama outlet", o.name, { key: "name", max: 80 }));
+      rr.appendChild(field("Region", o.region, { key: "region", max: 40 }));
+      r.appendChild(rr);
+      var rr2 = row();
+      rr2.appendChild(field("Area/lantai", o.area, { key: "area", max: 80 }));
+      rr2.appendChild(field("Jam buka", o.hours, { key: "hours", max: 120 }));
+      r.appendChild(rr2);
+      r.appendChild(field("Alamat", o.address, { key: "address", full: true, max: 200 }));
+      r.appendChild(field("Link Google Maps", o.maps, { key: "maps", full: true, max: 300 }));
+      r.appendChild(checkField("Flagship", !!o.flagship, "flagship"));
+      list.appendChild(r);
+    }
+    var add = el("button", "btn btn-ghost", "+ Tambah outlet"); add.type = "button";
+    var refresh = limiter(list, add, 1, 40, msg);
+    (lo.outlets || []).forEach(function (o) { addOutlet(o, refresh); });
+    add.addEventListener("click", function () { addOutlet({}, refresh); refresh(); });
+    gc.appendChild(list); gc.appendChild(msg); gc.appendChild(add); refresh(); host.appendChild(gc);
+    host._collect = function () {
+      var outlets = [];
+      list.querySelectorAll(":scope > .item-card").forEach(function (r) {
+        outlets.push({
+          flagship: val(r,"flagship"), region: val(r,"region"), name: val(r,"name"),
+          area: val(r,"area"), address: val(r,"address"), hours: val(r,"hours"), maps: val(r,"maps")
+        });
+      });
+      return { outlets: outlets };
+    };
+  };
+  C.renderFooter = function (f, host) {
+    f = f || {};
+    var c = card();
+    c.appendChild(field("Title", f.title, { key: "title", full: true, max: 40 }));
+    c.appendChild(field("Subtext (CJK)", f.subtext, { key: "subtext", full: true, max: 60 }));
+    c.appendChild(field("Deskripsi/tagline", f.description, { key: "description", full: true, textarea: true, max: 300 }));
+    c.appendChild(field("Copyright", f.copyright, { key: "copyright", full: true, max: 160 }));
+    host.appendChild(c);
+    function linkList(title, arr) {
+      var gc = card(); gc.appendChild(head(title));
+      var list = el("div"); var msg = el("div", "hint");
+      function addLink(l, refresh) {
+        l = l || {};
+        var r = card(); r.appendChild(head("Link", function () { list.removeChild(r); if (refresh) refresh(); }));
+        var rr = row();
+        rr.appendChild(field("Label", l.label, { key: "label", max: 40 }));
+        rr.appendChild(field("URL/href", l.href, { key: "href", max: 300 }));
+        r.appendChild(rr); list.appendChild(r);
+      }
+      var add = el("button", "btn btn-ghost", "+ Tambah link"); add.type = "button";
+      var refresh = limiter(list, add, 0, 8, msg);
+      (arr || []).forEach(function (l) { addLink(l, refresh); });
+      add.addEventListener("click", function () { addLink({}, refresh); refresh(); });
+      gc.appendChild(list); gc.appendChild(msg); gc.appendChild(add); refresh(); host.appendChild(gc);
+      return list;
+    }
+    var menuL = linkList("Menu links", f.menuLinks);
+    var orderL = linkList("Order links", f.orderLinks);
+    var infoL = linkList("Info links", f.infoLinks);
+    var socL = linkList("Social links", f.social);
+    function collectLinks(list) {
+      var out = [];
+      list.querySelectorAll(":scope > .item-card").forEach(function (r) {
+        out.push({ label: val(r,"label"), href: val(r,"href") });
+      });
+      return out;
+    }
+    host._collect = function () {
+      return {
+        title: val(c,"title"), subtext: val(c,"subtext"), description: val(c,"description"),
+        menuLinks: collectLinks(menuL), orderLinks: collectLinks(orderL), infoLinks: collectLinks(infoL),
+        copyright: val(c,"copyright"), social: collectLinks(socL)
+      };
+    };
+  };
+  C.renderParallax = function (px, host) {
+    px = px || {};
+    var SLOTS = [
+      { key: "cupSilver", zoom: "zoomSilver", label: "Cup Silver (Soymilk Tea)", def: "1.0" },
+      { key: "cupGuava",  zoom: "zoomGuava",  label: "Cup Guava (Pink Guava)",   def: "1.12" },
+      { key: "cupMochi",  zoom: "zoomMochi",  label: "Cup Mochi (Yu Tou Mochi)", def: "1.0" }
+    ];
+    SLOTS.forEach(function (s) {
+      var c = card();
+      c.appendChild(head(s.label));
+      c.appendChild(field("URL gambar", px[s.key], { key: s.key, full: true, max: 200 }));
+      var inp = c.querySelector('[data-key="' + s.key + '"]');
+      c.appendChild(uploadRow(function () { return inp.value; }, function (u) { inp.value = u; }));
+      var z = (px[s.zoom] != null && px[s.zoom] !== "") ? px[s.zoom] : s.def;
+      c.appendChild(field("Zoom saat scroll (1.0 = normal, makin besar = makin memenuhi layar)", z, { key: s.zoom, full: true, max: 6 }));
+      host.appendChild(c);
+    });
+    host._collect = function () {
+      return {
+        cupSilver: val(host, "cupSilver"),
+        cupGuava:  val(host, "cupGuava"),
+        cupMochi:  val(host, "cupMochi"),
+        zoomSilver: val(host, "zoomSilver"),
+        zoomGuava:  val(host, "zoomGuava"),
+        zoomMochi:  val(host, "zoomMochi")
+      };
+    };
+  };
+})();
+/* ===== BLOCK 4c: BOOT + NAV + SAVE ===== */
+(function () {
+  "use strict";
+  var C = window.__cms;
+  var STATE = C.STATE, el = C.el;
+  var TITLES = {
+    menu: ["Menu Minuman", "Kelola produk per kategori (1-30 tiap kategori)."],
+    scoops: ["Tofu Ice Cream", "Intro, harga, varian rasa (1-20), topping (0-12)."],
+    story: ["Our Story", "Judul, cerita, dan dua kartu maskot."],
+    senses: ["Five Senses", "Judul & lima teks indera."],
+    gallery: ["Galeri", "Ticker & delapan foto."],
+    locations: ["Lokasi Outlet", "Daftar outlet (1-40)."],
+    footer: ["Footer", "Title, subtext, deskripsi, copyright, link (maks 8/grup)."],
+    parallax: ["Parallax (Gambar)", "Ganti gambar cup pada animasi parallax."]
+  };
+  var RENDERERS = {
+    menu: C.renderMenu, scoops: C.renderScoops, story: C.renderStory,
+    senses: C.renderSenses, gallery: C.renderGallery, locations: C.renderLocations, footer: C.renderFooter, parallax: C.renderParallax
+  };
+  function buildSection(sec) {
+    var wrap = el("section", "section"); wrap.id = "sec-" + sec; wrap.setAttribute("data-sec", sec);
+    var meta = TITLES[sec] || [sec, ""];
+    wrap.appendChild(el("h2", null, meta[0]));
+    wrap.appendChild(el("p", "hint", meta[1]));
+    var host = el("div");
+    wrap.appendChild(host);
+    (RENDERERS[sec] || function(){})(STATE.data ? STATE.data[sec] : null, host);
+    var actions = el("div", "actions");
+    var btn = el("button", "btn btn-primary", "Simpan " + meta[0]); btn.type = "button";
+    var msg = el("span", "save-msg");
+    btn.addEventListener("click", function () {
+      if (typeof host._collect !== "function") { msg.textContent = "Tidak ada data."; return; }
+      C.saveSection(sec, host._collect(), btn, msg);
+    });
+    actions.appendChild(btn); actions.appendChild(msg);
+    wrap.appendChild(actions);
+    return wrap;
+  }
+  function activate(sec) {
+    document.querySelectorAll(".navlink").forEach(function (b) { b.classList.toggle("on", b.getAttribute("data-sec") === sec); });
+    document.querySelectorAll(".section").forEach(function (s) { s.classList.toggle("on", s.getAttribute("data-sec") === sec); });
+  }
+  function render() {
+    var content = document.getElementById("content");
+    content.innerHTML = "";
+    C.SECTIONS.forEach(function (sec) { content.appendChild(buildSection(sec)); });
+    activate(C.SECTIONS[0]);
+    document.querySelectorAll(".navlink").forEach(function (b) {
+      b.addEventListener("click", function () { activate(b.getAttribute("data-sec")); });
+    });
+  }
+  function boot() {
+    var status = document.getElementById("status");
+    var logout = document.getElementById("logoutBtn");
+    if (logout) logout.addEventListener("click", function () {
+      fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" })
+        .finally(function () { window.location.href = "login.html"; });
+    });
+    C.loadContent()
+      .then(function (data) {
+        STATE.data = data || {};
+        if (status) status.innerHTML = "Terhubung - siap edit";
+        render();
+      })
+      .catch(function (e) {
+        var content = document.getElementById("content");
+        content.innerHTML = "";
+        var box = el("div", "loading");
+        box.textContent = "Gagal memuat konten: " + e.message + ". Pastikan backend & sesi aktif.";
+        content.appendChild(box);
+        if (status) status.textContent = "Gagal memuat";
+      });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();

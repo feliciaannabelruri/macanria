@@ -1,0 +1,276 @@
+/* content-render.js — mengisi index.html dari /api/content (skema resmi CMS).
+   Cakupan: menu, scoops, story, senses, gallery, locations, footer.
+   TIDAK menyentuh hero/marquee/scene parallax (aset desain). Interaksi (tab
+   menu, scoop chip, topping) via event delegation agar bekerja pada elemen
+   yang dirender dinamis. Portabel: sama di Vercel & VPS. */
+(function () {
+  "use strict";
+
+  function txt(sel, value, root) {
+    if (value == null) return;
+    var el = (root || document).querySelector(sel);
+    if (el) el.textContent = value;
+  }
+  function clear(el) { while (el && el.firstChild) el.removeChild(el.firstChild); }
+  function make(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  /* ---------- MENU ---------- */
+  function renderMenu(m) {
+    if (!m || !m.categories) return;
+    var map = { smt: "soymilk", tea: "pure", frt: "fruit" };
+    Object.keys(map).forEach(function (tabId) {
+      var cat = m.categories[map[tabId]];
+      var panel = document.getElementById("tab-" + tabId);
+      if (!cat || !panel) return;
+      var grid = panel.querySelector(".mgrid");
+      if (grid) {
+        clear(grid);
+        (cat.items || []).forEach(function (it, i) {
+          var card = make("div", "mc rv d" + ((i % 3) + 1));
+          if (it.badge) {
+            card.classList.add("star");
+            card.appendChild(make("span", "mc-badge", "\u2605 " + it.badge));
+          }
+          card.appendChild(make("div", "mc-zh", it.zh));
+          card.appendChild(make("div", "mc-en", it.name));
+          card.appendChild(make("div", "mc-desc", it.desc));
+          card.appendChild(make("div", "mc-price", it.price));
+          grid.appendChild(card);
+        });
+      }
+      var note = panel.querySelector(".menu-note");
+      if (note && cat.note != null) note.textContent = cat.note;
+    });
+  }
+
+  /* ---------- SCOOPS ---------- */
+  function renderScoops(s) {
+    if (!s) return;
+    txt("#scoops > p", s.intro);
+    var grid = document.getElementById("scoop-grid");
+    if (grid && Array.isArray(s.flavours)) {
+      clear(grid);
+      s.flavours.forEach(function (f, i) {
+        var chip = make("div", "scoop-chip" + (i === 0 ? " on" : ""));
+        chip.setAttribute("data-name", f.name);
+        chip.setAttribute("data-zh", f.zh || "");
+        chip.setAttribute("data-img", f.img || "");
+        chip.setAttribute("data-desc", f.desc || "");
+        var img = make("img"); img.src = f.img || ""; img.alt = "";
+        chip.appendChild(img);
+        chip.appendChild(make("span", null, f.name));
+        grid.appendChild(chip);
+      });
+      var first = s.flavours[0];
+      if (first) {
+        txt("#scoop-zh", first.zh); txt("#scoop-name", first.name);
+        txt("#scoop-desc", first.desc);
+        var big = document.getElementById("scoop-big"); if (big && first.img) big.src = first.img;
+      }
+    }
+    var chipsWrap = document.getElementById("topping-chips");
+    if (chipsWrap && Array.isArray(s.toppings)) {
+      clear(chipsWrap);
+      s.toppings.forEach(function (t, i) {
+        chipsWrap.appendChild(make("button", "tchip" + (i === 0 ? " on" : ""), t));
+      });
+    }
+    txt(".scoop-price", s.price);
+  }
+
+  /* ---------- STORY (teks saja; biarkan gambar maskot) ---------- */
+  function renderStory(st) {
+    if (!st) return;
+    txt("#story .story-body", st.body);
+    var cards = document.querySelectorAll("#story .mcard");
+    (st.mascots || []).forEach(function (mc, i) {
+      var c = cards[i]; if (!c) return;
+      txt(".mcard-zh", mc.zh, c);
+      txt(".mcard-name", mc.name, c);
+      txt(".mcard-sub", mc.tagline, c);
+      txt(".mcard-desc", mc.desc, c);
+    });
+  }
+
+  /* ---------- SENSES ---------- */
+  function renderSenses(se) {
+    if (!se) return;
+    var cards = document.querySelectorAll("#senses .sense-card");
+    (se.items || []).forEach(function (it, i) {
+      var c = cards[i]; if (!c) return;
+      txt(".sense-name", it.key, c);
+      txt(".sense-desc", it.text, c);
+    });
+  }
+
+  /* ---------- GALLERY ---------- */
+  function renderGallery(gl) {
+    if (!gl) return;
+    var note = document.querySelector("#gallery .gal-note");
+    if (note && gl.ticker) {
+      clear(note);
+      var line = make("span");
+      line.style.cssText = "display:inline-block;width:14px;height:1px;background:var(--rose);";
+      note.appendChild(line);
+      note.appendChild(document.createTextNode(" " + gl.ticker));
+    }
+    var grid = document.querySelector("#gallery .gal-grid");
+    if (grid && Array.isArray(gl.photos)) {
+      clear(grid);
+      gl.photos.forEach(function (p) {
+        var cell = make("div", p.layout || "");
+        cell.style.cssText = "border-radius:18px;overflow:hidden;";
+        var img = make("img", "gal-photo"); img.src = p.img || ""; img.alt = "";
+        cell.appendChild(img);
+        grid.appendChild(cell);
+      });
+    }
+  }
+
+  /* ---------- LOCATIONS ---------- */
+  function renderLocations(lo) {
+    if (!lo || !Array.isArray(lo.outlets)) return;
+    var grid = document.querySelector("#locations .lgrid");
+    if (!grid) return;
+    clear(grid);
+    var n = 0;
+    lo.outlets.forEach(function (o, i) {
+      var a = make("a", "lcard" + (o.flagship ? " flag" : "") + " rv d" + ((i % 3) + 1));
+      a.href = o.maps || "#"; a.target = "_blank"; a.rel = "noopener";
+      if (o.flagship) { a.appendChild(make("span", "l-badge", "Flagship")); }
+      else { n++; a.appendChild(make("div", "l-num", ("0" + n).slice(-2))); }
+      a.appendChild(make("div", "l-zone", o.region));
+      a.appendChild(make("div", "l-name", o.name));
+      a.appendChild(make("div", "l-area", o.area));
+      a.appendChild(make("div", "l-addr", o.address));
+      a.appendChild(make("div", "l-hours", o.hours));
+      a.appendChild(make("span", "l-map", "\u25D0 Open in Maps \u2192"));
+      grid.appendChild(a);
+    });
+  }
+
+  /* ---------- FOOTER ---------- */
+  function renderFooter(f) {
+    if (!f) return;
+    txt("footer .f-cjk", f.subtext);
+    txt("footer .f-tag", f.description);
+    txt("footer .f-copy", f.copyright);
+    function fillCol(idx, links) {
+      var cols = document.querySelectorAll("footer .f-col");
+      if (!cols[idx] || !Array.isArray(links)) return;
+      var ul = cols[idx].querySelector("ul"); if (!ul) return;
+      clear(ul);
+      links.forEach(function (l) {
+        var li = make("li"); var a = make("a", null, l.label);
+        a.href = l.href; if (/^https?:/.test(l.href)) a.target = "_blank";
+        li.appendChild(a); ul.appendChild(li);
+      });
+    }
+    fillCol(0, f.menuLinks); fillCol(1, f.orderLinks); fillCol(2, f.infoLinks);
+    var soc = document.querySelector("footer .f-soc");
+    if (soc && Array.isArray(f.social)) {
+      clear(soc);
+      f.social.forEach(function (l) {
+        var a = make("a", null, l.label); a.href = l.href; a.target = "_blank";
+        soc.appendChild(a);
+      });
+    }
+  }
+
+  /* ---------- PARALLAX (image swapping) ---------- */
+  function renderParallax(px) {
+    if (!px) return;
+    document.querySelectorAll("[data-px]").forEach(function (el) {
+      var key = el.getAttribute("data-px");
+      if (px[key]) el.setAttribute("src", px[key]);
+    });
+  }
+  /* ---------- INTERAKSI via EVENT DELEGATION ---------- */
+  var bound = false;
+  function bindDelegation() {
+    if (bound) return; bound = true;
+    document.addEventListener("click", function (e) {
+      var mtab = e.target.closest ? e.target.closest(".mtab") : null;
+      if (mtab && mtab.dataset.tab) {
+        var id = mtab.dataset.tab;
+        document.querySelectorAll(".mtab").forEach(function (b) { b.classList.remove("on"); });
+        document.querySelectorAll(".mpanel").forEach(function (p) { p.classList.remove("on"); });
+        mtab.classList.add("on");
+        var panel = document.getElementById("tab-" + id);
+        if (panel) {
+          panel.classList.add("on");
+          panel.querySelectorAll(".rv").forEach(function (el) {
+            el.classList.remove("in");
+            requestAnimationFrame(function () { setTimeout(function () { el.classList.add("in"); }, 40); });
+          });
+        }
+        return;
+      }
+      var chip = e.target.closest ? e.target.closest(".scoop-chip") : null;
+      if (chip) {
+        document.querySelectorAll(".scoop-chip").forEach(function (c) { c.classList.remove("on"); });
+        chip.classList.add("on");
+        var big = document.getElementById("scoop-big");
+        var nm = document.getElementById("scoop-name");
+        var zh = document.getElementById("scoop-zh");
+        var ds = document.getElementById("scoop-desc");
+        if (big) {
+          big.style.transition = "opacity .16s ease"; big.style.opacity = "0";
+          setTimeout(function () {
+            if (chip.dataset.img) big.src = chip.dataset.img;
+            if (nm) nm.textContent = chip.dataset.name || "";
+            if (zh) zh.textContent = chip.dataset.zh || "";
+            if (ds) ds.textContent = chip.dataset.desc || "";
+            big.style.opacity = "1";
+          }, 160);
+        }
+        return;
+      }
+      var tchip = e.target.closest ? e.target.closest("#topping-chips .tchip") : null;
+      if (tchip) {
+        document.querySelectorAll("#topping-chips .tchip").forEach(function (x) { x.classList.remove("on"); });
+        tchip.classList.add("on");
+        return;
+      }
+    });
+  }
+  function observeReveal() {
+    if (!("IntersectionObserver" in window)) return;
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add("in"); obs.unobserve(en.target); }
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+    document.querySelectorAll(".rv:not(.in)").forEach(function (el) { obs.observe(el); });
+  }
+
+  /* ---------- BOOT ---------- */
+  function apply(data) {
+    if (data) {
+      try { renderMenu(data.menu); } catch (e) {}
+      try { renderScoops(data.scoops); } catch (e) {}
+      try { renderStory(data.story); } catch (e) {}
+      try { renderSenses(data.senses); } catch (e) {}
+      try { renderGallery(data.gallery); } catch (e) {}
+      try { renderLocations(data.locations); } catch (e) {}
+      try { renderFooter(data.footer); } catch (e) {}
+      try { renderParallax(data.parallax); } catch (e) {}
+    }
+    bindDelegation();
+    observeReveal();
+    document.dispatchEvent(new CustomEvent("content:ready", { detail: data }));
+  }
+  function boot() {
+    fetch("/api/content", { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (data) { apply(data); })
+      .catch(function () { apply(null); });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();

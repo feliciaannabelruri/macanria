@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Macanria CMS — Dashboard</title>
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">Macanria CMS</div>
+      <nav id="nav">
+        <button class="navlink on" data-sec="menu">Menu Minuman</button>
+        <button class="navlink" data-sec="scoops">Tofu Ice Cream</button>
+        <button class="navlink" data-sec="story">Our Story</button>
+        <button class="navlink" data-sec="senses">Five Senses</button>
+        <button class="navlink" data-sec="gallery">Galeri</button>
+        <button class="navlink" data-sec="locations">Lokasi Outlet</button>
+        <button class="navlink" data-sec="footer">Footer</button>
+      </nav>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="status" id="status">Memuat konten…</div>
+        <button class="logout" id="logoutBtn">Keluar</button>
+      </header>
+      <div class="content" id="content">
+        <div class="loading">Memuat konten dari server…</div>
+      </div>
+    </main>
+  </div>
+  <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+/* dev-server.cjs — server DEV LOKAL.
+   Melayani frontend statis + menjalankan endpoint /api/* (handler Vercel)
+   lewat dynamic import(). Memuat .env.local. Adapter dipilih di container.js
+   (tanpa KV -> FileContentRepository/content.json). Jalankan:  node backend/dev-server.cjs */
+const http = require("http");
+const fs   = require("fs");
+const path = require("path");
+const { pathToFileURL } = require("url");
+
+const PORT = 3001;
+const PROJECT_ROOT = path.join(__dirname, "..");
+const FRONTEND = path.join(PROJECT_ROOT, "frontend");
+
+// ── muat .env.local (parser sederhana, mendukung nilai dengan '$' dan '=') ──
+(function loadEnv() {
+  const p = path.join(PROJECT_ROOT, ".env.local");
+  if (!fs.existsSync(p)) { console.warn("[dev] .env.local tidak ditemukan"); return; }
+  for (const line of fs.readFileSync(p, "utf8").split(/\r?\n/)) {
+    const t = line.trim();
+    if (!t || t.startsWith("#")) continue;
+    const i = t.indexOf("=");
+    if (i < 0) continue;
+    const k = t.slice(0, i).trim();
+    const v = t.slice(i + 1).trim();
+    if (!(k in process.env)) process.env[k] = v;
+  }
+})();
+
+const MIME = {
+  ".html":"text/html",".css":"text/css",".js":"application/javascript",".mjs":"application/javascript",
+  ".json":"application/json",".png":"image/png",".jpg":"image/jpeg",".jpeg":"image/jpeg",
+  ".gif":"image/gif",".svg":"image/svg+xml",".webp":"image/webp",".ico":"image/x-icon",
+  ".woff2":"font/woff2",".woff":"font/woff",
+};
+
+// ── cache handler ESM agar import() sekali saja ──
+const handlerCache = new Map();
+async function loadHandler(relFile) {
+  if (handlerCache.has(relFile)) return handlerCache.get(relFile);
+  const abs = path.join(PROJECT_ROOT, relFile);
+  const mod = await import(pathToFileURL(abs).href);
+  const fn = mod.default;
+  handlerCache.set(relFile, fn);
+  return fn;
+}
+
+// ── bungkus res agar meniru API Vercel (res.status().json(), setHeader) ──
+function wrapRes(res) {
+  res.status = (code) => { res.statusCode = code; return res; };
+  res.json = (obj) => {
+    if (!res.getHeader("Content-Type")) res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(obj));
+    return res;
+  };
+  return res;
+}
+
+function readBody(req) {
+  return new Promise((resolve) => {
+    let b = "";
+    req.on("data", (c) => { b += c; });
+    req.on("end", () => resolve(b));
+  });
+}
+
+async function handleApi(req, res, url) {
+  const parts = url.pathname.split("/").filter(Boolean); // ["api","content",...]
+  const query = {};
+  url.searchParams.forEach((v, k) => { query[k] = v; });
+
+  // tentukan file handler + parameter path
+  let file = null;
+  if (parts[1] === "content" && parts.length === 2) {
+    file = "api/content/index.js";
+  } else if (parts[1] === "content" && parts.length === 3) {
+    file = "api/content/[section].js";
+    query.section = decodeURIComponent(parts[2]);
+  } else if (parts[1] === "auth" && parts[2] === "login") {
+    file = "api/auth/login.js";
+  } else if (parts[1] === "auth" && parts[2] === "logout") {
+    file = "api/auth/logout.js";
+  } else if (parts[1] === "upload") {
+    file = "api/upload.js";
+  }
+
+  if (!file) { res.statusCode = 404; res.end(JSON.stringify({ ok:false, error:"API route tidak ada" })); return; }
+
+  // parse body JSON (untuk PUT/POST non-upload)
+  let body = undefined;
+  if (req.method === "PUT" || req.method === "POST") {
+    const raw = await readBody(req);
+    const ct = req.headers["content-type"] || "";
+    if (ct.includes("application/json")) { try { body = raw ? JSON.parse(raw) : {}; } catch { body = {}; } }
+    else { body = raw; }
+  }
+
+  req.query = query;
+  req.body = body;
+  wrapRes(res);
+
+  try {
+    const handler = await loadHandler(file);
+    await handler(req, res);
+    if (!res.writableEnded) res.end();
+  } catch (e) {
+    console.error("[dev] handler error:", e);
+    if (!res.headersSent) { res.statusCode = 500; res.setHeader("Content-Type","application/json"); }
+    if (!res.writableEnded) res.end(JSON.stringify({ ok:false, error: String(e && e.message || e) }));
+  }
+}
+
+function serveStatic(req, res, url) {
+  let rel = url.pathname === "/" ? "/index.html" : url.pathname;
+  rel = decodeURIComponent(rel.split("?")[0]);
+  let filePath = path.join(FRONTEND, rel);
+
+  fs.stat(filePath, (err, st) => {
+    if (!err && st.isDirectory()) filePath = path.join(filePath, "index.html");
+    fs.readFile(filePath, (e, data) => {
+      if (e) { res.writeHead(404, {"Content-Type":"text/plain"}); res.end("404 Not Found: " + rel); return; }
+      const ext = path.extname(filePath).toLowerCase();
+      res.writeHead(200, {"Content-Type": MIME[ext] || "application/octet-stream"});
+      res.end(data);
+    });
+  });
+}
+
+http.createServer((req, res) => {
+  const url = new URL(req.url, "http://localhost:" + PORT);
+  if (url.pathname.startsWith("/api/")) {
+    handleApi(req, res, url).catch((e) => {
+      if (!res.writableEnded) { res.statusCode = 500; res.end(String(e)); }
+    });
+  } else {
+    serveStatic(req, res, url);
+  }
+}).listen(PORT, () => {
+  console.log("");
+  console.log("  Macanria DEV server (statis + /api/*) siap.");
+  console.log("  Website →  http://localhost:" + PORT + "/");
+  console.log("  Admin   →  http://localhost:" + PORT + "/admin/index.html");
+  console.log("  API     →  http://localhost:" + PORT + "/api/content");
+  console.log("  Ctrl+C untuk stop.");
+  console.log("");
+});

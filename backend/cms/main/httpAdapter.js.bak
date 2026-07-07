@@ -1,0 +1,23 @@
+import cookie from "cookie";
+import { session } from "./container.js";
+import { AuthError } from "../domain/errors.js";
+const COOKIE = "mcms_session";
+
+export function getToken(req) {
+  const parsed = cookie.parse(req.headers.cookie || "");
+  return parsed[COOKIE] || null;
+}
+export function requireLogin(req) {
+  const payload = getToken(req) && session.verify(getToken(req));
+  if (!payload) throw new AuthError();
+  return payload;
+}
+export function sessionCookie(token) {
+  return cookie.serialize(COOKIE, token, {
+    httpOnly: true, secure: true, sameSite: "lax", path: "/", maxAge: 60 * 60 * 8,
+  });
+}
+export function clearCookie() {
+  return cookie.serialize(COOKIE, "", { httpOnly: true, secure: true, sameSite: "lax", path: "/", maxAge: 0 });
+}
+

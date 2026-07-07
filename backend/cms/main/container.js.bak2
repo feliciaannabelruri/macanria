@@ -1,0 +1,28 @@
+import { KvContentRepository } from "../adapters/persistence/KvContentRepository.js";
+import { FileContentRepository } from "../adapters/persistence/FileContentRepository.js";
+import { BlobImageStorage } from "../adapters/storage/BlobImageStorage.js";
+import { JwtSessionManager } from "../adapters/security/JwtSessionManager.js";
+import { KvRateLimiter } from "../adapters/security/KvRateLimiter.js";
+import { passwordHasher } from "../adapters/security/passwordHasher.js";
+import { makeGetSection } from "../application/usecases/getSection.js";
+import { makeUpdateSection } from "../application/usecases/updateSection.js";
+import { makeLogin } from "../application/usecases/login.js";
+import { makeUploadImage } from "../application/usecases/uploadImage.js";
+
+/* Pemilihan adapter persistensi berdasarkan lingkungan:
+   - Ada KV_REST_API_URL (Vercel) -> KvContentRepository
+   - Selain itu (lokal/VPS)        -> FileContentRepository (content.json)
+   Swap adapter = satu-satunya perbedaan antar lingkungan. */
+const useKv = !!process.env.KV_REST_API_URL;
+const contentRepo  = useKv ? new KvContentRepository() : new FileContentRepository();
+const imageStorage = new BlobImageStorage();
+
+export const session = new JwtSessionManager(process.env.SESSION_SECRET, "8h");
+const rateLimiter  = new KvRateLimiter({ max: 5, windowSec: 300 });
+
+export const useCases = {
+  getSection:    makeGetSection({ contentRepo }),
+  updateSection: makeUpdateSection({ contentRepo }),
+  login:         makeLogin({ passwordHasher, session, rateLimiter, adminPasswordHash: process.env.ADMIN_PASSWORD_HASH }),
+  uploadImage:   makeUploadImage({ imageStorage }),
+};

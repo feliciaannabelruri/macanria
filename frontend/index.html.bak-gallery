@@ -372,9 +372,9 @@ footer{background:var(--ink);padding:80px 80px 44px;}
 <!-- ═══ FLOATING CUP (transparent PNG · 3D parallax) ═══ -->
 <div id="cup-fixed" aria-hidden="true">
   <div id="cup-wrap">
-    <img class="cup-img" id="cup-silver" data-px="cupSilver" src="assets/cup-silver.png" alt="" />
-    <img class="cup-img" id="cup-guava" data-px="cupGuava"  src="assets/cup-guava-t.png" alt="" style="opacity:0" />
-    <img class="cup-img" id="cup-mochi" data-px="cupMochi"  src="assets/cup-mochi-t.png" alt="" style="opacity:0" />
+    <img class="cup-img" id="cup-silver" src="assets/cup-silver.png" alt="" />
+    <img class="cup-img" id="cup-guava"  src="assets/cup-guava-t.png" alt="" style="opacity:0" />
+    <img class="cup-img" id="cup-mochi"  src="assets/cup-mochi-t.png" alt="" style="opacity:0" />
   </div>
 </div>
 
@@ -384,7 +384,7 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   <div class="bt" id="s1a">MA</div>
   <div class="bt" id="s1b">MACANRIA<span style="color:var(--rose)">.</span></div>
 
-  <img id="s1-mobile-cup" data-px="cupSilver" src="assets/cup-silver.png" alt="Macanria cup" />
+  <img id="s1-mobile-cup" src="assets/cup-silver.png" alt="Macanria cup" />
 
   <div id="s1-info-m" style="position:absolute;left:58px;bottom:106px;z-index:60;display:none;">
     <div class="mono tag" style="color:rgba(16,28,92,.38);display:flex;align-items:center;margin-bottom:9px;">
@@ -468,9 +468,9 @@ footer{background:var(--ink);padding:80px 80px 44px;}
     <div style="font-family:'Noto Serif SC',serif;font-size:16px;letter-spacing:.2em;color:rgba(16,28,92,.18);margin-top:10px;">選你的味道</div>
   </div>
   <div id="lineup">
-    <div class="li-item"><img src="assets/cup-guava-t.png" alt="Pink Guava" data-px="cupGuava" class="li-img" style="height:230px;" /><span class="li-lbl">Pink Guava · 38k</span></div>
-    <div class="li-item" style="margin-bottom:24px;"><img src="assets/cup-silver.png" alt="Soymilk Tea" data-px="cupSilver" class="li-img" style="height:270px;" /><span class="li-lbl">Soymilk Tea · From 35k</span></div>
-    <div class="li-item"><img src="assets/cup-mochi-t.png" alt="Yu Tou Mochi" data-px="cupMochi" class="li-img" style="height:230px;" /><span class="li-lbl">Yù Tou Mochi · 38k</span></div>
+    <div class="li-item"><img src="assets/cup-guava-t.png" alt="Pink Guava" class="li-img" style="height:230px;" /><span class="li-lbl">Pink Guava · 38k</span></div>
+    <div class="li-item" style="margin-bottom:24px;"><img src="assets/cup-silver.png" alt="Soymilk Tea" class="li-img" style="height:270px;" /><span class="li-lbl">Soymilk Tea · From 35k</span></div>
+    <div class="li-item"><img src="assets/cup-mochi-t.png" alt="Yù Tou Mochi" class="li-img" style="height:230px;" /><span class="li-lbl">Yù Tou Mochi · 38k</span></div>
   </div>
   <a href="#menu" style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:60;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(16,28,92,.28);text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:6px;">
     <div style="width:1px;height:26px;background:linear-gradient(to bottom,transparent,rgba(16,28,92,.16));animation:pulse 2.2s ease-in-out infinite;"></div>Full Menu Below
@@ -513,7 +513,7 @@ footer{background:var(--ink);padding:80px 80px 44px;}
 <section id="scoops" data-screen-label="Ice Cream">
   <div class="eyebrow ey-dk rv">03 — 愛心雪糕</div>
   <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);">Tofu Ice Cream.<br><span style="font-family:'Noto Serif SC',serif;font-size:.52em;opacity:.22;font-weight:700;">飲料選擇</span></h2>
-  <p class="rv d1" style="font-size:15px;line-height:1.72;color:rgba(16,28,92,.52);max-width:520px;margin-top:18px;"></p>
+  <p class="rv d1" style="font-size:15px;line-height:1.72;color:rgba(16,28,92,.52);max-width:520px;margin-top:18px;">A creamy, plant-based dessert crafted from blended silken tofu — smooth, dairy-free, and naturally lower in fat. Velvety and indulgent, it appeals to vegans, lactose-intolerant individuals, and anyone who believes dessert should feel as good as it tastes.</p>
 
   <div class="scoop-stage">
     <!-- Featured scoop -->
@@ -583,8 +583,16 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   <div class="eyebrow ey-lt rv">06 — Gallery</div>
   <h2 class="sh sh-lt rv d1" style="font-size:clamp(32px,3.8vw,54px);">From the booth.</h2>
   <div class="gal-grid rv d1">
+    <div class="span2c span2r" style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-interior-wide.jpg" alt="Macanria interior" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-exterior-tiger.jpg" alt="Macanria exterior tiger" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-interior-tiger.jpg" alt="Macanria interior tiger wall" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-mirror.jpg" alt="Blue convex mirror" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-neko.jpg" alt="Blue maneki neko" /></div>
+    <div class="span2c" style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-exterior-logo.jpg" alt="Macanria storefront" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-bench.jpg" alt="Blue bench detail" /></div>
+    <div style="border-radius:18px;overflow:hidden;"><img class="gal-photo" src="assets/photo-tiger-head.jpg" alt="Tiger mascot head" /></div>
   </div>
-  <div class="gal-note"></div>
+  <div class="gal-note"><span style="display:inline-block;width:14px;height:1px;background:var(--rose);"></span>10 outlets — Ashta District 8 · Grand Indonesia · Sarinah · PIK · Taman Anggrek · Chillax · Tribeca · Plaza Indonesia · Lippo Mall Puri · Kokas</div>
 </section>
 
 <!-- ═══ LOCATIONS ═══ -->
@@ -594,18 +602,28 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);">Find your nearest<br>Macanria.</h2>
   <p class="rv d1" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(16,28,92,.35);margin-top:14px;">10 outlets across Jakarta · tap a card to open in Google Maps</p>
   <div class="lgrid">
+    <a class="lcard flag rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Ashta+District+8+SCBD" target="_blank" rel="noopener"><span class="l-badge">Flagship</span><div class="l-zone">South Jakarta</div><div class="l-name">Ashta District 8</div><div class="l-area">SCBD · 1st Floor</div><div class="l-addr">Ashta 1F Unit 12, Oakwood Tower · Jl. Jend. Sudirman Kav. 52–53, Senayan</div><div class="l-hours">Daily · 08:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d2" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Lippo+Mall+Puri" target="_blank" rel="noopener"><div class="l-num">02</div><div class="l-zone">West Jakarta</div><div class="l-name">Lippo Mall Puri</div><div class="l-area">Puri Indah · 1st Floor</div><div class="l-addr">Unit L1-K02A · Jl. Puri Indah Raya Blok U1, Kembangan</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d3" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Pantai+Indah+Kapuk+PIK" target="_blank" rel="noopener"><div class="l-num">03</div><div class="l-zone">North Jakarta</div><div class="l-name">Pantai Indah Kapuk</div><div class="l-area">PIK</div><div class="l-addr">Pantai Indah Kapuk, Penjaringan</div><div class="l-hours">Daily · 10:00 – 21:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Grand+Indonesia+West+Mall" target="_blank" rel="noopener"><div class="l-num">04</div><div class="l-zone">Central Jakarta</div><div class="l-name">Grand Indonesia</div><div class="l-area">West Mall · LG Floor</div><div class="l-addr">Jl. M.H. Thamrin No. 1, Menteng</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d2" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Hublife+Taman+Anggrek" target="_blank" rel="noopener"><div class="l-num">05</div><div class="l-zone">West Jakarta</div><div class="l-name">Hublife Taman Anggrek</div><div class="l-area">Letjen S. Parman · 1st Floor</div><div class="l-addr">Jl. Letjen S. Parman, Tanjung Duren</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d3" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Sarinah+Thamrin" target="_blank" rel="noopener"><div class="l-num">06</div><div class="l-zone">Central Jakarta</div><div class="l-name">Sarinah</div><div class="l-area">M.H. Thamrin · GF Floor</div><div class="l-addr">Jl. M.H. Thamrin No. 11, Menteng</div><div class="l-hours">Mon–Sat 08:00–22:00 · Sun 07:00–22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Chillax+Sudirman" target="_blank" rel="noopener"><div class="l-num">07</div><div class="l-zone">Central Jakarta</div><div class="l-name">Chillax Sudirman</div><div class="l-area">Sudirman</div><div class="l-addr">Jl. Jend. Sudirman, Tanah Abang</div><div class="l-hours">Mon–Sat 08:00–22:00 · Sun 07:00–22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d2" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Tribeca+Central+Park" target="_blank" rel="noopener"><div class="l-num">08</div><div class="l-zone">West Jakarta</div><div class="l-name">Tribeca Park</div><div class="l-area">Central Park</div><div class="l-addr">Jl. Letjen S. Parman Kav. 28, Tanjung Duren</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d3" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Plaza+Indonesia" target="_blank" rel="noopener"><div class="l-num">09</div><div class="l-zone">Central Jakarta</div><div class="l-name">Plaza Indonesia</div><div class="l-area">Thamrin · Level 5</div><div class="l-addr">Jl. M.H. Thamrin Kav. 28–30, Menteng</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
+    <a class="lcard rv d1" href="https://www.google.com/maps/search/?api=1&query=MacanRia+Soymilk+Tea+Kota+Kasablanka+Food+Society" target="_blank" rel="noopener"><div class="l-num">10</div><div class="l-zone">South Jakarta</div><div class="l-name">Kota Kasablanka</div><div class="l-area">Food Society · UG Floor</div><div class="l-addr">Jl. Casablanca Raya Kav. 88, Tebet</div><div class="l-hours">Daily · 10:00 – 22:00 WIB</div><span class="l-map">◐ Open in Maps →</span></a>
   </div>
 </section>
 
 <!-- ═══ FOOTER ═══ -->
 <footer data-screen-label="Footer">
   <div class="f-top">
-    <div><div class="f-wm">MACANRIA<span class="dot">.</span><span class="logo-cjk">免免</span></div><div class="f-cjk"></div><p class="f-tag"></p></div>
-    <div class="f-col"><h4>Menu</h4><ul></ul></div>
-    <div class="f-col"><h4>Order</h4><ul></ul></div>
-    <div class="f-col"><h4>Info</h4><ul></ul></div>
+    <div><div class="f-wm">MACANRIA<span class="dot">.</span><span class="logo-cjk">免免</span></div><div class="f-cjk">豆漿以茶 · 愛心雪糕</div><p class="f-tag">Homemade soy milk tea &amp; silken tofu ice cream. Dairy-free, lighter, never boring. Jakarta, Indonesia.</p></div>
+    <div class="f-col"><h4>Menu</h4><ul><li><a href="#menu">Soymilk Tea</a></li><li><a href="#menu">Pure Tea</a></li><li><a href="#scoops">Tofu Ice Cream</a></li></ul></div>
+    <div class="f-col"><h4>Order</h4><ul><li><a href="https://gofood.co.id" target="_blank">GoFood</a></li><li><a href="https://grab.com" target="_blank">GrabFood</a></li><li><a href="https://shopee.co.id" target="_blank">ShopeeFood</a></li></ul></div>
+    <div class="f-col"><h4>Info</h4><ul><li><a href="#story">Our Story</a></li><li><a href="#locations">Locations</a></li><li><a href="https://instagram.com/macanria" target="_blank">@macanria</a></li></ul></div>
   </div>
-  <div class="f-bot"><span class="f-copy"></span><div class="f-soc"></div></div>
+  <div class="f-bot"><span class="f-copy">© 2026 Macanria · All rights reserved · Jakarta, Indonesia</span><div class="f-soc"><a href="https://instagram.com/macanria" target="_blank">Instagram</a><a href="https://tiktok.com/@macanria" target="_blank">TikTok</a><a href="https://gofood.co.id" target="_blank">GoFood</a></div></div>
 </footer>
 
 <script>
@@ -628,8 +646,6 @@ const lerp=(a,b,t)=>a+(b-a)*t;
 const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
 const easeOut=t=>1-Math.pow(1-t,3);
 const easeIn=t=>t*t*t;
-// PARALLAX ZOOM: baca nilai zoom cup dari CMS (window.__parallaxCfg), clamp 0.2..10, fallback default.
-const PZ=(k,def)=>{var c=window.__parallaxCfg;var v=(c&&c[k]!=null)?parseFloat(c[k]):NaN;return isNaN(v)?def:clamp(v,0.2,10);};
 
 function activeScene(){
   for(let i=0;i<4;i++){
@@ -684,7 +700,7 @@ function tick(){
   if(idx===0){
     setCup('silver');
     const rise=clamp(p/.3,0,1);
-    scale=lerp(.6,PZ('zoomSilver',1.0),easeOut(rise));
+    scale=lerp(.6,1.0,easeOut(rise));
     ty=lerp(110,0,easeOut(rise));
     ry=lerp(-18,8,easeOut(rise));
     rx=lerp(14,-3,easeOut(rise));
@@ -692,13 +708,13 @@ function tick(){
   } else if(idx===1){
     setCup('guava');
     const enter=clamp(p/.2,0,1);
-    scale=lerp(1.0,PZ('zoomGuava',1.12),p);
+    scale=lerp(1.0,1.12,p);
     ry=lerp(8,-14,p); rx=lerp(-3,5,p);
     opacity = p>.8?lerp(1,0,easeIn(clamp((p-.8)/.2,0,1))):easeOut(enter);
   } else if(idx===2){
     setCup('mochi');
     const enter=clamp(p/.2,0,1);
-    scale=lerp(1.12,PZ('zoomMochi',1.0),p);
+    scale=lerp(1.12,1.0,p);
     ry=lerp(-14,18,p); rx=lerp(5,-6,p);
     opacity = p>.82?lerp(1,0,easeIn(clamp((p-.82)/.18,0,1))):easeOut(enter);
     if(p>.6&&!lineupShown){lineupShown=true;lineupEls.forEach(e=>e.classList.add('show'));}
@@ -742,7 +758,6 @@ function onResize(){
 window.addEventListener('scroll',()=>{if(!raf){raf=true;requestAnimationFrame(tick);}},{passive:true});
 window.addEventListener('resize',onResize,{passive:true});
 window.addEventListener('orientationchange',onResize,{passive:true});
-window.__pxTick=tick;
 tick();
 
 // ═══ MENU TABS ═══

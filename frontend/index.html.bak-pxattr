@@ -372,9 +372,9 @@ footer{background:var(--ink);padding:80px 80px 44px;}
 <!-- ═══ FLOATING CUP (transparent PNG · 3D parallax) ═══ -->
 <div id="cup-fixed" aria-hidden="true">
   <div id="cup-wrap">
-    <img class="cup-img" id="cup-silver" data-px="cupSilver" src="assets/cup-silver.png" alt="" />
-    <img class="cup-img" id="cup-guava" data-px="cupGuava"  src="assets/cup-guava-t.png" alt="" style="opacity:0" />
-    <img class="cup-img" id="cup-mochi" data-px="cupMochi"  src="assets/cup-mochi-t.png" alt="" style="opacity:0" />
+    <img class="cup-img" id="cup-silver" src="assets/cup-silver.png" alt="" />
+    <img class="cup-img" id="cup-guava"  src="assets/cup-guava-t.png" alt="" style="opacity:0" />
+    <img class="cup-img" id="cup-mochi"  src="assets/cup-mochi-t.png" alt="" style="opacity:0" />
   </div>
 </div>
 
@@ -384,7 +384,7 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   <div class="bt" id="s1a">MA</div>
   <div class="bt" id="s1b">MACANRIA<span style="color:var(--rose)">.</span></div>
 
-  <img id="s1-mobile-cup" data-px="cupSilver" src="assets/cup-silver.png" alt="Macanria cup" />
+  <img id="s1-mobile-cup" src="assets/cup-silver.png" alt="Macanria cup" />
 
   <div id="s1-info-m" style="position:absolute;left:58px;bottom:106px;z-index:60;display:none;">
     <div class="mono tag" style="color:rgba(16,28,92,.38);display:flex;align-items:center;margin-bottom:9px;">
@@ -468,9 +468,9 @@ footer{background:var(--ink);padding:80px 80px 44px;}
     <div style="font-family:'Noto Serif SC',serif;font-size:16px;letter-spacing:.2em;color:rgba(16,28,92,.18);margin-top:10px;">選你的味道</div>
   </div>
   <div id="lineup">
-    <div class="li-item"><img src="assets/cup-guava-t.png" alt="Pink Guava" data-px="cupGuava" class="li-img" style="height:230px;" /><span class="li-lbl">Pink Guava · 38k</span></div>
-    <div class="li-item" style="margin-bottom:24px;"><img src="assets/cup-silver.png" alt="Soymilk Tea" data-px="cupSilver" class="li-img" style="height:270px;" /><span class="li-lbl">Soymilk Tea · From 35k</span></div>
-    <div class="li-item"><img src="assets/cup-mochi-t.png" alt="Yu Tou Mochi" data-px="cupMochi" class="li-img" style="height:230px;" /><span class="li-lbl">Yù Tou Mochi · 38k</span></div>
+    <div class="li-item"><img src="assets/cup-guava-t.png" alt="Pink Guava" class="li-img" style="height:230px;" /><span class="li-lbl">Pink Guava · 38k</span></div>
+    <div class="li-item" style="margin-bottom:24px;"><img src="assets/cup-silver.png" alt="Soymilk Tea" class="li-img" style="height:270px;" /><span class="li-lbl">Soymilk Tea · From 35k</span></div>
+    <div class="li-item"><img src="assets/cup-mochi-t.png" alt="Yù Tou Mochi" class="li-img" style="height:230px;" /><span class="li-lbl">Yù Tou Mochi · 38k</span></div>
   </div>
   <a href="#menu" style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);z-index:60;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(16,28,92,.28);text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:6px;">
     <div style="width:1px;height:26px;background:linear-gradient(to bottom,transparent,rgba(16,28,92,.16));animation:pulse 2.2s ease-in-out infinite;"></div>Full Menu Below
@@ -628,8 +628,6 @@ const lerp=(a,b,t)=>a+(b-a)*t;
 const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
 const easeOut=t=>1-Math.pow(1-t,3);
 const easeIn=t=>t*t*t;
-// PARALLAX ZOOM: baca nilai zoom cup dari CMS (window.__parallaxCfg), clamp 0.2..10, fallback default.
-const PZ=(k,def)=>{var c=window.__parallaxCfg;var v=(c&&c[k]!=null)?parseFloat(c[k]):NaN;return isNaN(v)?def:clamp(v,0.2,10);};
 
 function activeScene(){
   for(let i=0;i<4;i++){
@@ -684,7 +682,7 @@ function tick(){
   if(idx===0){
     setCup('silver');
     const rise=clamp(p/.3,0,1);
-    scale=lerp(.6,PZ('zoomSilver',1.0),easeOut(rise));
+    scale=lerp(.6,1.0,easeOut(rise));
     ty=lerp(110,0,easeOut(rise));
     ry=lerp(-18,8,easeOut(rise));
     rx=lerp(14,-3,easeOut(rise));
@@ -692,13 +690,13 @@ function tick(){
   } else if(idx===1){
     setCup('guava');
     const enter=clamp(p/.2,0,1);
-    scale=lerp(1.0,PZ('zoomGuava',1.12),p);
+    scale=lerp(1.0,1.12,p);
     ry=lerp(8,-14,p); rx=lerp(-3,5,p);
     opacity = p>.8?lerp(1,0,easeIn(clamp((p-.8)/.2,0,1))):easeOut(enter);
   } else if(idx===2){
     setCup('mochi');
     const enter=clamp(p/.2,0,1);
-    scale=lerp(1.12,PZ('zoomMochi',1.0),p);
+    scale=lerp(1.12,1.0,p);
     ry=lerp(-14,18,p); rx=lerp(5,-6,p);
     opacity = p>.82?lerp(1,0,easeIn(clamp((p-.82)/.18,0,1))):easeOut(enter);
     if(p>.6&&!lineupShown){lineupShown=true;lineupEls.forEach(e=>e.classList.add('show'));}
@@ -742,7 +740,6 @@ function onResize(){
 window.addEventListener('scroll',()=>{if(!raf){raf=true;requestAnimationFrame(tick);}},{passive:true});
 window.addEventListener('resize',onResize,{passive:true});
 window.addEventListener('orientationchange',onResize,{passive:true});
-window.__pxTick=tick;
 tick();
 
 // ═══ MENU TABS ═══
