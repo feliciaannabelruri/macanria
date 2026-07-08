@@ -1,4 +1,4 @@
-﻿/* admin.js â€” Macanria CMS. Tulis via PUT /api/content/[section]. 'general' tidak diedit di sini. */
+/* admin.js — Macanria CMS. Tulis via PUT /api/content/[section]. 'general' tidak diedit di sini. */
 (function () {
   "use strict";
   var STATE = { data: null };
@@ -78,7 +78,8 @@
       .finally(function () { btn.disabled = false; btn.textContent = old; });
   }
   function uploadImage(file) {
-    return fetch("/api/upload", { method: "POST", credentials: "same-origin", headers: { "Content-Type": file.type || "application/octet-stream", "x-filename": file.name || "upload" }, body: file })
+    var fd = new FormData(); fd.append("file", file);
+    return fetch("/api/upload", { method: "POST", credentials: "same-origin", body: fd })
       .then(guard)
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (res) {

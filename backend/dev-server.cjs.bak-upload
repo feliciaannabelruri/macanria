@@ -1,4 +1,4 @@
-﻿/* dev-server.cjs â€” server DEV LOKAL.
+/* dev-server.cjs — server DEV LOKAL.
    Melayani frontend statis + menjalankan endpoint /api/* (handler Vercel)
    lewat dynamic import(). Memuat .env.local. Adapter dipilih di container.js
    (tanpa KV -> FileContentRepository/content.json). Jalankan:  node backend/dev-server.cjs */
@@ -11,7 +11,7 @@ const PORT = 3001;
 const PROJECT_ROOT = path.join(__dirname, "..");
 const FRONTEND = path.join(PROJECT_ROOT, "frontend");
 
-// â”€â”€ muat .env.local (parser sederhana, mendukung nilai dengan '$' dan '=') â”€â”€
+// ── muat .env.local (parser sederhana, mendukung nilai dengan '$' dan '=') ──
 (function loadEnv() {
   const p = path.join(PROJECT_ROOT, ".env.local");
   if (!fs.existsSync(p)) { console.warn("[dev] .env.local tidak ditemukan"); return; }
@@ -33,7 +33,7 @@ const MIME = {
   ".woff2":"font/woff2",".woff":"font/woff",
 };
 
-// â”€â”€ cache handler ESM agar import() sekali saja â”€â”€
+// ── cache handler ESM agar import() sekali saja ──
 const handlerCache = new Map();
 async function loadHandler(relFile) {
   if (handlerCache.has(relFile)) return handlerCache.get(relFile);
@@ -44,7 +44,7 @@ async function loadHandler(relFile) {
   return fn;
 }
 
-// â”€â”€ bungkus res agar meniru API Vercel (res.status().json(), setHeader) â”€â”€
+// ── bungkus res agar meniru API Vercel (res.status().json(), setHeader) ──
 function wrapRes(res) {
   res.status = (code) => { res.statusCode = code; return res; };
   res.json = (obj) => {
@@ -87,8 +87,7 @@ async function handleApi(req, res, url) {
 
   // parse body JSON (untuk PUT/POST non-upload)
   let body = undefined;
-  const isUpload = parts[1] === "upload";
-  if (!isUpload && (req.method === "PUT" || req.method === "POST")) {
+  if (req.method === "PUT" || req.method === "POST") {
     const raw = await readBody(req);
     const ct = req.headers["content-type"] || "";
     if (ct.includes("application/json")) { try { body = raw ? JSON.parse(raw) : {}; } catch { body = {}; } }
@@ -138,9 +137,9 @@ http.createServer((req, res) => {
 }).listen(PORT, () => {
   console.log("");
   console.log("  Macanria DEV server (statis + /api/*) siap.");
-  console.log("  Website â†’  http://localhost:" + PORT + "/");
-  console.log("  Admin   â†’  http://localhost:" + PORT + "/admin/index.html");
-  console.log("  API     â†’  http://localhost:" + PORT + "/api/content");
+  console.log("  Website →  http://localhost:" + PORT + "/");
+  console.log("  Admin   →  http://localhost:" + PORT + "/admin/index.html");
+  console.log("  API     →  http://localhost:" + PORT + "/api/content");
   console.log("  Ctrl+C untuk stop.");
   console.log("");
 });
