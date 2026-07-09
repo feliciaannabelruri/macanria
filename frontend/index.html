@@ -196,13 +196,22 @@ a.btn-outline:hover{background:rgba(16,28,92,.12);}
 .gal-note{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:24px;display:flex;align-items:center;gap:8px;}
 
 /* ── FIVE SENSES ── */
-#senses{background:var(--cs);padding:100px 80px;position:relative;overflow:hidden;isolation:isolate;}
+#senses{background:var(--ink);padding:120px 80px;position:relative;overflow:hidden;isolation:isolate;}
+.senses-bg{position:absolute;inset:0;background:url('assets/tea.jpg') center 30%/cover no-repeat;background-attachment:fixed;z-index:-2;transform:scale(1.06);animation:senses-drift 22s ease-in-out infinite alternate;}
+.senses-veil{position:absolute;inset:0;z-index:-1;background:
+    radial-gradient(120% 90% at 12% 8%,rgba(45,47,119,.72) 0%,rgba(45,47,119,.55) 32%,rgba(20,21,58,.82) 68%,rgba(12,13,38,.94) 100%);
+  backdrop-filter:saturate(1.05);}
+@keyframes senses-drift{from{transform:scale(1.06) translate3d(0,0,0);}to{transform:scale(1.12) translate3d(-1.2%,-1%,0);}}
+@media(max-width:900px){.senses-bg{background-attachment:scroll;}}
 .sense-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:44px;}
-.sense-card{background:#fff;border-radius:18px;padding:28px 22px;border:1.5px solid rgba(16,28,92,.07);transition:transform .2s,box-shadow .2s,border-color .2s;}
-.sense-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(16,28,92,.1);border-color:var(--cobalt);}
-.sense-num{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--cobalt);opacity:.5;margin-bottom:14px;}
-.sense-name{font-family:var(--display);font-size:20px;font-weight:700;color:var(--ink);margin-bottom:10px;}
-.sense-desc{font-size:13px;line-height:1.68;color:rgba(16,28,92,.55);}
+.sense-card{background:rgba(255,255,255,.08);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-radius:18px;padding:28px 22px;border:1.5px solid rgba(255,255,255,.14);opacity:0;transform:translateY(28px);transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s,background .35s;transition-delay:calc(var(--si,0) * 110ms),calc(var(--si,0) * 110ms),0s,0s,0s;}
+.sense-card:nth-child(1){--si:0;}.sense-card:nth-child(2){--si:1;}.sense-card:nth-child(3){--si:2;}.sense-card:nth-child(4){--si:3;}.sense-card:nth-child(5){--si:4;}
+.sense-grid.in .sense-card{opacity:1;transform:translateY(0);}
+.sense-card:hover{transform:translateY(-6px) scale(1.015)!important;box-shadow:0 20px 40px rgba(0,0,0,.35);border-color:var(--rose);background:rgba(255,255,255,.13);transition-delay:0s!important;}
+.sense-num{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--rose);opacity:.85;margin-bottom:14px;transition:transform .35s;}
+.sense-card:hover .sense-num{transform:translateX(3px);}
+.sense-name{font-family:var(--display);font-size:20px;font-weight:700;color:#fff;margin-bottom:10px;}
+.sense-desc{font-size:13px;line-height:1.68;color:rgba(255,255,255,.68);}
 
 /* ── LOCATIONS ── */
 #locations{background:var(--cs);padding:100px 80px;position:relative;overflow:hidden;isolation:isolate;}
@@ -567,8 +576,11 @@ footer{background:var(--ink);padding:80px 80px 44px;}
 
 <!-- ═══ FIVE SENSES ═══ -->
 <section id="senses" data-screen-label="Five Senses">
-  <div class="eyebrow ey-dk rv">05 — The Experience</div>
-  <h2 class="sh sh-dk rv d1" style="font-size:clamp(32px,3.8vw,54px);">A cup for<br>every sense.</h2>
+  <div class="senses-bg"></div>
+  <div class="senses-veil"></div>
+  <span class="cjk-wm" style="left:-2vw;bottom:-8vw;font-size:32vw;color:rgba(255,255,255,.045);">感</span>
+  <div class="eyebrow ey-lt rv">05 — The Experience</div>
+  <h2 class="sh sh-lt rv d1" style="font-size:clamp(32px,3.8vw,54px);">A cup for<br>every sense.</h2>
   <div class="sense-grid rv d2">
     <div class="sense-card"><div class="sense-num">01</div><div class="sense-name"></div><p class="sense-desc"></p></div>
     <div class="sense-card"><div class="sense-num">02</div><div class="sense-name"></div><p class="sense-desc"></p></div>
