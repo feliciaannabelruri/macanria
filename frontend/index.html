@@ -33,9 +33,10 @@ body{font-family:'Space Grotesk',sans-serif;color:var(--ink);background:#fff;-we
 #nav{position:fixed;inset:0 0 auto;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:72px;transition:background .35s,box-shadow .35s;}
 #nav.glass{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(16,28,92,.08);}
 #nav.dark{background:rgba(16,28,92,.97);backdrop-filter:blur(16px);}
-.logo{font-family:var(--display);font-size:20px;font-weight:700;text-decoration:none;letter-spacing:.01em;transition:color .3s;}
-.logo.dk{color:var(--cobalt);}.logo.lt{color:#fff;}
-.logo .dot{color:var(--rose);}
+.logo{display:inline-flex;align-items:center;text-decoration:none;}
+.logo .wm{height:40px;width:auto;display:block;}
+.logo.dk .wm-white{display:none;}
+.logo.lt .wm-navy{display:none;}
 .nav-links{display:flex;gap:30px;align-items:center;}
 .nav-links a{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;text-decoration:none;transition:color .25s;}
 .nl-dk{color:rgba(16,28,92,.55);}.nl-dk:hover{color:var(--cobalt);}
@@ -63,7 +64,8 @@ body{font-family:'Space Grotesk',sans-serif;color:var(--ink);background:#fff;-we
 /* ── BIG DISPLAY TYPE ── */
 .bt{position:absolute;font-family:var(--display);font-weight:700;letter-spacing:-.012em;line-height:.82;user-select:none;pointer-events:none;color:var(--cobalt);}
 #s1a{display:none;}
-#s1b{top:50%;left:0;right:0;transform:translateY(-50%);text-align:center;font-size:clamp(72px,11vw,170px);}
+#s1b{top:50%;left:0;right:0;transform:translateY(-50%);text-align:center;}
+.wm-hero{height:clamp(150px,22vw,340px);width:auto;display:inline-block;}
 #s2a{top:50%;left:50%;transform:translate(-50%,-108%);font-size:clamp(84px,15vw,230px);white-space:nowrap;}
 #s2b{top:50%;left:50%;transform:translate(-50%,8%);font-size:clamp(84px,15vw,230px);white-space:nowrap;}
 #s3a{top:50%;left:50%;transform:translate(-50%,-108%);font-size:clamp(64px,11.5vw,172px);white-space:nowrap;}
@@ -243,8 +245,8 @@ a.btn-outline:hover{background:rgba(16,28,92,.12);}
 /* ── FOOTER ── */
 footer{background:var(--ink);padding:80px 80px 44px;}
 .f-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:56px;margin-bottom:40px;border-bottom:1px solid rgba(255,255,255,.08);}
-.f-wm{font-family:var(--display);font-size:32px;font-weight:700;color:#fff;letter-spacing:.01em;margin-bottom:6px;}
-.f-wm .dot{color:var(--rose);}
+.f-wm{margin-bottom:10px;}
+.wm-footer{height:76px;width:auto;display:block;}
 .f-cjk{font-family:'Noto Serif SC',serif;font-size:13px;letter-spacing:.2em;color:rgba(255,255,255,.2);margin-bottom:12px;}
 .f-tag{font-size:13.5px;line-height:1.66;color:rgba(255,255,255,.4);max-width:260px;}
 .f-col h4{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:14px;}
@@ -272,7 +274,7 @@ footer{background:var(--ink);padding:80px 80px 44px;}
   /* HERO — REAL parallax, same as desktop (white bg, big type, fixed cup) */
   #s1-mobile-cup{display:none!important;}
   #s1-info-m{display:none!important;}
-  #s1b{font-size:clamp(58px,15vw,120px)!important;}
+  .wm-hero{height:clamp(120px,32vw,220px)!important;}
   #s1-ctas{bottom:54px!important;gap:10px;}
   #s1-hint{display:flex!important;flex-direction:column;align-items:center;gap:6px;position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:60;}
   /* CUP SIZES — tuned for phone */
@@ -368,7 +370,10 @@ footer{background:var(--ink);padding:80px 80px 44px;}
 
 <!-- ═══ NAV ═══ -->
 <nav id="nav">
-  <a href="#" class="logo dk" id="nav-logo">MACANRIA<span class="dot">.</span><span class="logo-cjk">免免</span></a>
+  <a href="#" class="logo dk" id="nav-logo">
+    <img src="assets/wordmark-navy.png" class="wm wm-navy" alt="Macanria" />
+    <img src="assets/wordmark-white.png" class="wm wm-white" alt="Macanria" />
+  </a>
   <div class="nav-links" id="nav-links">
     <a href="#menu" class="nl-dk">Menu</a>
     <a href="#scoops" class="nl-dk">Ice Cream</a>
@@ -391,7 +396,7 @@ footer{background:var(--ink);padding:80px 80px 44px;}
 <div class="scene s1" id="scene1" data-screen-label="Hero">
 <div class="pin">
   <div class="bt" id="s1a">MA</div>
-  <div class="bt" id="s1b">MACANRIA<span style="color:var(--rose)">.</span></div>
+  <div class="bt" id="s1b"><img src="assets/wordmark-navy.png" class="wm-hero" alt="Macanria" /></div>
 
   <img id="s1-mobile-cup" data-px="cupSilver" src="assets/cup-silver.png" alt="Macanria cup" />
 
@@ -612,7 +617,7 @@ footer{background:var(--ink);padding:80px 80px 44px;}
 <!-- ═══ FOOTER ═══ -->
 <footer data-screen-label="Footer">
   <div class="f-top">
-    <div><div class="f-wm">MACANRIA<span class="dot">.</span><span class="logo-cjk">免免</span></div><div class="f-cjk"></div><p class="f-tag"></p></div>
+    <div><div class="f-wm"><img src="assets/wordmark-white.png" class="wm-footer" alt="Macanria" /></div><div class="f-cjk"></div><p class="f-tag"></p></div>
     <div class="f-col"><h4>Menu</h4><ul></ul></div>
     <div class="f-col"><h4>Order</h4><ul></ul></div>
     <div class="f-col"><h4>Info</h4><ul></ul></div>
