@@ -1,8 +1,8 @@
-/* admin.js - Macanria CMS. Tulis via PUT /api/content/[section]. 'general' tidak diedit di sini. */
+/* admin.js â€” Macanria CMS. Tulis via PUT /api/content/[section]. 'general' tidak diedit di sini. */
 (function () {
   "use strict";
   var STATE = { data: null };
-  var SECTIONS = ["menu","scoops","story","senses","gallery","locations","footer","parallax"];
+  var SECTIONS = ["menu", "scoops", "story", "senses", "gallery", "locations", "footer", "parallax"];
   function el(tag, cls, text) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
@@ -88,7 +88,7 @@
   }
   function uploadRow(getUrl, setUrl) {
     var row = el("div", "upload-row");
-    function resolveImg(u){ if(!u) return ""; if(/^https?:\/\//i.test(u)||u.charAt(0)==="/") return u; return "/"+u; }
+    function resolveImg(u) { if (!u) return ""; if (/^https?:\/\//i.test(u) || u.charAt(0) === "/") return u; return "/" + u; }
     var img = el("img", "thumb"); img.src = resolveImg(getUrl()); img.alt = "";
     var file = el("input"); file.type = "file"; file.accept = "image/png,image/jpeg,image/webp";
     var note = el("span", "save-msg");
@@ -124,9 +124,7 @@
   function card() { return el("div", "item-card"); }
   function row() { return el("div", "row"); }
   function imgField(r, value) {
-    var imgHidden = field("", value, { key: "img", full: true, max: 200 });
-    imgHidden.style.display = "none";
-    r.appendChild(imgHidden);
+    r.appendChild(field("URL gambar", value, { key: "img", full: true, max: 200 }));
     var inp = r.querySelector('[data-key="img"]');
     r.appendChild(uploadRow(function () { return inp.value; }, function (u) { inp.value = u; }));
   }
@@ -141,7 +139,7 @@
   }
   C.renderMenu = function (m, host) {
     m = m || { categories: {} };
-    var cats = [["soymilk","Soymilk Tea"],["pure","Pure Tea"],["fruit","Fruit Tea"]];
+    var cats = [["soymilk", "Soymilk Tea"], ["pure", "Pure Tea"], ["fruit", "Fruit Tea"]];
     var refs = {};
     cats.forEach(function (pair) {
       var key = pair[0], label = pair[1];
@@ -183,9 +181,9 @@
       Object.keys(refs).forEach(function (key) {
         var items = [];
         refs[key].list.querySelectorAll(":scope > .item-card").forEach(function (r) {
-          items.push({ name: val(r,"name"), zh: val(r,"zh"), desc: val(r,"desc"), price: val(r,"price"), badge: val(r,"badge") });
+          items.push({ name: val(r, "name"), zh: val(r, "zh"), desc: val(r, "desc"), price: val(r, "price"), badge: val(r, "badge") });
         });
-        out.categories[key] = { label: val(refs[key].meta,"label"), zh: val(refs[key].meta,"zh"), note: val(refs[key].meta,"note"), items: items };
+        out.categories[key] = { label: val(refs[key].meta, "label"), zh: val(refs[key].meta, "zh"), note: val(refs[key].meta, "note"), items: items };
       });
       return out;
     };
@@ -229,11 +227,11 @@
     host._collect = function () {
       var flavours = [];
       flist.querySelectorAll(":scope > .item-card").forEach(function (r) {
-        flavours.push({ name: val(r,"name"), zh: val(r,"zh"), desc: val(r,"desc"), img: val(r,"img") });
+        flavours.push({ name: val(r, "name"), zh: val(r, "zh"), desc: val(r, "desc"), img: val(r, "img") });
       });
       var toppings = [];
       tlist.querySelectorAll(":scope > .item-card").forEach(function (r) { toppings.push(val(r, "name")); });
-      return { intro: val(top,"intro"), price: val(top,"price"), flavours: flavours, toppings: toppings };
+      return { intro: val(top, "intro"), price: val(top, "price"), flavours: flavours, toppings: toppings };
     };
   };
   C.renderStory = function (st, host) {
@@ -245,9 +243,9 @@
     var mascots = st.mascots || [];
     var mrefs = [];
     var mc = card(); mc.appendChild(head("Kartu maskot (2 tetap)"));
-    [0,1].forEach(function (i) {
+    [0, 1].forEach(function (i) {
       var m = mascots[i] || {};
-      var r = card(); r.appendChild(head("Maskot " + (i+1)));
+      var r = card(); r.appendChild(head("Maskot " + (i + 1)));
       var rr = row();
       rr.appendChild(field("Nama", m.name, { key: "name", max: 60 }));
       rr.appendChild(field("Nama Mandarin", m.zh, { key: "zh", max: 20 }));
@@ -260,9 +258,9 @@
     host.appendChild(mc);
     host._collect = function () {
       var mascots = mrefs.map(function (r) {
-        return { zh: val(r,"zh"), name: val(r,"name"), tagline: val(r,"tagline"), desc: val(r,"desc"), img: val(r,"img") };
+        return { zh: val(r, "zh"), name: val(r, "name"), tagline: val(r, "tagline"), desc: val(r, "desc"), img: val(r, "img") };
       });
-      return { title: val(c,"title"), body: val(c, "body"), mascots: mascots };
+      return { title: val(c, "title"), body: val(c, "body"), mascots: mascots };
     };
   };
   C.renderSenses = function (se, host) {
@@ -273,16 +271,16 @@
     var items = se.items || [];
     var refs = [];
     var c = card(); c.appendChild(head("Lima indera (5 tetap)"));
-    [0,1,2,3,4].forEach(function (i) {
+    [0, 1, 2, 3, 4].forEach(function (i) {
       var it = items[i] || {};
-      var r = card(); r.appendChild(head("Indera " + (i+1)));
+      var r = card(); r.appendChild(head("Indera " + (i + 1)));
       r.appendChild(selectField("Key", it.key || SENSE_KEYS[i], SENSE_KEYS, "key"));
       r.appendChild(field("Teks", it.text, { key: "text", full: true, textarea: true, max: 300 }));
       c.appendChild(r); refs.push(r);
     });
     host.appendChild(c);
     host._collect = function () {
-      return { title: val(top,"title"), items: refs.map(function (r) { return { key: val(r,"key"), text: val(r,"text") }; }) };
+      return { title: val(top, "title"), items: refs.map(function (r) { return { key: val(r, "key"), text: val(r, "text") }; }) };
     };
   };
   C.renderGallery = function (gl, host) {
@@ -293,16 +291,16 @@
     var photos = gl.photos || [];
     var refs = [];
     var gc = card(); gc.appendChild(head("Foto (8 tetap)"));
-    [0,1,2,3,4,5,6,7].forEach(function (i) {
+    [0, 1, 2, 3, 4, 5, 6, 7].forEach(function (i) {
       var p = photos[i] || {};
-      var r = card(); r.appendChild(head("Foto " + (i+1)));
+      var r = card(); r.appendChild(head("Foto " + (i + 1)));
       imgField(r, p.img || "");
       r.appendChild(field("Layout", p.layout || "", { key: "layout", full: true, max: 40 }));
       gc.appendChild(r); refs.push(r);
     });
     host.appendChild(gc);
     host._collect = function () {
-      return { ticker: val(top, "ticker"), photos: refs.map(function (r) { return { img: val(r,"img"), layout: val(r,"layout") }; }) };
+      return { ticker: val(top, "ticker"), photos: refs.map(function (r) { return { img: val(r, "img"), layout: val(r, "layout") }; }) };
     };
   };
   C.renderLocations = function (lo, host) {
@@ -322,6 +320,7 @@
       r.appendChild(rr2);
       r.appendChild(field("Alamat", o.address, { key: "address", full: true, max: 200 }));
       r.appendChild(field("Link Google Maps", o.maps, { key: "maps", full: true, max: 300 }));
+      r.appendChild(checkField("Flagship", !!o.flagship, "flagship"));
       list.appendChild(r);
     }
     var add = el("button", "btn btn-ghost", "+ Tambah outlet"); add.type = "button";
@@ -333,8 +332,8 @@
       var outlets = [];
       list.querySelectorAll(":scope > .item-card").forEach(function (r) {
         outlets.push({
-          region: val(r,"region"), name: val(r,"name"),
-          area: val(r,"area"), address: val(r,"address"), hours: val(r,"hours"), maps: val(r,"maps")
+          flagship: val(r, "flagship"), region: val(r, "region"), name: val(r, "name"),
+          area: val(r, "area"), address: val(r, "address"), hours: val(r, "hours"), maps: val(r, "maps")
         });
       });
       return { outlets: outlets };
@@ -373,15 +372,15 @@
     function collectLinks(list) {
       var out = [];
       list.querySelectorAll(":scope > .item-card").forEach(function (r) {
-        out.push({ label: val(r,"label"), href: val(r,"href") });
+        out.push({ label: val(r, "label"), href: val(r, "href") });
       });
       return out;
     }
     host._collect = function () {
       return {
-        title: val(c,"title"), subtext: val(c,"subtext"), description: val(c,"description"),
+        title: val(c, "title"), subtext: val(c, "subtext"), description: val(c, "description"),
         menuLinks: collectLinks(menuL), orderLinks: collectLinks(orderL), infoLinks: collectLinks(infoL),
-        copyright: val(c,"copyright"), social: collectLinks(socL)
+        copyright: val(c, "copyright"), social: collectLinks(socL)
       };
     };
   };
@@ -389,15 +388,13 @@
     px = px || {};
     var SLOTS = [
       { key: "cupSilver", zoom: "zoomSilver", label: "Cup 1", def: "1.0" },
-      { key: "cupGuava",  zoom: "zoomGuava",  label: "Cup 2",   def: "1.12" },
-      { key: "cupMochi",  zoom: "zoomMochi",  label: "Cup 3", def: "1.0" }
+      { key: "cupGuava", zoom: "zoomGuava", label: "Cup 2", def: "1.12" },
+      { key: "cupMochi", zoom: "zoomMochi", label: "Cup 3", def: "1.0" }
     ];
     SLOTS.forEach(function (s) {
       var c = card();
       c.appendChild(head(s.label));
-      var pxHidden = field("", px[s.key], { key: s.key, full: true, max: 200 });
-      pxHidden.style.display = "none";
-      c.appendChild(pxHidden);
+      c.appendChild(field("URL gambar", px[s.key], { key: s.key, full: true, max: 200 }));
       var inp = c.querySelector('[data-key="' + s.key + '"]');
       c.appendChild(uploadRow(function () { return inp.value; }, function (u) { inp.value = u; }));
       var z = (px[s.zoom] != null && px[s.zoom] !== "") ? px[s.zoom] : s.def;
@@ -412,11 +409,11 @@
     host._collect = function () {
       return {
         cupSilver: val(host, "cupSilver"),
-        cupGuava:  val(host, "cupGuava"),
-        cupMochi:  val(host, "cupMochi"),
+        cupGuava: val(host, "cupGuava"),
+        cupMochi: val(host, "cupMochi"),
         zoomSilver: val(host, "zoomSilver"),
-        zoomGuava:  val(host, "zoomGuava"),
-        zoomMochi:  val(host, "zoomMochi"),
+        zoomGuava: val(host, "zoomGuava"),
+        zoomMochi: val(host, "zoomMochi"),
         smooth: val(host, "smooth")
       };
     };
@@ -428,12 +425,12 @@
   var C = window.__cms;
   var STATE = C.STATE, el = C.el;
   var TITLES = {
-    menu: ["Menu Minuman", "Kelola produk per kategori."],
+    menu: ["Menu Minuman", "Kelola produk per kategori (1-30 tiap kategori)."],
     scoops: ["Tofu Ice Cream", "Intro, harga, varian rasa (1-20), topping (0-12)."],
     story: ["Our Story", "Judul, cerita, dan dua kartu maskot."],
     senses: ["Five Senses", "Judul & lima teks indera."],
     gallery: ["Galeri", "Ticker & delapan foto."],
-    locations: ["Lokasi Outlet", ""],
+    locations: ["Lokasi Outlet", "Daftar outlet (1-40)."],
     footer: ["Footer", "Title, subtext, deskripsi, copyright, link (maks 8/grup)."],
     parallax: ["Parallax", "Ganti gambar cup pada animasi parallax."]
   };
@@ -448,7 +445,7 @@
     wrap.appendChild(el("p", "hint", meta[1]));
     var host = el("div");
     wrap.appendChild(host);
-    (RENDERERS[sec] || function(){})(STATE.data ? STATE.data[sec] : null, host);
+    (RENDERERS[sec] || function () { })(STATE.data ? STATE.data[sec] : null, host);
     var actions = el("div", "actions");
     var btn = el("button", "btn btn-primary", "Simpan " + meta[0]); btn.type = "button";
     var msg = el("span", "save-msg");
@@ -483,7 +480,7 @@
     C.loadContent()
       .then(function (data) {
         STATE.data = data || {};
-        if (status) status.innerHTML = "ADMIN";
+        if (status) status.innerHTML = "Terhubung - siap edit";
         render();
       })
       .catch(function (e) {
@@ -531,6 +528,6 @@
     // tutup dgn tombol Esc
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function(){ setTimeout(__hamburgerInit, 0); });
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { setTimeout(__hamburgerInit, 0); });
   else setTimeout(__hamburgerInit, 0);
 })();
