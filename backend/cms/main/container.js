@@ -9,15 +9,20 @@ import { makeLogin } from "../application/usecases/login.js";
 import { makeUploadImage } from "../application/usecases/uploadImage.js";
 
 /* Pemilihan adapter berdasarkan lingkungan.
-   Vercel (ada KV_REST_API_URL) -> KV + Blob (di-import lazy supaya paket @vercel/*
-   tidak pernah dimuat di lokal/VPS). Selain itu -> File + Memory.
+   Supabase (ada SUPABASE_URL) -> Supabase + Memory.
+   Vercel (ada KV_REST_API_URL) -> KV + Blob. Selain itu -> File + Memory.
    Storage gambar: ImageKit bila IMAGEKIT_PRIVATE_KEY ada; jika tidak, ikut lingkungan. */
+const useSupabase = !!process.env.SUPABASE_URL;
 const useKv = !!process.env.KV_REST_API_URL;
 const useImageKit = !!process.env.IMAGEKIT_PRIVATE_KEY;
 
 let contentRepo, rateLimiter, imageStorage;
 
-if (useKv) {
+if (useSupabase) {
+  const { SupabaseContentRepository } = await import("../adapters/persistence/SupabaseContentRepository.js");
+  contentRepo = new SupabaseContentRepository();
+  rateLimiter = new MemoryRateLimiter({ max: 5, windowSec: 300 });
+} else if (useKv) {
   const { KvContentRepository } = await import("../adapters/persistence/KvContentRepository.js");
   const { KvRateLimiter } = await import("../adapters/security/KvRateLimiter.js");
   contentRepo = new KvContentRepository();

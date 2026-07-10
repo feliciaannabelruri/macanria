@@ -1,0 +1,144 @@
+{
+  "categories": {
+    "soymilk": {
+      "label": "Soymilk Tea",
+      "zh": "豆漿",
+      "note": "+ Jelly Pearl topping Rp 3,000 · Sugar level adjustable · Available iced & hot",
+      "items": [
+        {
+          "name": "Osmanthus Oolong",
+          "zh": "桂花烏龍",
+          "desc": "Delicate osmanthus blossom with premium oolong. Naturally sweet, elegant.",
+          "price": "Rp 36.000",
+          "badge": "Bestseller"
+        },
+        {
+          "name": "Earl Grey",
+          "zh": "伯爵茶",
+          "desc": "Classic Earl Grey meets fresh homemade soy milk. Calming and refined.",
+          "price": "Rp 36.000",
+          "badge": ""
+        },
+        {
+          "name": "White Peach Oolong",
+          "zh": "白桃烏龍",
+          "desc": "Light white peach rounds out a smooth, refreshing oolong base.",
+          "price": "Rp 36.000",
+          "badge": ""
+        },
+        {
+          "name": "Jasmine",
+          "zh": "茉莉花",
+          "desc": "Fragrant jasmine — light, floral, perfect on a warm day.",
+          "price": "Rp 36.000",
+          "badge": ""
+        },
+        {
+          "name": "Tie Guan Yin",
+          "zh": "鐵觀音",
+          "desc": "Semi-fermented oolong with a distinctive floral character. Balanced.",
+          "price": "Rp 36.000",
+          "badge": ""
+        },
+        {
+          "name": "Yunnan Pu Er",
+          "zh": "雲南普洱",
+          "desc": "Deep, earthy Yunnan pu-erh — for the serious tea lover.",
+          "price": "Rp 36.000",
+          "badge": ""
+        },
+        {
+          "name": "Da Hong Pao",
+          "zh": "大紅袍",
+          "desc": "Legendary Wuyi oolong. Bold, roasted, unforgettable finish.",
+          "price": "Rp 36.000",
+          "badge": ""
+        },
+        {
+          "name": "Assam Black",
+          "zh": "阿薩姆紅茶",
+          "desc": "Full-bodied and robust, made creamy with homemade soy milk.",
+          "price": "Rp 35.000",
+          "badge": ""
+        }
+      ]
+    },
+    "pure": {
+      "label": "Pure Tea",
+      "zh": "清茶",
+      "note": "Brewed fresh daily · No milk · No added sugar",
+      "items": [
+        {
+          "name": "Osmanthus Tea",
+          "zh": "桂花茶",
+          "desc": "Light, floral, calming. No milk — pure aromatic fragrance.",
+          "price": "Rp 36.000",
+          "badge": "Recommended"
+        },
+        {
+          "name": "Da Hong Pao Tea",
+          "zh": "大紅袍清茶",
+          "desc": "Powerful roasted character without soy milk. Pure and bold.",
+          "price": "Rp 36.000",
+          "badge": ""
+        },
+        {
+          "name": "Jasmine Oolong",
+          "zh": "茉莉烏龍",
+          "desc": "Two florals in one cup — fresh and sophisticated.",
+          "price": "Rp 36.000",
+          "badge": ""
+        },
+        {
+          "name": "Rose Tea",
+          "zh": "玫瑰茶",
+          "desc": "Romantic, light, visually stunning rose tea. Indulgent.",
+          "price": "Rp 36.000",
+          "badge": ""
+        }
+      ]
+    },
+    "fruit": {
+      "label": "Fruit Tea",
+      "zh": "果茶",
+      "note": "Real fruit, pressed daily · Add ruby jelly or mochi · Iced only",
+      "items": [
+        {
+          "name": "Pink Guava Hei Cha",
+          "zh": "粉紅芭樂黑茶",
+          "desc": "Fresh pink guava + bold black tea + ruby jelly. A fruit burst.",
+          "price": "Rp 39.000",
+          "badge": "Signature"
+        },
+        {
+          "name": "Yu Tou Mochi",
+          "zh": "芋頭麻糬黑茶",
+          "desc": "Creamy purple taro with chewy mochi over Dieng black tea.",
+          "price": "Rp 49.000",
+          "badge": ""
+        },
+        {
+          "name": "Lychee Oolong",
+          "zh": "荔枝烏龍",
+          "desc": "Juicy lychee lifts a fragrant oolong. Sweet and refreshing.",
+          "price": "Rp 36.000",
+          "badge": ""
+        },
+        {
+          "name": "Passionfruit Green",
+          "zh": "百香果綠茶",
+          "desc": "Tangy passionfruit over cool green tea. Bright and zippy.",
+          "price": "Rp 36.000",
+          "badge": ""
+        },
+        {
+          "name": "Test Lychee Mango",
+          "zh": "",
+          "desc": "",
+          "price": "Rp 45.000",
+          "badge": ""
+        }
+      ]
+    }
+  }
+}

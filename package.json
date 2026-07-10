@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@imagekit/nodejs": "^7.9.1",
+    "@supabase/supabase-js": "^2.110.2",
     "@vercel/blob": "^0.27.0",
     "@vercel/kv": "^3.0.0",
     "bcryptjs": "^2.4.3",
