@@ -1,4 +1,4 @@
-﻿/* admin.js â€” Macanria CMS. Tulis via PUT /api/content/[section]. 'general' tidak diedit di sini. */
+/* admin.js - Macanria CMS. Tulis via PUT /api/content/[section]. 'general' tidak diedit di sini. */
 (function () {
   "use strict";
   var STATE = { data: null };
@@ -124,7 +124,9 @@
   function card() { return el("div", "item-card"); }
   function row() { return el("div", "row"); }
   function imgField(r, value) {
-    r.appendChild(field("URL gambar", value, { key: "img", full: true, max: 200 }));
+    var imgHidden = field("", value, { key: "img", full: true, max: 200 });
+    imgHidden.style.display = "none";
+    r.appendChild(imgHidden);
     var inp = r.querySelector('[data-key="img"]');
     r.appendChild(uploadRow(function () { return inp.value; }, function (u) { inp.value = u; }));
   }
@@ -320,7 +322,6 @@
       r.appendChild(rr2);
       r.appendChild(field("Alamat", o.address, { key: "address", full: true, max: 200 }));
       r.appendChild(field("Link Google Maps", o.maps, { key: "maps", full: true, max: 300 }));
-      r.appendChild(checkField("Flagship", !!o.flagship, "flagship"));
       list.appendChild(r);
     }
     var add = el("button", "btn btn-ghost", "+ Tambah outlet"); add.type = "button";
@@ -332,7 +333,7 @@
       var outlets = [];
       list.querySelectorAll(":scope > .item-card").forEach(function (r) {
         outlets.push({
-          flagship: val(r,"flagship"), region: val(r,"region"), name: val(r,"name"),
+          region: val(r,"region"), name: val(r,"name"),
           area: val(r,"area"), address: val(r,"address"), hours: val(r,"hours"), maps: val(r,"maps")
         });
       });
@@ -394,7 +395,9 @@
     SLOTS.forEach(function (s) {
       var c = card();
       c.appendChild(head(s.label));
-      c.appendChild(field("URL gambar", px[s.key], { key: s.key, full: true, max: 200 }));
+      var pxHidden = field("", px[s.key], { key: s.key, full: true, max: 200 });
+      pxHidden.style.display = "none";
+      c.appendChild(pxHidden);
       var inp = c.querySelector('[data-key="' + s.key + '"]');
       c.appendChild(uploadRow(function () { return inp.value; }, function (u) { inp.value = u; }));
       var z = (px[s.zoom] != null && px[s.zoom] !== "") ? px[s.zoom] : s.def;
@@ -425,12 +428,12 @@
   var C = window.__cms;
   var STATE = C.STATE, el = C.el;
   var TITLES = {
-    menu: ["Menu Minuman", "Kelola produk per kategori (1-30 tiap kategori)."],
+    menu: ["Menu Minuman", "Kelola produk per kategori."],
     scoops: ["Tofu Ice Cream", "Intro, harga, varian rasa (1-20), topping (0-12)."],
     story: ["Our Story", "Judul, cerita, dan dua kartu maskot."],
     senses: ["Five Senses", "Judul & lima teks indera."],
     gallery: ["Galeri", "Ticker & delapan foto."],
-    locations: ["Lokasi Outlet", "Daftar outlet (1-40)."],
+    locations: ["Lokasi Outlet", ""],
     footer: ["Footer", "Title, subtext, deskripsi, copyright, link (maks 8/grup)."],
     parallax: ["Parallax", "Ganti gambar cup pada animasi parallax."]
   };
@@ -480,7 +483,7 @@
     C.loadContent()
       .then(function (data) {
         STATE.data = data || {};
-        if (status) status.innerHTML = "Terhubung - siap edit";
+        if (status) status.innerHTML = "ADMIN";
         render();
       })
       .catch(function (e) {
