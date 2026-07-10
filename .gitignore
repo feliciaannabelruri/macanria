@@ -2,3 +2,6 @@
 .env
 .env.local
 .vercel
+
+frontend/assets copy.7z
+*.7z
