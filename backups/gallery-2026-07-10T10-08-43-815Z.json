@@ -1,0 +1,37 @@
+{
+  "ticker": "10 outlets — Ashta District 8 · Grand Indonesia · Sarinah · PIK · Taman Anggrek · Chillax · Tribeca · Plaza Indonesia · Lippo Mall Puri · Kokas",
+  "photos": [
+    {
+      "img": "assets/photo-interior-wide.jpg",
+      "layout": "span2c span2r"
+    },
+    {
+      "img": "assets/photo-exterior-tiger.jpg",
+      "layout": ""
+    },
+    {
+      "img": "assets/photo-interior-tiger.jpg",
+      "layout": ""
+    },
+    {
+      "img": "assets/photo-mirror.jpg",
+      "layout": ""
+    },
+    {
+      "img": "assets/photo-neko.jpg",
+      "layout": ""
+    },
+    {
+      "img": "assets/photo-exterior-logo.jpg",
+      "layout": "span2c"
+    },
+    {
+      "img": "assets/photo-bench.jpg",
+      "layout": ""
+    },
+    {
+      "img": "assets/photo-tiger-head.jpg",
+      "layout": ""
+    }
+  ]
+}
