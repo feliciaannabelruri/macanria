@@ -110,45 +110,6 @@ async function handleApi(req, res, url) {
   }
 }
 
-let __sessionMod = null;
-async function getSession() {
-  if (!__sessionMod) {
-    const abs = path.join(PROJECT_ROOT, "backend/cms/main/container.js");
-    __sessionMod = await import(pathToFileURL(abs).href);
-  }
-  return __sessionMod.session;
-}
-function getCookieToken(req) {
-  const header = req.headers.cookie || "";
-  const parts = header.split(";");
-  for (let i = 0; i < parts.length; i++) {
-    const idx = parts[i].indexOf("=");
-    if (idx < 0) continue;
-    if (parts[i].slice(0, idx).trim() === "mcms_session") {
-      const v = parts[i].slice(idx + 1).trim();
-      try { return decodeURIComponent(v); } catch (e) { return v; }
-    }
-  }
-  return null;
-}
-function isAdminPublic(p) {
-  return /\/admin\/(login\.html|login\.js|admin\.css)$/.test(p);
-}
-async function adminGateAllows(req, res, url) {
-  const p = url.pathname;
-  const inAdmin = p === "/admin" || p === "/admin/" || p.indexOf("/admin/") === 0;
-  if (!inAdmin || isAdminPublic(p)) return true;
-  const token = getCookieToken(req);
-  let ok = false;
-  if (token) {
-    try { const session = await getSession(); ok = !!session.verify(token); } catch (e) { ok = false; }
-  }
-  if (ok) return true;
-  res.writeHead(302, { Location: "/admin/login.html" });
-  res.end();
-  return false;
-}
-
 function serveStatic(req, res, url) {
   let rel = url.pathname === "/" ? "/index.html" : url.pathname;
   rel = decodeURIComponent(rel.split("?")[0]);
@@ -172,11 +133,7 @@ http.createServer((req, res) => {
       if (!res.writableEnded) { res.statusCode = 500; res.end(String(e)); }
     });
   } else {
-    adminGateAllows(req, res, url).then(function (allowed) {
-      if (allowed) serveStatic(req, res, url);
-    }).catch(function () {
-      if (!res.writableEnded) { res.statusCode = 500; res.end("gate error"); }
-    });
+    serveStatic(req, res, url);
   }
 }).listen(PORT, () => {
   console.log("");

@@ -1,0 +1,25 @@
+{
+  "title": "A cup for every sense.",
+  "items": [
+    {
+      "key": "Sight",
+      "text": "We've designed a sanctuary for your eyes — a modern, minimalist space flooded with crisp, bright light that gently puts your mind at ease the moment you walk through the door."
+    },
+    {
+      "key": "Smell",
+      "text": "The enchanting scent of tea fills the air, creating a serene sanctuary for your mind while your order is crafted."
+    },
+    {
+      "key": "Sound",
+      "text": "Immerse yourself in calming rhythms that elevate your spirits as you wait and savor our signature blends."
+    },
+    {
+      "key": "Touch",
+      "text": "Hold our cup and feel the genuine passion and quality in your hands."
+    },
+    {
+      "key": "Taste",
+      "text": "Prepare your palate for a delightful plot twist — a beautiful, unexpected friendship between velvety soymilk and bold tea."
+    }
+  ]
+}

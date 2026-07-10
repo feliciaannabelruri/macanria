@@ -1,0 +1,67 @@
+{
+  "intro": "A creamy, plant-based dessert crafted from blended silken tofu — smooth, dairy-free, and naturally lower in fat. Velvety and indulgent, it appeals to vegans, lactose-intolerant individuals, and anyone who believes dessert should feel as good as it tastes.",
+  "price": "Single Rp 28k · Double Rp 45k",
+  "flavours": [
+    {
+      "name": "Black Sesame",
+      "zh": "黑芝麻",
+      "desc": "Creamy, nutty and intensely deep — a stunning jet-grey scoop finished with honeycomb brittle.",
+      "img": "assets/ic-sesame.png"
+    },
+    {
+      "name": "Coffee Hazelnut",
+      "zh": "榛果咖啡",
+      "desc": "Bold cold-brew coffee folded with toasted hazelnut. Smooth, grown-up, never bitter.",
+      "img": "assets/ic-coffee.png"
+    },
+    {
+      "name": "Macadamia Brittle",
+      "zh": "夏威夷果",
+      "desc": "Clean soy-cream base loaded with buttery macadamia and caramel brittle shards.",
+      "img": "assets/ic-macadamia.png"
+    },
+    {
+      "name": "Rum Raisin",
+      "zh": "蘭姆葡萄",
+      "desc": "Plump rum-soaked raisins swirled through a mellow, fragrant cream. A classic.",
+      "img": "assets/ic-rumraisin.png"
+    },
+    {
+      "name": "Maple Walnut",
+      "zh": "楓糖核桃",
+      "desc": "Toasted walnuts and warm maple in a soft, comforting soy-cream scoop.",
+      "img": "assets/ic-walnut.png"
+    },
+    {
+      "name": "Biscoff Crumble",
+      "zh": "比斯可夫",
+      "desc": "Spiced speculoos cream crowned with caramelised biscuit crumble.",
+      "img": "assets/ic-biscoff.png"
+    },
+    {
+      "name": "Durian",
+      "zh": "貓山王",
+      "desc": "For the brave — rich Musang King durian, pure and unapologetic.",
+      "img": "assets/ic-durian.png"
+    },
+    {
+      "name": "Salted Cheese",
+      "zh": "鹹起司",
+      "desc": "Sweet-and-salty cheese cream — mellow, golden, surprisingly addictive.",
+      "img": "assets/ic-cheese.png"
+    },
+    {
+      "name": "Strawberry Shortcake",
+      "zh": "草莓蛋糕",
+      "desc": "Fresh strawberry compote and sponge crumble over clean soy-cream.",
+      "img": "assets/ic-strawberry.png"
+    }
+  ],
+  "toppings": [
+    "Honeycomb Brittle",
+    "Mochi",
+    "Ruby Jelly",
+    "Crushed Nuts",
+    "Biscuit Crumble"
+  ]
+}

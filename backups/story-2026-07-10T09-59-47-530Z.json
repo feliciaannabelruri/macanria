@@ -1,0 +1,20 @@
+{
+  "title": "A heritage tea house, brewed for the future.",
+  "body": "At Macanria, we set out to revive the beauty of Chinese tea culture for a new generation. Every cup begins with premium heritage teas — aged oolongs, jasmine blossoms, Wuyi rock teas — paired with fresh homemade soy milk in place of dairy. Lighter on the body, extraordinary on the palate.",
+  "mascots": [
+    {
+      "zh": "老虎",
+      "name": "Macan · The Tiger",
+      "tagline": "Bold · Strong · Fearless",
+      "desc": "The brand's soul: navy confidence, bold flavours, no hesitation.",
+      "img": "assets/macan-front.png"
+    },
+    {
+      "zh": "兔兔",
+      "name": "Tutu · The Rabbit",
+      "tagline": "Soft · Silky · Sweet",
+      "desc": "The cream side — silky tofu ice cream, subtle sweetness, unforgettable charm.",
+      "img": "assets/tutu-front.png"
+    }
+  ]
+}

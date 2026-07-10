@@ -495,39 +495,3 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 })();
-
-/* ===== Hamburger mobile nav (ditambahkan) ===== */
-(function () {
-  "use strict";
-  function __hamburgerInit() {
-    var sidebar = document.querySelector(".sidebar");
-    var topbar = document.querySelector(".topbar");
-    if (!sidebar || !topbar || document.querySelector(".hamburger")) return;
-
-    var btn = document.createElement("button");
-    btn.className = "hamburger";
-    btn.type = "button";
-    btn.setAttribute("aria-label", "Menu");
-    btn.innerHTML = "<span></span><span></span><span></span>";
-    topbar.insertBefore(btn, topbar.firstChild);
-
-    var overlay = document.createElement("div");
-    overlay.className = "nav-overlay";
-    document.body.appendChild(overlay);
-
-    function open() { sidebar.classList.add("open"); overlay.classList.add("show"); }
-    function close() { sidebar.classList.remove("open"); overlay.classList.remove("show"); }
-    function toggle() { sidebar.classList.contains("open") ? close() : open(); }
-
-    btn.addEventListener("click", toggle);
-    overlay.addEventListener("click", close);
-    // tutup saat memilih section
-    sidebar.addEventListener("click", function (e) {
-      if (e.target && e.target.classList && e.target.classList.contains("navlink")) close();
-    });
-    // tutup dgn tombol Esc
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
-  }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function(){ setTimeout(__hamburgerInit, 0); });
-  else setTimeout(__hamburgerInit, 0);
-})();
