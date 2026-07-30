@@ -39,11 +39,6 @@
             "label": "Dairy",
             "value": "Free",
             "sub": "100% homemade soy milk"
-          },
-          {
-            "label": "Price",
-            "value": "Rp 39k",
-            "sub": "Sugar level adjustable"
           }
         ]
       },
@@ -73,11 +68,6 @@
             "label": "Dairy",
             "value": "Free",
             "sub": "Vegan-friendly"
-          },
-          {
-            "label": "Price",
-            "value": "Rp 49k",
-            "sub": "Sugar level adjustable"
           }
         ]
       }
